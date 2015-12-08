@@ -119,7 +119,7 @@ shared_examples_for 'globus::config' do |facts|
       is_expected.to contain_exec('add-gridftp-callback').with({
         :path     => '/usr/bin:/bin:/usr/sbin:/sbin',
         :command  => 'sed -i \'1s/^/|globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout\n/\' /var/lib/globus-connect-server/gsi-authz.conf',
-        :unless   => '[[ "$(head -n 1 /var/lib/globus-connect-server/gsi-authz.conf)" = "|globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout" ]]',
+        :unless   => 'head -n 1 /var/lib/globus-connect-server/gsi-authz.conf | egrep -q \'^\|globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout$\'',
         :onlyif   => 'test -f /var/lib/globus-connect-server/gsi-authz.conf',
         :require  => 'Exec[globus-connect-server-setup]',
         :notify   => 'Service[globus-gridftp-server]',

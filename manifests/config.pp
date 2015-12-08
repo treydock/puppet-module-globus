@@ -125,10 +125,11 @@ class globus::config {
   }
 
   if $globus::first_gridftp_callback {
+    $_first_gridftp_callback_match = regsubst($globus::first_gridftp_callback, '\|', '\\|', 'G')
     exec { 'add-gridftp-callback':
       path    => '/usr/bin:/bin:/usr/sbin:/sbin',
       command => "sed -i '1s/^/${globus::first_gridftp_callback}\\n/' /var/lib/globus-connect-server/gsi-authz.conf",
-      unless  => "[[ \"$(head -n 1 /var/lib/globus-connect-server/gsi-authz.conf)\" = \"${globus::first_gridftp_callback}\" ]]",
+      unless  => "head -n 1 /var/lib/globus-connect-server/gsi-authz.conf | egrep -q '^${_first_gridftp_callback_match}$'",
       onlyif  => 'test -f /var/lib/globus-connect-server/gsi-authz.conf',
       require => $_resources_require_setup,
       notify  => Service['globus-gridftp-server'],
