@@ -60,6 +60,22 @@ shared_examples_for 'globus::config' do |facts|
   it { is_expected.not_to contain_file('/etc/gridftp.d/z-extra-settings') }
   it { is_expected.not_to contain_exec('add-gridftp-callback') }
 
+  it do
+    is_expected.to contain_firewall('500 allow GridFTP control channel').with({
+      :action => 'accept',
+      :dport  => '2811',
+      :proto  => 'tcp',
+    })
+  end
+
+  it do
+    is_expected.to contain_firewall('500 allow GridFTP data channels').with({
+      :action => 'accept',
+      :dport  => '50000-51000',
+      :proto  => 'tcp',
+    })
+  end
+
   context 'when run_setup_commands => false' do
     let(:params) {{ :run_setup_commands => false }}
     it { is_expected.not_to contain_exec('globus-connect-server-setup') }
@@ -130,5 +146,11 @@ shared_examples_for 'globus::config' do |facts|
       let(:params) {{ :first_gridftp_callback => '|globus_mapping liblcas_lcmaps_gt4_mapping.so lcmaps_callout', :run_setup_commands => false }}
       it { is_expected.to contain_exec('add-gridftp-callback').without_require }
     end
+  end
+
+  context 'when manage_firewall => false' do
+    let(:params) {{ :manage_firewall => false }}
+    it { is_expected.not_to contain_firewall('500 allow GridFTP control channel') }
+    it { is_expected.not_to contain_firewall('500 allow GridFTP data channels') }
   end
 end

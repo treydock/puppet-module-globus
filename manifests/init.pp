@@ -11,6 +11,7 @@ class globus (
   $first_gridftp_callback                   = undef,
   $manage_service                           = true,
   $run_setup_commands                       = true,
+  $manage_firewall                          = true,
 
   # Globus Config
   $globus_user                              = '%(GLOBUS_USER)s',
@@ -67,7 +68,8 @@ class globus (
     $include_oauth_server,
     $remove_cilogon_cron,
     $manage_service,
-    $run_setup_commands
+    $run_setup_commands,
+    $manage_firewall
   )
 
   validate_array(

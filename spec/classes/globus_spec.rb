@@ -23,6 +23,7 @@ describe 'globus' do
       it_behaves_like 'globus::repo::el', facts
       it_behaves_like 'globus::install', facts
       it_behaves_like 'globus::config', facts
+      it_behaves_like 'globus::service', facts
     end
   end
 end

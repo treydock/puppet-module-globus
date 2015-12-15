@@ -136,4 +136,20 @@ class globus::config {
     }
   }
 
+  if $globus::manage_firewall {
+    $_gridftp_incoming_ports = join($globus::gridftp_incoming_port_range, '-')
+
+    firewall { '500 allow GridFTP control channel':
+      action => 'accept',
+      dport  => $globus::gridftp_server_port,
+      proto  => 'tcp',
+    }
+
+    firewall { '500 allow GridFTP data channels':
+      action => 'accept',
+      dport  => $_gridftp_incoming_ports,
+      proto  => 'tcp',
+    }
+  }
+
 }
