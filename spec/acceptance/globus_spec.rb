@@ -9,6 +9,7 @@ describe 'yum_cron class:' do
           globus_password     => 'bar',
           endpoint_name       => 'test',
           run_setup_commands  => false,
+          manage_firewall     => #{!(default['hypervisor'] =~ /docker/)},
         }
       "
 
