@@ -9,7 +9,12 @@ class globus::params {
         $yum_priorities_package = 'yum-plugin-priorities'
       } else {
         $repo_descr   = "Globus-Toolkit-6-el${::operatingsystemmajrelease}"
-        $repo_baseurl = "http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/\$releasever/\$basearch/"
+        if $::operatingsystem == 'RedHat' {
+          $releasever = $::operatingsystemmajrelease
+        } else {
+          $releasever = "\$releasever"
+        }
+        $repo_baseurl = "http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/${releasever}/\$basearch/"
 
         if versioncmp($::operatingsystemmajrelease, '5') == 0 {
           $yum_priorities_package = 'yum-priorities'

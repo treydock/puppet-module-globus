@@ -8,6 +8,9 @@ shared_examples_for 'globus::repo::el' do |facts|
   if facts[:operatingsystem] == 'Fedora'
     let(:descr) { 'Globus-Toolkit-6-fedora' }
     let(:baseurl) { 'http://toolkit.globus.org/ftppub/gt6/stable/rpm/fedora/$releasever/$basearch/' }
+  elsif facts[:operatingsystem] == 'RedHat'
+    let(:descr) { "Globus-Toolkit-6-el#{facts[:operatingsystemmajrelease]}" }
+    let(:baseurl) { "http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/#{facts[:operatingsystemmajrelease]}/$basearch/" }
   else
     let(:descr) { "Globus-Toolkit-6-el#{facts[:operatingsystemmajrelease]}" }
     let(:baseurl) { 'http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/$releasever/$basearch/' }
