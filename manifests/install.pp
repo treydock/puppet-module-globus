@@ -14,7 +14,7 @@ class globus::install {
   }
 
   if $globus::include_oauth_server {
-    package { 'globus-connect-server-oauth':
+    package { 'globus-connect-server-web':
       ensure  => 'present',
     }
   }
