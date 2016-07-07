@@ -76,6 +76,23 @@ shared_examples_for 'globus::config' do |facts|
     })
   end
 
+  it do
+    is_expected.to contain_firewall('500 allow MyProxy').with({
+      :action => 'accept',
+      :dport  => '7512',
+      :proto  => 'tcp',
+      :source => '174.129.226.69'
+    })
+  end
+
+  it do
+    is_expected.not_to contain_firewall('500 allow OAuth HTTPS').with({
+      :action => 'accept',
+      :dport  => '443',
+      :proto  => 'tcp',
+    })
+  end
+
   context 'when run_setup_commands => false' do
     let(:params) {{ :run_setup_commands => false }}
     it { is_expected.not_to contain_exec('globus-connect-server-setup') }

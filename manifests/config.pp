@@ -150,6 +150,23 @@ class globus::config {
       dport  => $_gridftp_incoming_ports,
       proto  => 'tcp',
     }
+
+    if $globus::include_id_server {
+      firewall { '500 allow MyProxy':
+        action => 'accept',
+        dport  => $globus::myproxy_server_port,
+        proto  => 'tcp',
+        source => $globus::myproxy_firewall_source,
+      }
+    }
+
+    if $globus::include_oauth_server {
+      firewall { '500 allow OAuth HTTPS':
+        action => 'accept',
+        dport  => '443',
+        proto  => 'tcp',
+      }
+    }
   }
 
 }
