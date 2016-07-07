@@ -85,7 +85,7 @@ class globus::config {
   }
 
   # MyProxy Configs
-  if $globus::include_id_server and $globus::_myproxy_server {
+  if $globus::_myproxy_server {
     globus_connect_config { 'MyProxy/Server': value => $globus::_myproxy_server }
     globus_connect_config { 'MyProxy/ServerBehindNAT': value => $globus::myproxy_server_behind_nat }
     globus_connect_config { 'MyProxy/CADirectory': value => $globus::myproxy_ca_directory }
@@ -93,7 +93,7 @@ class globus::config {
   }
 
   # OAuth Configs
-  if $globus::include_oauth_server and $globus::_oauth_server {
+  if $globus::_oauth_server {
     globus_connect_config { 'OAuth/Server': value => $globus::_oauth_server }
     globus_connect_config { 'OAuth/ServerBehindNAT': value => $globus::oauth_server_behind_firewall }
     if $globus::oauth_stylesheet {
