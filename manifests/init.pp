@@ -91,25 +91,20 @@ class globus (
   $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
   $_setup_command   = join($_setup_commands, ' && ')
 
-  anchor { 'globus::start': }
-  anchor { 'globus::end': }
-
-  include globus::install
-  include globus::config
-  include globus::service
+  contain globus::install
+  contain globus::config
+  contain globus::service
 
   case $::osfamily {
     'RedHat': {
       include ::epel
-      include globus::repo::el
+      contain globus::repo::el
 
-      Anchor['globus::start']->
-      Class['epel']->
-      Class['globus::repo::el']->
-      Class['globus::install']->
-      Class['globus::config']->
-      Class['globus::service']->
-      Anchor['globus::end']
+      Class['epel']
+      -> Class['globus::repo::el']
+      -> Class['globus::install']
+      -> Class['globus::config']
+      -> Class['globus::service']
     }
     default: {
       # Do nothing
