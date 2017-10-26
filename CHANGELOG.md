@@ -4,6 +4,12 @@ Release notes for the treydock-globus module.
 
 ------------------------------------------
 
+#### 2.0.0 - 2017-10-26
+
+* Rename myproxy\_firewall\_source to myproxy\_firewall\_sources and require Array value
+
+------------------------------------------
+
 #### 1.0.0 - 2017-10-26
 
 * Drop Puppet 3 support
