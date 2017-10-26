@@ -77,11 +77,20 @@ shared_examples_for 'globus::config' do |facts|
   end
 
   it do
-    is_expected.to contain_firewall('500 allow MyProxy').with({
+    is_expected.to contain_firewall('500 allow MyProxy from 174.129.226.69').with({
       :action => 'accept',
       :dport  => '7512',
       :proto  => 'tcp',
       :source => '174.129.226.69'
+    })
+  end
+
+  it do
+    is_expected.to contain_firewall('500 allow MyProxy from 54.237.254.192/29').with({
+      :action => 'accept',
+      :dport  => '7512',
+      :proto  => 'tcp',
+      :source => '54.237.254.192/29'
     })
   end
 

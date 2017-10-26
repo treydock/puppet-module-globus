@@ -152,12 +152,14 @@ class globus::config {
     }
 
     if $globus::include_id_server {
-      firewall { '500 allow MyProxy':
-        action   => 'accept',
-        dport    => $globus::myproxy_server_port,
-        proto    => 'tcp',
-        source   => $globus::myproxy_firewall_source,
-        provider => 'iptables',
+      $globus::myproxy_firewall_sources.each |$source| {
+        firewall { "500 allow MyProxy from ${source}":
+          action   => 'accept',
+          dport    => $globus::myproxy_server_port,
+          proto    => 'tcp',
+          source   => $source,
+          provider => 'iptables',
+        }
       }
     }
 
