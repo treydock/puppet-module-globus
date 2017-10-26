@@ -1,17 +1,17 @@
 # Class: globus: See README.md for documentation
 class globus (
-  $include_io_server                        = true,
-  $include_id_server                        = true,
-  $include_oauth_server                     = false,
+  Boolean $include_io_server                = true,
+  Boolean $include_id_server                = true,
+  Boolean $include_oauth_server             = false,
   $release_url                              = $globus::params::release_url,
   $repo_descr                               = $globus::params::repo_descr,
   $repo_baseurl                             = $globus::params::repo_baseurl,
-  $remove_cilogon_cron                      = false,
-  $extra_gridftp_settings                   = [],
+  Boolean $remove_cilogon_cron              = false,
+  Array $extra_gridftp_settings             = [],
   $first_gridftp_callback                   = undef,
-  $manage_service                           = true,
-  $run_setup_commands                       = true,
-  $manage_firewall                          = true,
+  Boolean $manage_service                   = true,
+  Boolean $run_setup_commands               = true,
+  Boolean $manage_firewall                  = true,
 
   # Globus Config
   $globus_user                              = '%(GLOBUS_USER)s',
@@ -27,7 +27,8 @@ class globus (
   $security_certificate_file                = '/var/lib/globus-connect-server/grid-security/hostcert.pem',
   $security_key_file                        = '/var/lib/globus-connect-server/grid-security/hostkey.pem',
   $security_trusted_certificate_directory   = '/var/lib/globus-connect-server/grid-security/certificates/',
-  $security_identity_method                 = 'MyProxy',
+  Enum['MyProxy', 'OAuth', 'CILogon']
+    $security_identity_method               = 'MyProxy',
   $security_authorization_method            = undef,
   $security_gridmap                         = undef,
   $security_cilogon_identity_provider       = undef,
@@ -36,10 +37,10 @@ class globus (
   $gridftp_server                           = undef,
   $gridftp_server_port                      = '2811',
   $gridftp_server_behind_nat                = false,
-  $gridftp_incoming_port_range              = ['50000', '51000'],
+  Array $gridftp_incoming_port_range        = ['50000', '51000'],
   $gridftp_outgoing_port_range              = undef, #'50000-51000',
   $gridftp_data_interface                   = undef,
-  $gridftp_restrict_paths                   = ['RW~', 'N~/.*'],
+  Array $gridftp_restrict_paths             = ['RW~', 'N~/.*'],
   $gridftp_sharing                          = false,
   $gridftp_sharing_restrict_paths           = undef,
   $gridftp_sharing_state_dir                = '$HOME/.globus/sharing',
@@ -62,37 +63,6 @@ class globus (
   $oauth_stylesheet                         = undef,
   $oauth_logo                               = undef,
 ) inherits globus::params {
-
-  validate_bool(
-    $include_io_server,
-    $include_id_server,
-    $include_oauth_server,
-    $remove_cilogon_cron,
-    $manage_service,
-    $run_setup_commands,
-    $manage_firewall
-  )
-
-  validate_array(
-    $extra_gridftp_settings,
-    $gridftp_incoming_port_range,
-    $gridftp_restrict_paths
-  )
-
-  case $security_identity_method {
-    'MyProxy': {
-      # Do nothing
-    }
-    'OAuth': {
-      # Do nothing
-    }
-    'CILogon': {
-      validate_string($security_cilogon_identity_provider)
-    }
-    default: {
-      fail("Unsupported identity_method: ${security_identity_method}, module ${module_name} only supports MyProxy, OAuth and CILogon")
-    }
-  }
 
   if $include_io_server {
     $_gridftp_server    = pick($gridftp_server, "${::fqdn}:${gridftp_server_port}")
