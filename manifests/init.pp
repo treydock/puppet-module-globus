@@ -12,6 +12,7 @@ class globus (
   Boolean $manage_service                   = true,
   Boolean $run_setup_commands               = true,
   Boolean $manage_firewall                  = true,
+  Boolean $manage_epel                      = true,
 
   # Globus Config
   $globus_user                              = '%(GLOBUS_USER)s',
@@ -97,11 +98,13 @@ class globus (
 
   case $::osfamily {
     'RedHat': {
-      include ::epel
+      if $manage_epel {
+        include ::epel
+        Class['epel'] -> Class['globus::repo::el']
+      }
       contain globus::repo::el
 
-      Class['epel']
-      -> Class['globus::repo::el']
+      Class['globus::repo::el']
       -> Class['globus::install']
       -> Class['globus::config']
       -> Class['globus::service']
