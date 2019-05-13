@@ -56,6 +56,7 @@ class globus (
   $myproxy_server_behind_nat                = false,
   $myproxy_ca_directory                     = '/var/lib/globus-connect-server/myproxy-ca',
   $myproxy_config_file                      = '/var/lib/globus-connect-server/myproxy-server.conf',
+  $myproxy_ca_subject_dn                    = undef,
   Array $myproxy_firewall_sources           = ['174.129.226.69', '54.237.254.192/29'],
 
   # OAuth Config
