@@ -90,6 +90,9 @@ class globus::config {
     globus_connect_config { 'MyProxy/ServerBehindNAT': value => $globus::myproxy_server_behind_nat }
     globus_connect_config { 'MyProxy/CADirectory': value => $globus::myproxy_ca_directory }
     globus_connect_config { 'MyProxy/ConfigFile': value => $globus::myproxy_config_file }
+    if $globus::myproxy_ca_subject_dn {
+      globus_connect_config { 'MyProxy/CaSubjectDN': value => $globus::myproxy_ca_subject_dn }
+    }
   }
 
   # OAuth Configs
