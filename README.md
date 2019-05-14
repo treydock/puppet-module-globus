@@ -105,6 +105,10 @@ Below is an example of what would be required to setup Globus GridFTP to also wo
     # Apply OSG GridFTP before Globus
     Package['osg-gridftp'] -> Class['::globus::install']
 
+## Reference
+
+[http://treydock.github.io/puppet-module-globus/](http://treydock.github.io/puppet-module-globus/)
+
 ## Compatibility
 
 Tested using

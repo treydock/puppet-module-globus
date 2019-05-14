@@ -1,4 +1,80 @@
-# Class: globus: See README.md for documentation
+# @summary Manage Globus
+#
+# @example Install and configure a Globus IO endpoint that uses OAuth.  This example assumes host cert/key will not be provided by Globus.
+#    class { 'globus':
+#      include_id_server => false,
+#      globus_user => 'myusername',
+#      globus_password => 'password',
+#      endpoint_name => 'myorg',
+#      endpoint_public => true,
+#      myproxy_server => 'myproxy.example.com:7512',
+#      oauth_server => 'myproxy.example.com',
+#      security_identity_method => 'OAuth',
+#      security_fetch_credentials_from_relay => false,
+#      security_certificate_file => '/etc/grid-security/hostcert.pem',
+#      security_key_file => '/etc/grid-security/hostkey.pem',
+#      gridftp_server => $::fqdn,
+#      gridftp_restrict_paths => ['RW~','N~/.*','RW/project'],
+#      # Example of extra settings
+#      extra_gridftp_settings => [
+#        'log_level ALL',
+#        'log_single /var/log/gridftp-auth.log',
+#        'log_transfer /var/log/gridftp-transfer.log',
+#      ],
+#    }
+#
+# @param include_io_server
+# @param include_id_server
+# @param include_oauth_server
+# @param release_url
+# @param repo_descr
+# @param repo_baseurl
+# @param remove_cilogon_cron
+# @param extra_gridftp_settings
+# @param first_gridftp_callback
+# @param manage_service
+# @param run_setup_commands
+# @param manage_firewall
+# @param manage_epel
+# @param globus_user
+# @param globus_password
+# @param endpoint_name
+# @param endpoint_public
+# @param endpoint_default_directory
+# @param security_fetch_credentials_from_relay
+# @param security_certificate_file
+# @param security_key_file
+# @param security_trusted_certificate_directory
+# @param security_identity_method
+# @param security_authorization_method
+# @param security_gridmap
+# @param security_cilogon_identity_provider
+# @param gridftp_server
+# @param gridftp_server_port
+# @param gridftp_server_behind_nat
+# @param gridftp_incoming_port_range
+# @param gridftp_outgoing_port_range
+# @param gridftp_data_interface
+# @param gridftp_restrict_paths
+# @param gridftp_sharing
+# @param gridftp_sharing_restrict_paths
+# @param gridftp_sharing_state_dir
+# @param gridftp_sharing_users_allow
+# @param gridftp_sharing_groups_allow
+# @param gridftp_sharing_users_deny
+# @param gridftp_sharing_groups_deny
+# @param myproxy_server
+# @param myproxy_server_port
+# @param myproxy_server_behind_nat
+# @param myproxy_ca_directory
+# @param myproxy_config_file
+# @param myproxy_ca_subject_dn
+# @param myproxy_firewall_sources
+# @param oauth_server
+# @param oauth_server_behind_firewall
+# @param oauth_stylesheet
+# @param oauth_logo
+#
 class globus (
   Boolean $include_io_server = true,
   Boolean $include_id_server = true,
