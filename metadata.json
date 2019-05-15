@@ -5,31 +5,62 @@
   "summary": "Globus Online module",
   "license": "Apache-2.0",
   "source": "git://github.com/treydock/puppet-module-globus.git",
-  "description": "Globus Online module",
-  "issues_url": "https://github.com/treydock/puppet-module-globus/issues",
   "project_page": "http://github.com/treydock/puppet-module-globus",
-  "tags": [ "globus", "gridftp", "hpc" ],
+  "issues_url": "https://github.com/treydock/puppet-module-globus/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.13.1 <6.0.0"
+    },
+    {
+      "name": "puppetlabs/inifile",
+      "version_requirement": ">= 1.0.0 <4.0.0"
+    },
+    {
+      "name": "puppetlabs/firewall",
+      "version_requirement": ">= 1.0.0 <2.0.0"
+    },
+    {
+      "name": "stahnma/epel",
+      "version_requirement": ">= 1.0.0 <2.0.0"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": [ "6", "7" ]
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
     },
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": [ "6", "7" ]
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
     },
     {
       "operatingsystem": "Scientific",
-      "operatingsystemrelease": [ "6", "7" ]
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
     }
   ],
-  "dependencies": [
-    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.13.1 <6.0.0" },
-    { "name": "puppetlabs/inifile", "version_requirement": ">= 1.0.0 <4.0.0" },
-    { "name": "puppetlabs/firewall", "version_requirement": ">= 1.0.0 <2.0.0" },
-    { "name": "stahnma/epel", "version_requirement": ">= 1.0.0 <2.0.0" }
-  ],
   "requirements": [
-    {"name": "puppet", "version_requirement": ">= 5.0.0 < 7.0.0" }
-  ]
+    {
+      "name": "puppet",
+      "version_requirement": ">= 5.0.0 < 7.0.0"
+    }
+  ],
+  "description": "Globus Online module",
+  "tags": [
+    "globus",
+    "gridftp",
+    "hpc"
+  ],
+  "pdk-version": "1.10.0",
+  "template-url": "https://github.com/treydock/pdk-templates.git#master",
+  "template-ref": "heads/master-0-g6a0555c"
 }
