@@ -7,7 +7,7 @@ describe 'globus' do
         facts
       end
 
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to create_class('globus') }
       it { is_expected.to contain_class('globus::params') }
@@ -24,8 +24,9 @@ describe 'globus' do
       it_behaves_like 'globus::service', facts
 
       context 'manage_epel => false' do
-        let(:params) {{ :manage_epel => false }}
-        it { should compile.with_all_deps }
+        let(:params) { { manage_epel: false } }
+
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_class('epel') }
       end
     end
