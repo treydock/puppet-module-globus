@@ -487,7 +487,7 @@ Default value: present
 
 ##### `value`
 
-Valid values: /^[\S ]*$/
+Valid values: %r{^[\S ]*$}
 
 The value of the setting to be defined.
 

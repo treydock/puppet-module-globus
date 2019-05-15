@@ -1,10 +1,10 @@
 {
   "name": "treydock-globus",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "author": "treydock",
   "summary": "Globus Online module",
   "license": "Apache-2.0",
-  "source": "git://github.com/treydock/puppet-module-globus.git",
+  "source": "https://github.com/treydock/puppet-module-globus",
   "project_page": "http://github.com/treydock/puppet-module-globus",
   "issues_url": "https://github.com/treydock/puppet-module-globus/issues",
   "dependencies": [
