@@ -80,12 +80,13 @@
   </dl>
 </div>
 
+  <h2>Summary</h2>
+  Default values
+
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>Private class: See README.md.</p>
-
   </div>
 </div>
 
@@ -100,7 +101,6 @@
         <pre class="lines">
 
 
-2
 3
 4
 5
@@ -133,11 +133,10 @@
 32
 33
 34
-35
-36</pre>
+35</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/params.pp', line 2</span>
+        <pre class="code"><span class="info file"># File 'manifests/params.pp', line 3</span>
 
 class globus::params {
 
@@ -156,12 +155,10 @@ class globus::params {
         }
         $repo_baseurl = &quot;http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/${releasever}/\$basearch/&quot;
 
-        if versioncmp($::operatingsystemmajrelease, &#39;5&#39;) == 0 {
-          $yum_priorities_package = &#39;yum-priorities&#39;
-        } elsif versioncmp($::operatingsystemmajrelease, &#39;6&#39;) &gt;= 0 {
+        if versioncmp($::operatingsystemmajrelease, &#39;6&#39;) &gt;= 0 {
           $yum_priorities_package = &#39;yum-plugin-priorities&#39;
         } else {
-          fail(&quot;Unsupported operatingsystemmajrelease: ${::operatingsystemmajrelease} for ${::operatingsystem}, only support 5, 6 and 7.&quot;)
+          fail(&quot;Unsupported operatingsystemmajrelease: ${::operatingsystemmajrelease} for ${::operatingsystem}, only supports 6 and 7.&quot;)
         }
       }
 
