@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage globus repo
+# @api private
 class globus::repo::el {
   ensure_packages([$globus::params::yum_priorities_package])
 

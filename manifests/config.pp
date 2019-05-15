@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary Manage globus configs
+# @api private
 class globus::config {
 
   if $globus::run_setup_commands {

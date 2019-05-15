@@ -1,4 +1,5 @@
-# Private class: See README.md.
+# @summary manage Globus install
+# @api private
 class globus::install {
 
   if $globus::include_io_server {
