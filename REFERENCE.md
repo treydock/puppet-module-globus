@@ -107,6 +107,14 @@ Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 Default value: $globus::params::repo_baseurl
 
+##### `gpg_key_url`
+
+Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
+
+
+
+Default value: $globus::params::gpg_key_url
+
 ##### `remove_cilogon_cron`
 
 Data type: `Boolean`
