@@ -29,6 +29,7 @@
 # @param release_url
 # @param repo_descr
 # @param repo_baseurl
+# @param gpg_key_url
 # @param remove_cilogon_cron
 # @param extra_gridftp_settings
 # @param first_gridftp_callback
@@ -82,6 +83,7 @@ class globus (
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = $globus::params::release_url,
   String $repo_descr = $globus::params::repo_descr,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = $globus::params::repo_baseurl,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gpg_key_url = $globus::params::gpg_key_url,
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,

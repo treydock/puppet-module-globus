@@ -6,7 +6,7 @@ class globus::params {
     'RedHat': {
       if $::operatingsystem == 'Fedora' {
         $repo_descr   = 'Globus-Toolkit-6-fedora'
-        $repo_baseurl = "http://toolkit.globus.org/ftppub/gt6/stable/rpm/fedora/\$releasever/\$basearch/"
+        $repo_baseurl = 'https://downloads.globus.org/toolkit/gt6/stable/rpm/fedora/$releasever/$basearch/'
         $yum_priorities_package = 'yum-plugin-priorities'
       } else {
         $repo_descr   = "Globus-Toolkit-6-el${::operatingsystemmajrelease}"
@@ -15,7 +15,7 @@ class globus::params {
         } else {
           $releasever = "\$releasever"
         }
-        $repo_baseurl = "http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/${releasever}/\$basearch/"
+        $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${releasever}/\$basearch/"
 
         if versioncmp($::operatingsystemmajrelease, '6') >= 0 {
           $yum_priorities_package = 'yum-plugin-priorities'
@@ -24,7 +24,8 @@ class globus::params {
         }
       }
 
-      $release_url = 'http://toolkit.globus.org/ftppub/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'
+      $release_url = 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'
+      $gpg_key_url = 'https://downloads.globus.org/toolkit/gt6/stable/repo/rpm/RPM-GPG-KEY-Globus'
     }
 
     default: {
