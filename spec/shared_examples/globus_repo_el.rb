@@ -7,25 +7,17 @@ shared_examples_for 'globus::repo::el' do |facts|
 
   if facts[:operatingsystem] == 'Fedora'
     let(:descr) { 'Globus-Toolkit-6-fedora' }
-    let(:baseurl) { 'http://toolkit.globus.org/ftppub/gt6/stable/rpm/fedora/$releasever/$basearch/' }
+    let(:baseurl) { 'https://downloads.globus.org/toolkit/gt6/stable/rpm/fedora/$releasever/$basearch/' }
   elsif facts[:operatingsystem] == 'RedHat'
     let(:descr) { "Globus-Toolkit-6-el#{facts[:operatingsystemmajrelease]}" }
-    let(:baseurl) { "http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/#{facts[:operatingsystemmajrelease]}/$basearch/" }
+    let(:baseurl) { "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/#{facts[:operatingsystemmajrelease]}/$basearch/" }
   else
     let(:descr) { "Globus-Toolkit-6-el#{facts[:operatingsystemmajrelease]}" }
-    let(:baseurl) { 'http://toolkit.globus.org/ftppub/gt6/stable/rpm/el/$releasever/$basearch/' }
+    let(:baseurl) { 'https://downloads.globus.org/toolkit/gt6/stable/rpm/el/$releasever/$basearch/' }
   end
 
   it 'installs yum priorities plugin' do
     is_expected.to contain_package(yum_priorities_package)
-  end
-
-  it 'installs GPG key' do
-    is_expected.to contain_exec('RPM-GPG-KEY-Globus')
-      .with(path: '/usr/bin:/bin:/usr/sbin:/sbin',
-            command: 'wget -qO- http://toolkit.globus.org/ftppub/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus', # rubocop:disable Metrics/LineLength
-            creates: '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
-            before: 'Yumrepo[Globus-Toolkit]')
   end
 
   it 'creates Yumrepo[Globus-Toolkit]' do
@@ -35,6 +27,6 @@ shared_examples_for 'globus::repo::el' do |facts|
                                                           priority: '98',
                                                           enabled: '1',
                                                           gpgcheck: '1',
-                                                          gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus')
+                                                          gpgkey: 'https://downloads.globus.org/toolkit/gt6/stable/repo/rpm/RPM-GPG-KEY-Globus')
   end
 end
