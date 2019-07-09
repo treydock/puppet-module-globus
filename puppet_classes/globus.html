@@ -204,6 +204,19 @@ assumes host cert/key will not be provided by Globus.</p>
   
     <li>
       
+        <span class='name'>gpg_key_url</span>
+      
+      
+        <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$globus::params::gpg_key_url</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>remove_cilogon_cron</span>
       
       
@@ -797,7 +810,6 @@ assumes host cert/key will not be provided by Globus.</p>
         <pre class="lines">
 
 
-78
 79
 80
 81
@@ -912,10 +924,12 @@ assumes host cert/key will not be provided by Globus.</p>
 190
 191
 192
-193</pre>
+193
+194
+195</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 78</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 79</span>
 
 class globus (
   Boolean $include_io_server = true,
@@ -924,6 +938,7 @@ class globus (
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = $globus::params::release_url,
   String $repo_descr = $globus::params::repo_descr,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = $globus::params::repo_baseurl,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gpg_key_url = $globus::params::gpg_key_url,
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,

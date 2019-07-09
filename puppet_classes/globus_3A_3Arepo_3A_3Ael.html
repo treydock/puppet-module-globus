@@ -104,27 +104,13 @@
 12
 13
 14
-15
-16
-17
-18
-19
-20
-21
-22</pre>
+15</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/repo/el.pp', line 3</span>
 
 class globus::repo::el {
   ensure_packages([$globus::params::yum_priorities_package])
-
-  exec { &#39;RPM-GPG-KEY-Globus&#39;:
-    path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
-    command =&gt; &quot;wget -qO- ${globus::release_url} | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus &gt; /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&quot;,
-    creates =&gt; &#39;/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
-    before  =&gt; Yumrepo[&#39;Globus-Toolkit&#39;],
-  }
 
   yumrepo { &#39;Globus-Toolkit&#39;:
     descr          =&gt; $globus::repo_descr,
@@ -133,7 +119,7 @@ class globus::repo::el {
     priority       =&gt; &#39;98&#39;,
     enabled        =&gt; &#39;1&#39;,
     gpgcheck       =&gt; &#39;1&#39;,
-    gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
+    gpgkey         =&gt; $globus::gpg_key_url,
   }
 }</pre>
       </td>
