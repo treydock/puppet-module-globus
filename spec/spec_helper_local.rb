@@ -5,3 +5,7 @@ def support_cli(facts)
   return false if facts[:os]['release']['major'].to_i <= 6
   true
 end
+def support_v5(facts)
+  return false if facts[:os]['release']['major'].to_i <= 6
+  true
+end

@@ -27,9 +27,8 @@
 # @param include_id_server
 # @param include_oauth_server
 # @param release_url
-# @param repo_descr
 # @param repo_baseurl
-# @param gpg_key_url
+# @param repo_baseurl_v5
 # @param remove_cilogon_cron
 # @param extra_gridftp_settings
 # @param first_gridftp_callback
@@ -37,11 +36,17 @@
 # @param run_setup_commands
 # @param manage_firewall
 # @param manage_epel
+# @param package_name
 # @param globus_user
 # @param globus_password
+# @param globus_client_id
+# @param globus_client_secret
 # @param endpoint_name
 # @param endpoint_public
 # @param endpoint_default_directory
+# @param endpoint_server_name
+# @param letsencrypt_email
+# @param letsencrypt_agreetos
 # @param security_fetch_credentials_from_relay
 # @param security_certificate_file
 # @param security_key_file
@@ -64,6 +69,7 @@
 # @param gridftp_sharing_groups_allow
 # @param gridftp_sharing_users_deny
 # @param gridftp_sharing_groups_deny
+# @param gridftp_require_encryption
 # @param myproxy_server
 # @param myproxy_server_port
 # @param myproxy_server_behind_nat
@@ -81,9 +87,8 @@ class globus (
   Boolean $include_id_server = true,
   Boolean $include_oauth_server = false,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = $globus::params::release_url,
-  String $repo_descr = $globus::params::repo_descr,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = $globus::params::repo_baseurl,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gpg_key_url = $globus::params::gpg_key_url,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = $globus::params::repo_baseurl_v5,
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
@@ -92,16 +97,29 @@ class globus (
   Boolean $manage_firewall = true,
   Boolean $manage_epel = true,
 
-  # Globus Config
+  String $package_name = 'globus-connect-server53',
+
+  # Globus Config - v4
   String $globus_user = '%(GLOBUS_USER)s',
   String $globus_password = '%(GLOBUS_PASSWORD)s',
 
-  # Endpoint Config
+  # Globus Config - v5
+  String $globus_client_id = '',
+  String $globus_client_secret = '',
+
+  # Endpoint Config - v4
   String $endpoint_name = $::hostname,
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = '/~/',
 
-  # Security Config
+  # Endpoint Config - v5
+  String $endpoint_server_name = $::fqdn,
+
+  # LetsEncrypt Config - v5
+  String $letsencrypt_email = '',
+  Boolean $letsencrypt_agreetos = false,
+
+  # Security Config - v4
   Boolean $security_fetch_credentials_from_relay = true,
   Stdlib::Absolutepath $security_certificate_file = '/var/lib/globus-connect-server/grid-security/hostcert.pem',
   Stdlib::Absolutepath $security_key_file = '/var/lib/globus-connect-server/grid-security/hostkey.pem',
@@ -111,13 +129,15 @@ class globus (
   Optional[Stdlib::Absolutepath] $security_gridmap = undef,
   Optional[String] $security_cilogon_identity_provider = undef,
 
-  # GridFTP Config
-  Optional[String] $gridftp_server = undef,
+  # GridFTP Config - v4/v5
   Stdlib::Port $gridftp_server_port = 2811,
-  Boolean $gridftp_server_behind_nat = false,
   Array $gridftp_incoming_port_range = ['50000', '51000'],
   $gridftp_outgoing_port_range = undef, #'50000-51000',
   Optional[String] $gridftp_data_interface = undef,
+
+  # GridFTP Config - v4
+  Optional[String] $gridftp_server = undef,
+  Boolean $gridftp_server_behind_nat = false,
   Array $gridftp_restrict_paths = ['RW~', 'N~/.*'],
   Boolean $gridftp_sharing = false,
   Optional[Array] $gridftp_sharing_restrict_paths = undef,
@@ -127,7 +147,10 @@ class globus (
   Optional[Array] $gridftp_sharing_users_deny = undef,
   Optional[Array] $gridftp_sharing_groups_deny = undef,
 
-  # MyProxy Config
+  # GridFTP Config - v5
+  Boolean $gridftp_require_encryption = false,
+
+  # MyProxy Config - v4
   Optional[String] $myproxy_server = undef,
   Stdlib::Port $myproxy_server_port = 7512,
   Boolean $myproxy_server_behind_nat = false,
@@ -136,12 +159,14 @@ class globus (
   Optional[String] $myproxy_ca_subject_dn = undef,
   Array $myproxy_firewall_sources = ['174.129.226.69', '54.237.254.192/29'],
 
-  # OAuth Config
+  # OAuth Config - v4
   Optional[String] $oauth_server = undef,
   Boolean $oauth_server_behind_firewall = false,
   Optional[String] $oauth_stylesheet = undef,
   Optional[String] $oauth_logo = undef,
 ) inherits globus::params {
+
+  $version = String($globus::params::version)
 
   if $include_io_server {
     $_gridftp_server    = pick($gridftp_server, "${::fqdn}:${gridftp_server_port}")
@@ -168,11 +193,25 @@ class globus (
   }
 
   $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
-  $_setup_command   = join($_setup_commands, ' && ')
+  if $version == '5' {
+    $_setup_command = 'globus-connect-server-setup'
+  } else {
+    $_setup_command   = join($_setup_commands, ' && ')
+  }
+
+  if $manage_service {
+    $notify_service = Service['globus-gridftp-server']
+  } else {
+    $notify_service = undef
+  }
 
   contain globus::install
   contain globus::config
   contain globus::service
+
+  Class['globus::install']
+  -> Class['globus::config']
+  -> Class['globus::service']
 
   case $::osfamily {
     'RedHat': {
@@ -182,10 +221,7 @@ class globus (
       }
       contain globus::repo::el
 
-      Class['globus::repo::el']
-      -> Class['globus::install']
-      -> Class['globus::config']
-      -> Class['globus::service']
+      Class['globus::repo::el'] -> Class['globus::install']
     }
     default: {
       # Do nothing

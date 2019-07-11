@@ -1,31 +1,27 @@
 # @summary Default values
 # @api private
-class globus::params {
+# @param version
+class globus::params (
+  Variant[Enum['4','5'],Integer[4,5]] $version = '4',
+) {
 
   case $::osfamily {
     'RedHat': {
+      $releasever = $facts['os']['release']['major']
       if $::operatingsystem == 'Fedora' {
-        $repo_descr   = 'Globus-Toolkit-6-fedora'
-        $repo_baseurl = 'https://downloads.globus.org/toolkit/gt6/stable/rpm/fedora/$releasever/$basearch/'
-        $yum_priorities_package = 'yum-plugin-priorities'
+        $url_os = 'fedora'
       } else {
-        $repo_descr   = "Globus-Toolkit-6-el${::operatingsystemmajrelease}"
-        if $::operatingsystem == 'RedHat' {
-          $releasever = $::operatingsystemmajrelease
-        } else {
-          $releasever = "\$releasever"
-        }
-        $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${releasever}/\$basearch/"
-
-        if versioncmp($::operatingsystemmajrelease, '6') >= 0 {
-          $yum_priorities_package = 'yum-plugin-priorities'
-        } else {
-          fail("Unsupported operatingsystemmajrelease: ${::operatingsystemmajrelease} for ${::operatingsystem}, only supports 6 and 7.")
+        $url_os = 'el'
+        if versioncmp($releasever, '6') <= 0 {
+          if String($version) == '5' {
+            fail("${module_name}: Version 5 is not supported on OS major release ${releasever}")
+          }
         }
       }
-
+      $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/${url_os}/${releasever}/\$basearch/"
+      $repo_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/stable/rpm/${url_os}/${releasever}/\$basearch/"
       $release_url = 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'
-      $gpg_key_url = 'https://downloads.globus.org/toolkit/gt6/stable/repo/rpm/RPM-GPG-KEY-Globus'
+      $yum_priorities_package = 'yum-plugin-priorities'
     }
 
     default: {

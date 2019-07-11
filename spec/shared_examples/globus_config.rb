@@ -166,4 +166,52 @@ shared_examples_for 'globus::config' do |facts|
     it { is_expected.not_to contain_firewall('500 allow GridFTP control channel') }
     it { is_expected.not_to contain_firewall('500 allow GridFTP data channels') }
   end
+
+  context 'version => 5', if: support_v5(facts) do
+    let(:pre_condition) { "class { 'globus::params': version => '5' }" }
+
+    # v5 configs
+    it { is_expected.to contain_globus_connect_config('Globus/ClientId').with_value('').with_notify('Exec[globus-connect-server-setup]') }
+    it { is_expected.to contain_globus_connect_config('Globus/ClientSecret').with_value('').with_secret('true') }
+    it { is_expected.to contain_globus_connect_config('Endpoint/Name').with_value(facts[:hostname]) }
+    it { is_expected.to contain_globus_connect_config('Endpoint/ServerName').with_value(facts[:fqdn]) }
+    it { is_expected.to contain_globus_connect_config('LetsEncrypt/Email').with_value('') }
+    it { is_expected.to contain_globus_connect_config('LetsEncrypt/AgreeToS').with_value('false') }
+    it { is_expected.to contain_globus_connect_config('GridFTP/IncomingPortRange').with_value('50000,51000') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/OutgoingPortRange') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/DataInterface') }
+    it { is_expected.to contain_globus_connect_config('GridFTP/RequireEncryption').with_value('false') }
+
+    # v4 Configs
+    it { is_expected.not_to contain_globus_connect_config('Globus/User') }
+    it { is_expected.not_to contain_globus_connect_config('Globus/Password') }
+    it { is_expected.not_to contain_globus_connect_config('Endpoint/Public') }
+    it { is_expected.not_to contain_globus_connect_config('Endpoint/DefaultDirectory') }
+    it { is_expected.not_to contain_globus_connect_config('Security/FetchCredentialFromRelay') }
+    it { is_expected.not_to contain_globus_connect_config('Security/CertificateFile') }
+    it { is_expected.not_to contain_globus_connect_config('Security/KeyFile') }
+    it { is_expected.not_to contain_globus_connect_config('Security/TrustedCertificateDirectory') }
+    it { is_expected.not_to contain_globus_connect_config('Security/IdentityMethod') }
+    it { is_expected.not_to contain_globus_connect_config('Security/AuthorizationMethod') }
+    it { is_expected.not_to contain_globus_connect_config('Security/Gridmap') }
+    it { is_expected.not_to contain_globus_connect_config('Security/CILogonIdentityProvider') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/Server') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/ServerBehindNAT') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/RestrictPaths') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/Sharing') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/SharingRestrictPaths') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/SharingStateDir') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/SharingUsersAllow') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/SharingGroupsAllow') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/SharingUsersDeny') }
+    it { is_expected.not_to contain_globus_connect_config('GridFTP/SharingGroupsDeny') }
+    it { is_expected.not_to contain_globus_connect_config('MyProxy/Server') }
+    it { is_expected.not_to contain_globus_connect_config('MyProxy/ServerBehindNAT') }
+    it { is_expected.not_to contain_globus_connect_config('MyProxy/CADirectory') }
+    it { is_expected.not_to contain_globus_connect_config('MyProxy/ConfigFile') }
+    it { is_expected.not_to contain_globus_connect_config('OAuth/Server') }
+    it { is_expected.not_to contain_globus_connect_config('OAuth/ServerBehindNAT') }
+    it { is_expected.not_to contain_globus_connect_config('OAuth/Stylesheet') }
+    it { is_expected.not_to contain_globus_connect_config('OAuth/Logo') }
+  end
 end
