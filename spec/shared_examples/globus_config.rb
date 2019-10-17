@@ -62,6 +62,8 @@ shared_examples_for 'globus::config' do |facts|
                                                                               proto: 'tcp')
   end
 
+  it { is_expected.not_to contain_firewall('500 allow HTTPS') }
+
   it do
     is_expected.to contain_firewall('500 allow GridFTP data channels').with(action: 'accept',
                                                                             dport: '50000-51000',
@@ -213,5 +215,7 @@ shared_examples_for 'globus::config' do |facts|
     it { is_expected.not_to contain_globus_connect_config('OAuth/ServerBehindNAT') }
     it { is_expected.not_to contain_globus_connect_config('OAuth/Stylesheet') }
     it { is_expected.not_to contain_globus_connect_config('OAuth/Logo') }
+
+    it { is_expected.to contain_firewall('500 allow HTTPS') }
   end
 end

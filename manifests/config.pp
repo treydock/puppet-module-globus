@@ -151,21 +151,30 @@ class globus::config {
   }
 
   if $globus::manage_firewall {
-    $_gridftp_incoming_ports = join($globus::gridftp_incoming_port_range, '-')
-
-    firewall { '500 allow GridFTP control channel':
-      action => 'accept',
-      dport  => $globus::gridftp_server_port,
-      proto  => 'tcp',
+    if String($globus::version) == '4' {
+      firewall { '500 allow GridFTP control channel':
+        action => 'accept',
+        dport  => $globus::gridftp_server_port,
+        proto  => 'tcp',
+      }
     }
 
+    if String($globus::version) == '5' {
+      firewall { '500 allow HTTPS':
+        action => 'accept',
+        dport  => '443',
+        proto  => 'tcp',
+      }
+    }
+
+    $_gridftp_incoming_ports = join($globus::gridftp_incoming_port_range, '-')
     firewall { '500 allow GridFTP data channels':
       action => 'accept',
       dport  => $_gridftp_incoming_ports,
       proto  => 'tcp',
     }
 
-    if $globus::version == '4' and $globus::include_id_server {
+    if String($globus::version) == '4' and $globus::include_id_server {
       $globus::myproxy_firewall_sources.each |$source| {
         firewall { "500 allow MyProxy from ${source}":
           action   => 'accept',
@@ -177,7 +186,7 @@ class globus::config {
       }
     }
 
-    if $globus::version == '4' and $globus::include_oauth_server {
+    if String($globus::version) == '4' and $globus::include_oauth_server {
       firewall { '500 allow OAuth HTTPS':
         action => 'accept',
         dport  => '443',
