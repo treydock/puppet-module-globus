@@ -8,6 +8,11 @@ class globus::cli (
   Boolean $manage_python = true,
 ) {
 
+  $releasever = $facts['os']['release']['major']
+  if versioncmp($releasever, '6') <= 0 {
+    fail("${module_name}: CLI is not supported on OS major release ${releasever}")
+  }
+
   if $manage_python {
     class { 'python':
       virtualenv => 'present',

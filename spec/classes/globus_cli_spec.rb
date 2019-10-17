@@ -7,6 +7,11 @@ describe 'globus::cli' do
         facts
       end
 
+      if ! support_cli(facts)
+        skip("CLI not supported")
+        next
+      end
+
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to create_class('globus::cli') }
