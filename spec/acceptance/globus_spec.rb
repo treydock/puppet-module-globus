@@ -55,10 +55,8 @@ describe 'globus class:' do
   context 'with v5 parameters', if: fact('os.release.major').to_i >= 7 do
     it 'runs successfully' do
       pp = "
-        class { 'globus::params':
-          version              => '5',
-        }
         class { 'globus':
+          version              => '5',
           globus_client_id     => 'foo',
           globus_client_secret => 'bar',
           endpoint_name        => 'test',

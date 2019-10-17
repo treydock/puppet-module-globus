@@ -13,7 +13,7 @@ shared_examples_for 'globus::service' do |facts|
   end
 
   context 'version => 5', if: support_v5(facts) do
-    let(:pre_condition) { "class { 'globus::params': version => '5' }" }
+    let(:params) { { version: '5' } }
 
     it { is_expected.to contain_service('globus-gridftp-server') }
   end

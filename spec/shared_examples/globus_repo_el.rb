@@ -32,7 +32,7 @@ shared_examples_for 'globus::repo::el' do |facts|
   it { is_expected.not_to contain_yumrepo('globus-connect-server-5') }
 
   context 'version => 5', if: support_v5(facts) do
-    let(:pre_condition) { "class { 'globus::params': version => '5' }" }
+    let(:params) { { version: '5' } }
 
     it 'installs yum priorities plugin' do
       is_expected.to contain_package('yum-plugin-priorities')

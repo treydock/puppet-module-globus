@@ -5,7 +5,7 @@ shared_examples_for 'globus::install' do |facts|
   it { is_expected.not_to contain_package('globus-connect-server53') }
 
   context 'version => 5', if: support_v5(facts) do
-    let(:pre_condition) { "class { 'globus::params': version => '5' }" }
+    let(:params) { { version: '5' } }
 
     it { is_expected.not_to contain_package('globus-connect-server-io') }
     it { is_expected.not_to contain_package('globus-connect-server-id') }

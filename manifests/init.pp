@@ -23,6 +23,7 @@
 #      ],
 #    }
 #
+# @param version
 # @param include_io_server
 # @param include_id_server
 # @param include_oauth_server
@@ -83,6 +84,8 @@
 # @param oauth_logo
 #
 class globus (
+  Variant[Enum['4','5'],Integer[4,5]] $version = '4',
+
   Boolean $include_io_server = true,
   Boolean $include_id_server = true,
   Boolean $include_oauth_server = false,
@@ -108,12 +111,14 @@ class globus (
   String $globus_client_secret = '',
 
   # Endpoint Config - v4
-  String $endpoint_name = $::hostname,
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = '/~/',
 
   # Endpoint Config - v5
   String $endpoint_server_name = $::fqdn,
+
+  # Endpoint Config - v4/v5
+  String $endpoint_name = $::hostname,
 
   # LetsEncrypt Config - v5
   String $letsencrypt_email = '',
@@ -166,7 +171,12 @@ class globus (
   Optional[String] $oauth_logo = undef,
 ) inherits globus::params {
 
-  $version = String($globus::params::version)
+  $releasever = $facts['os']['release']['major']
+  if versioncmp($releasever, '6') <= 0 {
+    if String($version) == '5' {
+      fail("${module_name}: Version 5 is not supported on OS major release ${releasever}")
+    }
+  }
 
   if $include_io_server {
     $_gridftp_server    = pick($gridftp_server, "${::fqdn}:${gridftp_server_port}")
@@ -193,7 +203,7 @@ class globus (
   }
 
   $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
-  if $version == '5' {
+  if String($version) == '5' {
     $_setup_command = 'globus-connect-server-setup'
   } else {
     $_setup_command   = join($_setup_commands, ' && ')

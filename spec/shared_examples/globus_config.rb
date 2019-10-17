@@ -168,7 +168,7 @@ shared_examples_for 'globus::config' do |facts|
   end
 
   context 'version => 5', if: support_v5(facts) do
-    let(:pre_condition) { "class { 'globus::params': version => '5' }" }
+    let(:params) { { version: '5' } }
 
     # v5 configs
     it { is_expected.to contain_globus_connect_config('Globus/ClientId').with_value('').with_notify('Exec[globus-connect-server-setup]') }

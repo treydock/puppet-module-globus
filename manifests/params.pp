@@ -1,9 +1,6 @@
 # @summary Default values
 # @api private
-# @param version
-class globus::params (
-  Variant[Enum['4','5'],Integer[4,5]] $version = '4',
-) {
+class globus::params {
 
   case $::osfamily {
     'RedHat': {
@@ -12,11 +9,6 @@ class globus::params (
         $url_os = 'fedora'
       } else {
         $url_os = 'el'
-        if versioncmp($releasever, '6') <= 0 {
-          if String($version) == '5' {
-            fail("${module_name}: Version 5 is not supported on OS major release ${releasever}")
-          }
-        }
       }
       $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/${url_os}/${releasever}/\$basearch/"
       $repo_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/stable/rpm/${url_os}/${releasever}/\$basearch/"
