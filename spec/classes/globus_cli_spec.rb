@@ -7,8 +7,8 @@ describe 'globus::cli' do
         facts
       end
 
-      if ! support_cli(facts)
-        skip("CLI not supported")
+      unless support_cli(facts)
+        skip('CLI not supported')
         next
       end
 
