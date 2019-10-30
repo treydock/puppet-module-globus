@@ -10,7 +10,6 @@ describe 'globus' do
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to create_class('globus') }
-      it { is_expected.to contain_class('globus::params') }
 
       it { is_expected.to contain_class('epel').that_comes_before('Class[globus::repo::el]') }
       it { is_expected.to contain_class('globus::repo::el').that_comes_before('Class[globus::install]') }

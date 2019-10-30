@@ -37,6 +37,7 @@
 # @param run_setup_commands
 # @param manage_firewall
 # @param manage_epel
+# @param repo_dependencies
 # @param package_name
 # @param globus_user
 # @param globus_password
@@ -89,9 +90,9 @@ class globus (
   Boolean $include_io_server = true,
   Boolean $include_id_server = true,
   Boolean $include_oauth_server = false,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = $globus::params::release_url,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = $globus::params::repo_baseurl,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = $globus::params::repo_baseurl_v5,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm',
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
@@ -99,6 +100,7 @@ class globus (
   Boolean $run_setup_commands = true,
   Boolean $manage_firewall = true,
   Boolean $manage_epel = true,
+  Array $repo_dependencies = ['yum-plugin-priorities'],
 
   String $package_name = 'globus-connect-server53',
 
@@ -169,12 +171,18 @@ class globus (
   Boolean $oauth_server_behind_firewall = false,
   Optional[String] $oauth_stylesheet = undef,
   Optional[String] $oauth_logo = undef,
-) inherits globus::params {
+) {
 
-  $releasever = $facts['os']['release']['major']
-  if versioncmp($releasever, '6') <= 0 {
+  $osfamily = $facts.dig('os', 'family')
+  $osmajor = $facts.dig('os', 'release', 'major')
+  $supported = ['RedHat-6','RedHat-7']
+  $os = "${osfamily}-${osmajor}"
+  if ! ($os in $supported) {
+    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 6 and 7")
+  }
+  if versioncmp($osmajor, '6') <= 0 {
     if String($version) == '5' {
-      fail("${module_name}: Version 5 is not supported on OS major release ${releasever}")
+      fail("${module_name}: Version 5 is not supported on OS major release ${osmajor}")
     }
   }
 
