@@ -1,0 +1,4 @@
+---
+globus::url_os: el
+globus::repo_dependencies:
+  - yum-plugin-priorities

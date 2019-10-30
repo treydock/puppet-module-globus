@@ -1,7 +1,7 @@
 # @summary Manage globus repo
 # @api private
 class globus::repo::el {
-  ensure_packages([$globus::params::yum_priorities_package])
+  ensure_packages([$globus::repo_dependencies])
 
   exec { 'RPM-GPG-KEY-Globus':
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
