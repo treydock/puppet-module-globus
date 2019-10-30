@@ -9,7 +9,18 @@ This module manages Globus Connect Server.
 
 ## Usage
 
-### Class: globus
+### Globus v5
+
+In order to use Globus v5 you must define `version` parameter as `5`. You must register the host with Globus in order to get the values for `globus_client_id` and `globus_client_secret`.
+
+    class { 'globus':
+      version              => '5',
+      package_name         => 'globus-connect-server53',
+      globus_client_id     => 'REPLACE-client-id-from-globus',
+      globus_client_secret => 'REPLACE-client-secret-from-globus',
+    }
+
+### Globus v4
 
 Install and configure a Globus IO endpoint that uses OAuth.  This example assumes host cert/key will not be provided by Globus.
 

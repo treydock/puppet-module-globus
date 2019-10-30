@@ -29,6 +29,12 @@ describe 'globus' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_class('epel') }
       end
+
+      context 'version => 5', if: support_v5(facts) do
+        let(:params) { { version: '5' } }
+
+        it { is_expected.to compile.with_all_deps }
+      end
     end
   end
 end
