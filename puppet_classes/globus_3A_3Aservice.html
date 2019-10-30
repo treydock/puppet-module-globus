@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::service
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -110,7 +110,7 @@
 
 class globus::service {
 
-  if $globus::include_io_server and $globus::manage_service {
+  if ($globus::include_io_server or $globus::version == &#39;5&#39;) and $globus::manage_service {
     service { &#39;globus-gridftp-server&#39;:
       ensure     =&gt; &#39;running&#39;,
       enable     =&gt; true,

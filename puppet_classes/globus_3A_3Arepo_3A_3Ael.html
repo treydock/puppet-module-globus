@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::repo::el
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -104,23 +104,65 @@
 12
 13
 14
-15</pre>
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/repo/el.pp', line 3</span>
 
 class globus::repo::el {
-  ensure_packages([$globus::params::yum_priorities_package])
+  ensure_packages([$globus::repo_dependencies])
+
+  exec { &#39;RPM-GPG-KEY-Globus&#39;:
+    path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
+    command =&gt; &quot;wget -qO- ${globus::release_url} | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus &gt; /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&quot;,
+    creates =&gt; &#39;/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
+    before  =&gt; Yumrepo[&#39;Globus-Toolkit&#39;]
+  }
 
   yumrepo { &#39;Globus-Toolkit&#39;:
-    descr          =&gt; $globus::repo_descr,
+    descr          =&gt; &#39;Globus-Toolkit-6&#39;,
     baseurl        =&gt; $globus::repo_baseurl,
     failovermethod =&gt; &#39;priority&#39;,
     priority       =&gt; &#39;98&#39;,
     enabled        =&gt; &#39;1&#39;,
     gpgcheck       =&gt; &#39;1&#39;,
-    gpgkey         =&gt; $globus::gpg_key_url,
+    gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
   }
+
+  if $globus::version == &#39;5&#39; {
+    yumrepo { &#39;globus-connect-server-5&#39;:
+      descr          =&gt; &#39;Globus-Connect-Server-5&#39;,
+      baseurl        =&gt; $globus::repo_baseurl_v5,
+      failovermethod =&gt; &#39;priority&#39;,
+      priority       =&gt; &#39;98&#39;,
+      enabled        =&gt; &#39;1&#39;,
+      gpgcheck       =&gt; &#39;1&#39;,
+      gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
+      require        =&gt; Exec[&#39;RPM-GPG-KEY-Globus&#39;],
+    }
+  }
+
 }</pre>
       </td>
     </tr>

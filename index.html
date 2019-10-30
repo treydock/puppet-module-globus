@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -71,7 +71,22 @@ src="https://travis-ci.org/treydock/puppet-module-globus.png"></a></p>
 
 <h2 id="label-Usage">Usage</h2>
 
-<h3 id="label-Class-3A+globus">Class: globus</h3>
+<h3 id="label-Globus+v5">Globus v5</h3>
+
+<p>In order to use Globus v5 you must define <code>version</code> parameter as
+<code>5</code>. You must register the host with Globus in order to get the
+values for <code>globus_client_id</code> and
+<code>globus_client_secret</code>.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;globus&#39;:
+  version              =&gt; &#39;5&#39;,
+  package_name         =&gt; &#39;globus-connect-server53&#39;,
+  globus_client_id     =&gt; &#39;REPLACE-client-id-from-globus&#39;,
+  globus_client_secret =&gt; &#39;REPLACE-client-secret-from-globus&#39;,
+}
+</code></pre>
+
+<h3 id="label-Globus+v4">Globus v4</h3>
 
 <p>Install and configure a Globus IO endpoint that uses OAuth. This example
 assumes host cert/key will not be provided by Globus.</p>

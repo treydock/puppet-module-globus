@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus
   
-    &mdash; Documentation by YARD 0.9.19
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -61,11 +61,6 @@
 
       <div id="content"><h1>Puppet Class: globus</h1>
 <div class="box_info">
-  
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="globus_3A_3Aparams.html" title="puppet_classes::globus::params (puppet_class)">globus::params</a></span></dd>
-  </dl>
   
   
   <dl>
@@ -126,6 +121,19 @@ assumes host cert/key will not be provided by Globus.</p>
   
     <li>
       
+        <span class='name'>version</span>
+      
+      
+        <span class='type'>(<tt>Variant[Enum['4','5'],Integer[4,5]]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;4&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>include_io_server</span>
       
       
@@ -171,20 +179,7 @@ assumes host cert/key will not be provided by Globus.</p>
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$globus::params::release_url</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>repo_descr</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>$globus::params::repo_descr</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm&#39;</tt>)</em>
       
       
     </li>
@@ -197,20 +192,20 @@ assumes host cert/key will not be provided by Globus.</p>
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$globus::params::repo_baseurl</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
     </li>
   
     <li>
       
-        <span class='name'>gpg_key_url</span>
+        <span class='name'>repo_baseurl_v5</span>
       
       
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$globus::params::gpg_key_url</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
     </li>
@@ -308,6 +303,32 @@ assumes host cert/key will not be provided by Globus.</p>
   
     <li>
       
+        <span class='name'>repo_dependencies</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[&#39;yum-plugin-priorities&#39;]</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>package_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;globus-connect-server53&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>globus_user</span>
       
       
@@ -328,6 +349,32 @@ assumes host cert/key will not be provided by Globus.</p>
       
       
         <em class="default">(defaults to: <tt>&#39;%(GLOBUS_PASSWORD)s&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>globus_client_id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>globus_client_secret</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
       
       
     </li>
@@ -367,6 +414,45 @@ assumes host cert/key will not be provided by Globus.</p>
       
       
         <em class="default">(defaults to: <tt>&#39;/~/&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>endpoint_server_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$::fqdn</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>letsencrypt_email</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>letsencrypt_agreetos</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
     </li>
@@ -659,6 +745,19 @@ assumes host cert/key will not be provided by Globus.</p>
   
     <li>
       
+        <span class='name'>gridftp_require_encryption</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>myproxy_server</span>
       
       
@@ -810,14 +909,6 @@ assumes host cert/key will not be provided by Globus.</p>
         <pre class="lines">
 
 
-79
-80
-81
-82
-83
-84
-85
-86
 87
 88
 89
@@ -926,19 +1017,74 @@ assumes host cert/key will not be provided by Globus.</p>
 192
 193
 194
-195</pre>
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 79</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 87</span>
 
 class globus (
+  Variant[Enum[&#39;4&#39;,&#39;5&#39;],Integer[4,5]] $version = &#39;4&#39;,
+
   Boolean $include_io_server = true,
   Boolean $include_id_server = true,
   Boolean $include_oauth_server = false,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = $globus::params::release_url,
-  String $repo_descr = $globus::params::repo_descr,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = $globus::params::repo_baseurl,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gpg_key_url = $globus::params::gpg_key_url,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = &#39;https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm&#39;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = &quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
@@ -946,17 +1092,33 @@ class globus (
   Boolean $run_setup_commands = true,
   Boolean $manage_firewall = true,
   Boolean $manage_epel = true,
+  Array $repo_dependencies = [&#39;yum-plugin-priorities&#39;],
 
-  # Globus Config
+  String $package_name = &#39;globus-connect-server53&#39;,
+
+  # Globus Config - v4
   String $globus_user = &#39;%(GLOBUS_USER)s&#39;,
   String $globus_password = &#39;%(GLOBUS_PASSWORD)s&#39;,
 
-  # Endpoint Config
-  String $endpoint_name = $::hostname,
+  # Globus Config - v5
+  String $globus_client_id = &#39;&#39;,
+  String $globus_client_secret = &#39;&#39;,
+
+  # Endpoint Config - v4
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = &#39;/~/&#39;,
 
-  # Security Config
+  # Endpoint Config - v5
+  String $endpoint_server_name = $::fqdn,
+
+  # Endpoint Config - v4/v5
+  String $endpoint_name = $::hostname,
+
+  # LetsEncrypt Config - v5
+  String $letsencrypt_email = &#39;&#39;,
+  Boolean $letsencrypt_agreetos = false,
+
+  # Security Config - v4
   Boolean $security_fetch_credentials_from_relay = true,
   Stdlib::Absolutepath $security_certificate_file = &#39;/var/lib/globus-connect-server/grid-security/hostcert.pem&#39;,
   Stdlib::Absolutepath $security_key_file = &#39;/var/lib/globus-connect-server/grid-security/hostkey.pem&#39;,
@@ -966,13 +1128,15 @@ class globus (
   Optional[Stdlib::Absolutepath] $security_gridmap = undef,
   Optional[String] $security_cilogon_identity_provider = undef,
 
-  # GridFTP Config
-  Optional[String] $gridftp_server = undef,
+  # GridFTP Config - v4/v5
   Stdlib::Port $gridftp_server_port = 2811,
-  Boolean $gridftp_server_behind_nat = false,
   Array $gridftp_incoming_port_range = [&#39;50000&#39;, &#39;51000&#39;],
   $gridftp_outgoing_port_range = undef, #&#39;50000-51000&#39;,
   Optional[String] $gridftp_data_interface = undef,
+
+  # GridFTP Config - v4
+  Optional[String] $gridftp_server = undef,
+  Boolean $gridftp_server_behind_nat = false,
   Array $gridftp_restrict_paths = [&#39;RW~&#39;, &#39;N~/.*&#39;],
   Boolean $gridftp_sharing = false,
   Optional[Array] $gridftp_sharing_restrict_paths = undef,
@@ -982,7 +1146,10 @@ class globus (
   Optional[Array] $gridftp_sharing_users_deny = undef,
   Optional[Array] $gridftp_sharing_groups_deny = undef,
 
-  # MyProxy Config
+  # GridFTP Config - v5
+  Boolean $gridftp_require_encryption = false,
+
+  # MyProxy Config - v4
   Optional[String] $myproxy_server = undef,
   Stdlib::Port $myproxy_server_port = 7512,
   Boolean $myproxy_server_behind_nat = false,
@@ -991,12 +1158,25 @@ class globus (
   Optional[String] $myproxy_ca_subject_dn = undef,
   Array $myproxy_firewall_sources = [&#39;174.129.226.69&#39;, &#39;54.237.254.192/29&#39;],
 
-  # OAuth Config
+  # OAuth Config - v4
   Optional[String] $oauth_server = undef,
   Boolean $oauth_server_behind_firewall = false,
   Optional[String] $oauth_stylesheet = undef,
   Optional[String] $oauth_logo = undef,
-) inherits globus::params {
+) {
+
+  $osfamily = $facts.dig(&#39;os&#39;, &#39;family&#39;)
+  $osmajor = $facts.dig(&#39;os&#39;, &#39;release&#39;, &#39;major&#39;)
+  $supported = [&#39;RedHat-6&#39;,&#39;RedHat-7&#39;]
+  $os = &quot;${osfamily}-${osmajor}&quot;
+  if ! ($os in $supported) {
+    fail(&quot;Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 6 and 7&quot;)
+  }
+  if versioncmp($osmajor, &#39;6&#39;) &lt;= 0 {
+    if String($version) == &#39;5&#39; {
+      fail(&quot;${module_name}: Version 5 is not supported on OS major release ${osmajor}&quot;)
+    }
+  }
 
   if $include_io_server {
     $_gridftp_server    = pick($gridftp_server, &quot;${::fqdn}:${gridftp_server_port}&quot;)
@@ -1023,11 +1203,25 @@ class globus (
   }
 
   $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
-  $_setup_command   = join($_setup_commands, &#39; &amp;&amp; &#39;)
+  if String($version) == &#39;5&#39; {
+    $_setup_command = &#39;globus-connect-server-setup&#39;
+  } else {
+    $_setup_command   = join($_setup_commands, &#39; &amp;&amp; &#39;)
+  }
+
+  if $manage_service {
+    $notify_service = Service[&#39;globus-gridftp-server&#39;]
+  } else {
+    $notify_service = undef
+  }
 
   contain globus::install
   contain globus::config
   contain globus::service
+
+  Class[&#39;globus::install&#39;]
+  -&gt; Class[&#39;globus::config&#39;]
+  -&gt; Class[&#39;globus::service&#39;]
 
   case $::osfamily {
     &#39;RedHat&#39;: {
@@ -1037,10 +1231,7 @@ class globus (
       }
       contain globus::repo::el
 
-      Class[&#39;globus::repo::el&#39;]
-      -&gt; Class[&#39;globus::install&#39;]
-      -&gt; Class[&#39;globus::config&#39;]
-      -&gt; Class[&#39;globus::service&#39;]
+      Class[&#39;globus::repo::el&#39;] -&gt; Class[&#39;globus::install&#39;]
     }
     default: {
       # Do nothing
