@@ -8,12 +8,12 @@
 _Public Classes_
 
 * [`globus`](#globus): Manage Globus
+* [`globus::cli`](#globuscli): Manage Globus CLI
 
 _Private Classes_
 
 * `globus::config`: Manage globus configs
 * `globus::install`: manage Globus install
-* `globus::params`: Default values
 * `globus::repo::el`: Manage globus repo
 * `globus::service`: Manage Globus service
 
@@ -59,6 +59,14 @@ class { 'globus':
 
 The following parameters are available in the `globus` class.
 
+##### `version`
+
+Data type: `Variant[Enum['4','5'],Integer[4,5]]`
+
+
+
+Default value: '4'
+
 ##### `include_io_server`
 
 Data type: `Boolean`
@@ -89,15 +97,7 @@ Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 
 
-Default value: $globus::params::release_url
-
-##### `repo_descr`
-
-Data type: `String`
-
-
-
-Default value: $globus::params::repo_descr
+Default value: 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'
 
 ##### `repo_baseurl`
 
@@ -105,15 +105,15 @@ Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 
 
-Default value: $globus::params::repo_baseurl
+Default value: "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/"
 
-##### `gpg_key_url`
+##### `repo_baseurl_v5`
 
 Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 
 
-Default value: $globus::params::gpg_key_url
+Default value: "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/"
 
 ##### `remove_cilogon_cron`
 
@@ -171,6 +171,22 @@ Data type: `Boolean`
 
 Default value: `true`
 
+##### `repo_dependencies`
+
+Data type: `Array`
+
+
+
+Default value: ['yum-plugin-priorities']
+
+##### `package_name`
+
+Data type: `String`
+
+
+
+Default value: 'globus-connect-server53'
+
 ##### `globus_user`
 
 Data type: `String`
@@ -186,6 +202,22 @@ Data type: `String`
 
 
 Default value: '%(GLOBUS_PASSWORD)s'
+
+##### `globus_client_id`
+
+Data type: `String`
+
+
+
+Default value: ''
+
+##### `globus_client_secret`
+
+Data type: `String`
+
+
+
+Default value: ''
 
 ##### `endpoint_name`
 
@@ -210,6 +242,30 @@ Data type: `String`
 
 
 Default value: '/~/'
+
+##### `endpoint_server_name`
+
+Data type: `String`
+
+
+
+Default value: $::fqdn
+
+##### `letsencrypt_email`
+
+Data type: `String`
+
+
+
+Default value: ''
+
+##### `letsencrypt_agreetos`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
 
 ##### `security_fetch_credentials_from_relay`
 
@@ -387,6 +443,14 @@ Data type: `Optional[Array]`
 
 Default value: `undef`
 
+##### `gridftp_require_encryption`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
 ##### `myproxy_server`
 
 Data type: `Optional[String]`
@@ -474,6 +538,30 @@ Data type: `Optional[String]`
 
 
 Default value: `undef`
+
+### globus::cli
+
+Manage Globus CLI
+
+#### Examples
+
+##### 
+
+```puppet
+include ::globus::cli
+```
+
+#### Parameters
+
+The following parameters are available in the `globus::cli` class.
+
+##### `manage_python`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
 
 ## Resource types
 

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.0.0](https://github.com/treydock/puppet-module-globus/tree/v4.0.0) (2019-10-30)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v3.0.1...v4.0.0)
+
+### Changed
+
+- Support Globus v5 [\#10](https://github.com/treydock/puppet-module-globus/pull/10) ([treydock](https://github.com/treydock))
+
+### Added
+
+- Use module Hiera data [\#12](https://github.com/treydock/puppet-module-globus/pull/12) ([treydock](https://github.com/treydock))
+- Add globus CLI class [\#11](https://github.com/treydock/puppet-module-globus/pull/11) ([treydock](https://github.com/treydock))
+
 ## [v3.0.1](https://github.com/treydock/puppet-module-globus/tree/v3.0.1) (2019-07-09)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v3.0.0...v3.0.1)
