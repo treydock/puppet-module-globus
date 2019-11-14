@@ -107,6 +107,14 @@ Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 Default value: "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/"
 
+##### `repo_testing_baseurl`
+
+Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
+
+
+
+Default value: "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/"
+
 ##### `repo_baseurl_v5`
 
 Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
@@ -114,6 +122,14 @@ Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 
 Default value: "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/"
+
+##### `repo_testing_baseurl_v5`
+
+Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
+
+
+
+Default value: "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/"
 
 ##### `remove_cilogon_cron`
 
