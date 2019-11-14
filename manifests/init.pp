@@ -29,7 +29,9 @@
 # @param include_oauth_server
 # @param release_url
 # @param repo_baseurl
+# @param repo_testing_baseurl
 # @param repo_baseurl_v5
+# @param repo_testing_baseurl_v5
 # @param remove_cilogon_cron
 # @param extra_gridftp_settings
 # @param first_gridftp_callback
@@ -92,7 +94,9 @@ class globus (
   Boolean $include_oauth_server = false,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm',
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl = "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,

@@ -20,6 +20,16 @@ class globus::repo::el {
     gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
   }
 
+  yumrepo { 'Globus-Toolkit-6-Testing':
+    descr          => 'Globus-Toolkit-6-testing',
+    baseurl        => $globus::repo_testing_baseurl,
+    failovermethod => 'priority',
+    priority       => '98',
+    enabled        => '0',
+    gpgcheck       => '1',
+    gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
+  }
+
   if $globus::version == '5' {
     yumrepo { 'globus-connect-server-5':
       descr          => 'Globus-Connect-Server-5',
@@ -27,6 +37,17 @@ class globus::repo::el {
       failovermethod => 'priority',
       priority       => '98',
       enabled        => '1',
+      gpgcheck       => '1',
+      gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
+      require        => Exec['RPM-GPG-KEY-Globus'],
+    }
+
+    yumrepo { 'globus-connect-server-5-testing':
+      descr          => 'Globus-Connect-Server-5-Testing',
+      baseurl        => $globus::repo_testing_baseurl_v5,
+      failovermethod => 'priority',
+      priority       => '98',
+      enabled        => '0',
       gpgcheck       => '1',
       gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
       require        => Exec['RPM-GPG-KEY-Globus'],
