@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.2.0](https://github.com/treydock/puppet-module-globus/tree/v4.2.0) (2020-11-18)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v4.1.0...v4.2.0)
+
+### Added
+
+- Improve globus::cli and add globus::sdk [\#15](https://github.com/treydock/puppet-module-globus/pull/15) ([treydock](https://github.com/treydock))
+
 ## [v4.1.0](https://github.com/treydock/puppet-module-globus/tree/v4.1.0) (2019-11-14)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v4.0.0...v4.1.0)
