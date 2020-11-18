@@ -6,15 +6,15 @@
 <title>
   Puppet Class: globus::repo::el
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::globus::repo::el";
   relpath = '../';
 </script>
@@ -85,6 +85,7 @@
 <div class="tags">
   
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -125,7 +126,28 @@
 33
 34
 35
-36</pre>
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/repo/el.pp', line 3</span>
@@ -150,6 +172,16 @@ class globus::repo::el {
     gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
   }
 
+  yumrepo { &#39;Globus-Toolkit-6-Testing&#39;:
+    descr          =&gt; &#39;Globus-Toolkit-6-testing&#39;,
+    baseurl        =&gt; $globus::repo_testing_baseurl,
+    failovermethod =&gt; &#39;priority&#39;,
+    priority       =&gt; &#39;98&#39;,
+    enabled        =&gt; &#39;0&#39;,
+    gpgcheck       =&gt; &#39;1&#39;,
+    gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
+  }
+
   if $globus::version == &#39;5&#39; {
     yumrepo { &#39;globus-connect-server-5&#39;:
       descr          =&gt; &#39;Globus-Connect-Server-5&#39;,
@@ -157,6 +189,17 @@ class globus::repo::el {
       failovermethod =&gt; &#39;priority&#39;,
       priority       =&gt; &#39;98&#39;,
       enabled        =&gt; &#39;1&#39;,
+      gpgcheck       =&gt; &#39;1&#39;,
+      gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
+      require        =&gt; Exec[&#39;RPM-GPG-KEY-Globus&#39;],
+    }
+
+    yumrepo { &#39;globus-connect-server-5-testing&#39;:
+      descr          =&gt; &#39;Globus-Connect-Server-5-Testing&#39;,
+      baseurl        =&gt; $globus::repo_testing_baseurl_v5,
+      failovermethod =&gt; &#39;priority&#39;,
+      priority       =&gt; &#39;98&#39;,
+      enabled        =&gt; &#39;0&#39;,
       gpgcheck       =&gt; &#39;1&#39;,
       gpgkey         =&gt; &#39;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
       require        =&gt; Exec[&#39;RPM-GPG-KEY-Globus&#39;],

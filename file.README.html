@@ -6,15 +6,15 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "";
   relpath = '';
 </script>
@@ -191,6 +191,23 @@ Yumrepo[&#39;Globus-Toolkit&#39;] -&gt; Package[&#39;osg-gridftp&#39;]
 # Apply OSG GridFTP before Globus
 Package[&#39;osg-gridftp&#39;] -&gt; Class[&#39;::globus::install&#39;]
 </code></pre>
+
+<h3 id="label-Globus+CLI">Globus CLI</h3>
+
+<p>To install the Globus CLI to <code>/opt/globus-cli</code> and create
+symlink for executable at <code>/usr/bin/globus</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_globus'>globus</span><span class='op'>::</span><span class='id identifier rubyid_cli'>cli</span>
+</code></pre>
+
+<h3 id="label-Globus+SDK">Globus SDK</h3>
+
+<p>To install the Globus SDK to <code>/opt/globus-sdk</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_globus'>globus</span><span class='op'>::</span><span class='id identifier rubyid_sdk'>sdk</span>
+</code></pre>
+
+<h3 id="label-Globus+SDK">Globus SDK</h3>
 
 <h2 id="label-Reference">Reference</h2>
 

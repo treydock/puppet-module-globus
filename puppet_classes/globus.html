@@ -6,15 +6,15 @@
 <title>
   Puppet Class: globus
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::globus";
   relpath = '../';
 </script>
@@ -199,6 +199,19 @@ assumes host cert/key will not be provided by Globus.</p>
   
     <li>
       
+        <span class='name'>repo_testing_baseurl</span>
+      
+      
+        <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>repo_baseurl_v5</span>
       
       
@@ -206,6 +219,19 @@ assumes host cert/key will not be provided by Globus.</p>
       
       
         <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>repo_testing_baseurl_v5</span>
+      
+      
+        <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
     </li>
@@ -902,6 +928,7 @@ assumes host cert/key will not be provided by Globus.</p>
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -909,8 +936,6 @@ assumes host cert/key will not be provided by Globus.</p>
         <pre class="lines">
 
 
-87
-88
 89
 90
 91
@@ -1071,10 +1096,14 @@ assumes host cert/key will not be provided by Globus.</p>
 246
 247
 248
-249</pre>
+249
+250
+251
+252
+253</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 87</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 89</span>
 
 class globus (
   Variant[Enum[&#39;4&#39;,&#39;5&#39;],Integer[4,5]] $version = &#39;4&#39;,
@@ -1084,7 +1113,9 @@ class globus (
   Boolean $include_oauth_server = false,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = &#39;https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm&#39;,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = &quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl_v5 = &quot;https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
   Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,

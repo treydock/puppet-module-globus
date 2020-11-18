@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: globus::cli
+  Puppet Class: globus::sdk
   
     &mdash; Documentation by YARD 0.9.25
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "puppet_classes::globus::cli";
+  pathId = "puppet_classes::globus::sdk";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (g)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">globus::cli</span>
+    <span class="title">globus::sdk</span>
   
 </div>
 
@@ -59,20 +59,20 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: globus::cli</h1>
+      <div id="content"><h1>Puppet Class: globus::sdk</h1>
 <div class="box_info">
   
   
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/cli.pp
+      manifests/sdk.pp
     </dd>
   </dl>
 </div>
 
   <h2>Summary</h2>
-  Manage Globus CLI
+  Manage Globus SDK
 
 <h2>Overview</h2>
 <div class="docstring">
@@ -88,7 +88,7 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>include ::globus::cli</code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_globus'>globus</span><span class='op'>::</span><span class='id identifier rubyid_sdk'>sdk</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -107,7 +107,7 @@
       
         &mdash;
         <div class='inline'>
-<p>The ensure parameter for PIP installed CLI</p>
+<p>The ensure parameter for PIP installed SDK</p>
 </div>
       
     </li>
@@ -120,7 +120,7 @@
         <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;/opt/globus-cli&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;/opt/globus-sdk&#39;</tt>)</em>
       
       
         &mdash;
@@ -186,21 +186,14 @@
 36
 37
 38
-39
-40
-41
-42
-43
-44
-45
-46</pre>
+39</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cli.pp', line 12</span>
+        <pre class="code"><span class="info file"># File 'manifests/sdk.pp', line 12</span>
 
-class globus::cli (
+class globus::sdk (
   String[1] $ensure = &#39;present&#39;,
-  Stdlib::Absolutepath $install_path = &#39;/opt/globus-cli&#39;,
+  Stdlib::Absolutepath $install_path = &#39;/opt/globus-sdk&#39;,
   Boolean $manage_python = true,
 ) {
 
@@ -213,25 +206,18 @@ class globus::cli (
     class { &#39;python&#39;:
       virtualenv =&gt; &#39;present&#39;,
     }
-    Package[&#39;virtualenv&#39;] -&gt; Python::Virtualenv[&#39;globus-cli&#39;]
+    Package[&#39;virtualenv&#39;] -&gt; Python::Virtualenv[&#39;globus-sdk&#39;]
   }
 
-  python::virtualenv { &#39;globus-cli&#39;:
+  python::virtualenv { &#39;globus-sdk&#39;:
     ensure     =&gt; &#39;present&#39;,
     venv_dir   =&gt; $install_path,
     distribute =&gt; false,
   }
-  -&gt; python::pip { &#39;globus-cli&#39;:
+  -&gt; python::pip { &#39;globus-sdk&#39;:
     ensure     =&gt; $ensure,
     virtualenv =&gt; $install_path,
   }
-
-  file { &#39;/usr/bin/globus&#39;:
-    ensure  =&gt; &#39;link&#39;,
-    target  =&gt; &quot;${install_path}/bin/globus&quot;,
-    require =&gt; Python::Pip[&#39;globus-cli&#39;],
-  }
-
 }</pre>
       </td>
     </tr>
