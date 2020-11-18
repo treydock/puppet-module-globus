@@ -1,17 +1,17 @@
-# @summary Manage Globus CLI
+# @summary Manage Globus SDK
 #
 # @example
-#   include ::globus::cli
+#   include globus::sdk
 #
 # @param ensure
-#   The ensure parameter for PIP installed CLI
+#   The ensure parameter for PIP installed SDK
 # @param install_path
 #   Path to install Globus CLI virtualenv
 # @param manage_python
 #   Boolean to set if Python is managed by this class
-class globus::cli (
+class globus::sdk (
   String[1] $ensure = 'present',
-  Stdlib::Absolutepath $install_path = '/opt/globus-cli',
+  Stdlib::Absolutepath $install_path = '/opt/globus-sdk',
   Boolean $manage_python = true,
 ) {
 
@@ -24,23 +24,16 @@ class globus::cli (
     class { 'python':
       virtualenv => 'present',
     }
-    Package['virtualenv'] -> Python::Virtualenv['globus-cli']
+    Package['virtualenv'] -> Python::Virtualenv['globus-sdk']
   }
 
-  python::virtualenv { 'globus-cli':
+  python::virtualenv { 'globus-sdk':
     ensure     => 'present',
     venv_dir   => $install_path,
     distribute => false,
   }
-  -> python::pip { 'globus-cli':
+  -> python::pip { 'globus-sdk':
     ensure     => $ensure,
     virtualenv => $install_path,
   }
-
-  file { '/usr/bin/globus':
-    ensure  => 'link',
-    target  => "${install_path}/bin/globus",
-    require => Python::Pip['globus-cli'],
-  }
-
 }

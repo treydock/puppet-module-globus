@@ -1,41 +1,36 @@
 require 'spec_helper'
 
-describe 'globus::cli' do
+describe 'globus::sdk' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts
       end
 
-      unless support_cli(facts)
-        skip('CLI not supported')
+      unless support_sdk(facts)
+        skip('SDK not supported')
         next
       end
 
       it { is_expected.to compile.with_all_deps }
 
-      it { is_expected.to create_class('globus::cli') }
+      it { is_expected.to create_class('globus::sdk') }
 
       it { is_expected.to contain_class('python').with_virtualenv('present') }
 
       it do
-        is_expected.to contain_python__virtualenv('globus-cli').with(
+        is_expected.to contain_python__virtualenv('globus-sdk').with(
           'ensure'     => 'present',
-          'venv_dir'   => '/opt/globus-cli',
+          'venv_dir'   => '/opt/globus-sdk',
           'distribute' => 'false',
         )
       end
 
       it do
-        is_expected.to contain_python__pip('globus-cli').with(
+        is_expected.to contain_python__pip('globus-sdk').with(
           'ensure'     => 'present',
-          'virtualenv' => '/opt/globus-cli',
+          'virtualenv' => '/opt/globus-sdk',
         )
-      end
-
-      it do
-        is_expected.to contain_file('/usr/bin/globus').with('ensure' => 'link',
-                                                            'target' => '/opt/globus-cli/bin/globus')
       end
 
       context 'manage_python => false' do

@@ -116,6 +116,24 @@ Below is an example of what would be required to setup Globus GridFTP to also wo
     # Apply OSG GridFTP before Globus
     Package['osg-gridftp'] -> Class['::globus::install']
 
+### Globus CLI
+
+To install the Globus CLI to `/opt/globus-cli` and create symlink for executable at `/usr/bin/globus`:
+
+```
+include globus::cli
+```
+
+### Globus SDK
+
+To install the Globus SDK to `/opt/globus-sdk`:
+
+```
+include globus::sdk
+```
+
+### Globus SDK
+
 ## Reference
 
 [http://treydock.github.io/puppet-module-globus/](http://treydock.github.io/puppet-module-globus/)
