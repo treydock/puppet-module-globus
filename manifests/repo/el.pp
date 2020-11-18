@@ -1,7 +1,9 @@
 # @summary Manage globus repo
 # @api private
 class globus::repo::el {
-  ensure_packages([$globus::repo_dependencies])
+  if String($globus::version) == '4' {
+    ensure_packages([$globus::repo_dependencies])
+  }
 
   exec { 'RPM-GPG-KEY-Globus':
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
@@ -30,7 +32,7 @@ class globus::repo::el {
     gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
   }
 
-  if $globus::version == '5' {
+  if String($globus::version) == '5' {
     yumrepo { 'globus-connect-server-5':
       descr          => 'Globus-Connect-Server-5',
       baseurl        => $globus::repo_baseurl_v5,

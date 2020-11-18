@@ -1,15 +1,16 @@
 require 'spec_helper_acceptance'
 
 describe 'globus class:' do
-  context 'with default parameters' do
+  context 'with version => 4', if: fact('os.release.major').to_i == 7 do
     it 'runs successfully' do
       pp = "
         class { 'globus':
+          version             => '4',
           globus_user         => 'foo',
           globus_password     => 'bar',
           endpoint_name       => 'test',
           run_setup_commands  => false,
-          manage_firewall     => #{default['hypervisor'] !~ %r{docker}},
+          manage_firewall     => false,
         }
       "
 
@@ -35,7 +36,7 @@ describe 'globus class:' do
       it { is_expected.to be_installed }
     end
 
-    describe package('globus-connect-server53') do
+    describe package('globus-connect-server54') do
       it { is_expected.not_to be_installed }
     end
 
@@ -52,17 +53,17 @@ describe 'globus class:' do
     end
   end
 
-  context 'with v5 parameters', if: fact('os.release.major').to_i >= 7 do
+  context 'with v5 parameters' do
     it 'runs successfully' do
       pp = "
-        class { 'globus':
-          version              => '5',
-          globus_client_id     => 'foo',
-          globus_client_secret => 'bar',
-          endpoint_name        => 'test',
-          run_setup_commands   => false,
-          manage_firewall      => #{default['hypervisor'] !~ %r{docker}},
-        }
+      class { 'globus':
+        display_name        => 'REPLACE My Site Globus',
+        client_id           => 'REPLACE-client-id-from-globus',
+        client_secret       => 'REPLACE-client-id-from-globus',
+        owner               => 'REPLACE-user@example.com',
+        run_setup_commands  => false,
+        manage_firewall     => false,
+      }
       "
       on hosts, 'yum -y remove globus\\*'
       apply_manifest(pp, catch_failures: true)
@@ -87,18 +88,8 @@ describe 'globus class:' do
       it { is_expected.not_to be_installed }
     end
 
-    describe package('globus-connect-server53') do
+    describe package('globus-connect-server54') do
       it { is_expected.to be_installed }
-    end
-
-    describe file('/etc/globus-connect-server.conf') do
-      it { is_expected.to be_file }
-      it { is_expected.to be_owned_by 'root' }
-      it { is_expected.to be_grouped_into 'root' }
-      it { is_expected.to be_mode 600 }
-      its(:content) { is_expected.to match %r{^ClientId = foo$} }
-      its(:content) { is_expected.to match %r{^ClientSecret = bar$} }
-      its(:content) { is_expected.to match %r{^Name = test$} }
     end
   end
 end
