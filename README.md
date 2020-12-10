@@ -1,7 +1,7 @@
 # puppet-globus
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/treydock/globus.svg)](https://forge.puppetlabs.com/treydock/globus)
-[![Build Status](https://travis-ci.org/treydock/puppet-module-globus.png)](https://travis-ci.org/treydock/puppet-module-globus)
+[![CI Status](https://github.com/treydock/puppet-module-globus/workflows/CI/badge.svg?branch=master)](https://github.com/treydock/puppet-module-globus/actions?query=workflow%3ACI)
 
 ## Overview
 
