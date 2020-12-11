@@ -194,7 +194,14 @@ class globus::config {
   }
 
   if $globus::manage_firewall {
-    if String($globus::version) == '5' or $globus::include_io_server {
+    if String($globus::version) == '5' {
+      firewall { '500 allow GridFTP control channel':
+        action => 'accept',
+        dport  => 2811,
+        proto  => 'tcp',
+      }
+    }
+    if String($globus::version) == '4' and $globus::include_io_server {
       firewall { '500 allow GridFTP control channel':
         action => 'accept',
         dport  => $globus::gridftp_server_port,
