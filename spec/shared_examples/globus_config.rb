@@ -64,13 +64,7 @@ shared_examples_for 'globus::config' do |_facts|
     )
   end
 
-  it do
-    is_expected.to contain_firewall('500 allow GridFTP control channel').with(
-      action: 'accept',
-      dport: '2811',
-      proto: 'tcp',
-    )
-  end
+  it { is_expected.not_to contain_firewall('500 allow GridFTP control channel') }
 
   it do
     is_expected.to contain_firewall('500 allow HTTPS').with(
