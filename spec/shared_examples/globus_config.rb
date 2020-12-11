@@ -1,14 +1,52 @@
 shared_examples_for 'globus::config' do |_facts|
-  it 'has endpoint setup command' do
-    command = [
+  let(:endpoint_setup) do
+    [
       'globus-connect-server endpoint setup',
       "'Example' --client-id foo",
       "--owner 'admin@example.com'",
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
     ]
+  end
+  let(:node_setup) do
+    [
+      'globus-connect-server node setup',
+      '--client-id foo',
+      '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
+      '--incoming-port-range 50000,51000',
+      '--ip-address 172.16.254.254',
+    ]
+  end
+
+  it do
+    is_expected.to contain_file('/root/globus-endpoint-setup').with(
+      ensure: 'file',
+      owner: 'root',
+      group: 'root',
+      mode: '0700',
+      show_diff: 'false',
+      content: "export GLOBUS_CLIENT_SECRET=bar
+#{endpoint_setup.join(' ')}
+",
+    )
+  end
+
+  it do
+    is_expected.to contain_file('/root/globus-node-setup').with(
+      ensure: 'file',
+      owner: 'root',
+      group: 'root',
+      mode: '0700',
+      show_diff: 'false',
+      content: "export GLOBUS_CLIENT_SECRET=bar
+#{node_setup.join(' ')}
+",
+    )
+  end
+
+  it 'has endpoint setup command' do
     is_expected.to contain_exec('globus-endpoint-setup').with(
       path: '/usr/bin:/bin:/usr/sbin:/sbin',
-      command: command.join(' '),
+      command: endpoint_setup.join(' '),
       environment: ['GLOBUS_CLIENT_SECRET=bar'],
       creates: '/var/lib/globus-connect-server/gcs-manager/deployment-key.json',
       logoutput: 'true',
@@ -16,16 +54,9 @@ shared_examples_for 'globus::config' do |_facts|
   end
 
   it 'has node setup command' do
-    command = [
-      'globus-connect-server node setup',
-      '--client-id foo',
-      '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
-      '--incoming-port-range 50000,51000',
-      '--ip-address 172.16.254.254',
-    ]
     is_expected.to contain_exec('globus-node-setup').with(
       path: '/usr/bin:/bin:/usr/sbin:/sbin',
-      command: command.join(' '),
+      command: node_setup.join(' '),
       environment: ['GLOBUS_CLIENT_SECRET=bar'],
       creates: '/var/lib/globus-connect-server/info.json',
       logoutput: 'true',
