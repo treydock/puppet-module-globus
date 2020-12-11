@@ -23,6 +23,7 @@ describe 'globus' do
 
       it { is_expected.to contain_class('epel').that_comes_before('Class[globus::repo::el]') }
       it { is_expected.to contain_class('globus::repo::el').that_comes_before('Class[globus::install]') }
+      it { is_expected.to contain_class('globus::user').that_comes_before('Class[globus::install]') }
       it { is_expected.to contain_class('globus::install').that_comes_before('Class[globus::config]') }
       it { is_expected.to contain_class('globus::config').that_comes_before('Class[globus::service]') }
       it { is_expected.to contain_class('globus::service') }
@@ -31,6 +32,7 @@ describe 'globus' do
         let(:params) { default_params }
 
         it_behaves_like 'globus::repo::el', facts
+        it_behaves_like 'globus::user', facts
         it_behaves_like 'globus::install', facts
         it_behaves_like 'globus::config', facts
         it_behaves_like 'globus::service', facts
@@ -48,6 +50,9 @@ describe 'globus' do
         let(:params) { default_params }
 
         it { is_expected.to compile.with_all_deps }
+
+        it { is_expected.not_to contain_group('gcsweb') }
+        it { is_expected.not_to contain_user('gcsweb') }
 
         it_behaves_like 'globus::repo::elv4', facts
         it_behaves_like 'globus::installv4', facts

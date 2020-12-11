@@ -40,6 +40,12 @@
 #   Boolean to set if EPEL is managed by this repo
 # @param repo_dependencies
 #   Additional repo dependencies
+# @param manage_user
+#   Boolean to set if the gcsweb user and group are managed by this module
+# @param group_gid
+#   The gcsweb group GID
+# @param user_uid
+#   The gcsweb user UID
 # @param package_name
 #   Globus v5 package name
 # @param display_name
@@ -174,6 +180,9 @@ class globus (
   Boolean $manage_epel = true,
   Array $repo_dependencies = ['yum-plugin-priorities'],
 
+  Boolean $manage_user = true,
+  Optional[Integer] $group_gid = undef,
+  Optional[Integer] $user_uid = undef,
   String $package_name = 'globus-connect-server54',
 
   # Required - v5
@@ -315,11 +324,13 @@ class globus (
     $notify_service = undef
   }
 
+  contain globus::user
   contain globus::install
   contain globus::config
   contain globus::service
 
-  Class['globus::install']
+  Class['globus::user']
+  -> Class['globus::install']
   -> Class['globus::config']
   -> Class['globus::service']
 
