@@ -80,6 +80,7 @@
 #   Globus v5 only
 # @param deployment_key
 #   --deployment-key use when running 'globus-connect-server endpoint setup'
+#   The parent directory of this path must be writable by gcsweb user
 #   Globus v5 only
 # @param organization
 #   --organization use when running 'globus-connect-server endpoint setup'
