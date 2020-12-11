@@ -1,93 +1,243 @@
 # @summary Manage Globus
 #
-# @example Install and configure a Globus IO endpoint that uses OAuth.  This example assumes host cert/key will not be provided by Globus.
-#    class { 'globus':
-#      include_id_server => false,
-#      globus_user => 'myusername',
-#      globus_password => 'password',
-#      endpoint_name => 'myorg',
-#      endpoint_public => true,
-#      myproxy_server => 'myproxy.example.com:7512',
-#      oauth_server => 'myproxy.example.com',
-#      security_identity_method => 'OAuth',
-#      security_fetch_credentials_from_relay => false,
-#      security_certificate_file => '/etc/grid-security/hostcert.pem',
-#      security_key_file => '/etc/grid-security/hostkey.pem',
-#      gridftp_server => $::fqdn,
-#      gridftp_restrict_paths => ['RW~','N~/.*','RW/project'],
-#      # Example of extra settings
-#      extra_gridftp_settings => [
-#        'log_level ALL',
-#        'log_single /var/log/gridftp-auth.log',
-#        'log_transfer /var/log/gridftp-transfer.log',
-#      ],
-#    }
+# @example Install and setup a Globus v5.4 endpoint
+#   class { 'globus':
+#     display_name  => 'REPLACE My Site Globus',
+#     client_id     => 'REPLACE-client-id-from-globus',
+#     client_secret => 'REPLACE-client-id-from-globus',
+#     owner         => 'REPLACE-user@example.com',
+#   }
 #
 # @param version
+#   Major version of Globus to install. Only needed to install Globus v4
 # @param include_io_server
+#   Setup Globus v4 IO server
+#   Globus v4 only
 # @param include_id_server
+#   Setup Globus v4 ID server
+#   Globus v4 only
 # @param include_oauth_server
+#   Setup Globus v4 OAuth server
+#   Globus v4 only
 # @param release_url
+#   Release URL of Globus release RPM
+#   Globus v4 & v5
 # @param repo_baseurl
+#   Globus RPM repo baseurl
+#   Globus v4 & v5
 # @param repo_testing_baseurl
+#   Globus testing RPM repo baseurl
+#   Globus v4 & v5
 # @param repo_baseurl_v5
+#   Globus v5 repo baseurl
+#   Globus v4 & v5
 # @param repo_testing_baseurl_v5
-# @param remove_cilogon_cron
+#   Globus v5 testing repo baseurl
+#   Globus v4 & v5
 # @param extra_gridftp_settings
+#   Additional settings for GridFTP
+#   Globus v4 & v5
 # @param first_gridftp_callback
+#   Used when running GridFTP from Globus with OSG, see README.
+#   Globus v4 only
 # @param manage_service
+#   Boolean to set if globus-gridftp-server service is managed
+#   Globus v4 & v5
 # @param run_setup_commands
+#   Boolean to set if the commands to setup Globus are run (v4 and v5)
+#   Globus v4 & v5
 # @param manage_firewall
+#   Boolean to set if firewall rules are managed by this module
+#   Globus v4 & v5
 # @param manage_epel
+#   Boolean to set if EPEL is managed by this repo
+#   Globus v4 & v5
 # @param repo_dependencies
+#   Additional repo dependencies
+#   Globus v4 only
+# @param manage_user
+#   Boolean to set if the gcsweb user and group are managed by this module
+#   Globus v5 only
+# @param group_gid
+#   The gcsweb group GID
+#   Globus v5 only
+# @param user_uid
+#   The gcsweb user UID
+#   Globus v5 only
 # @param package_name
+#   Globus v5 package name
+# @param display_name
+#   Display name to use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param client_id
+#   --client-id use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param client_secret
+#   --client-secret use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param owner
+#   --owner use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param deployment_key
+#   --deployment-key use when running 'globus-connect-server endpoint setup'
+#   The parent directory of this path must be writable by gcsweb user
+#   Globus v5 only
+# @param organization
+#   --organization use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param keywords
+#   --keywords use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param department
+#   --department use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param contact_email
+#   --contact-email use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param contact_info
+#   --contact-info use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param info_link
+#   --info-link use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param description
+#   --description use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param public
+#   When false pass --private flag to 'globus-connect-server endpoint setup'
+#   Globus v5 only
+# @param incoming_port_range
+#   --incoming-port-range use when running 'globus-connect-server node setup'
+#   Globus v5 only
+# @param outgoing_port_range
+#   --outgoing-port-range use when running 'globus-connect-server node setup'
+#   Globus v5 only
+# @param ip_address
+#   --ip-address use when running 'globus-connect-server node setup'
+#   Globus v5 only
+# @param export_node
+#   --export-node use when running 'globus-connect-server node setup'
+#   Globus v5 only
+# @param import_node
+#   --import-node use when running 'globus-connect-server node setup'
+#   Globus v5 only
 # @param globus_user
+#   See globus-connect-server.conf Globus/User
+#   Globus v4 only
 # @param globus_password
-# @param globus_client_id
-# @param globus_client_secret
+#   See globus-connect-server.conf Globus/Password
+#   Globus v4 only
 # @param endpoint_name
+#   See globus-connect-server.conf Endpoint/Name
+#   Globus v4 only
 # @param endpoint_public
+#   See globus-connect-server.conf Endpoint/Public
+#   Globus v4 only
 # @param endpoint_default_directory
-# @param endpoint_server_name
-# @param letsencrypt_email
-# @param letsencrypt_agreetos
+#   See globus-connect-server.conf Endpoint/DefaultDirectory
+#   Globus v4 only
 # @param security_fetch_credentials_from_relay
+#   See globus-connect-server.conf Security/FetchCredentialFromRelay
+#   Globus v4 only
 # @param security_certificate_file
+#   See globus-connect-server.conf Security/CertificateFile
+#   Globus v4 only
 # @param security_key_file
+#   See globus-connect-server.conf Security/KeyFile
+#   Globus v4 only
 # @param security_trusted_certificate_directory
+#   See globus-connect-server.conf Security/TrustedCertificateDirectory
+#   Globus v4 only
 # @param security_identity_method
+#   See globus-connect-server.conf Security/IdentityMethod
+#   Globus v4 only
 # @param security_authorization_method
+#   See globus-connect-server.conf Security/AuthorizationMethod
+#   Globus v4 only
 # @param security_gridmap
+#   See globus-connect-server.conf Security/Gridmap
+#   Globus v4 only
 # @param security_cilogon_identity_provider
+#   See globus-connect-server.conf Security/IdentityProvider
+#   Globus v4 only
 # @param gridftp_server
+#   See globus-connect-server.conf GridFTP/Server
+#   Globus v4 only
 # @param gridftp_server_port
+#   See globus-connect-server.conf GridFTP/ServerPort
+#   Globus v4
 # @param gridftp_server_behind_nat
+#   See globus-connect-server.conf GridFTP/ServerBehindNat
+#   Globus v4 only
 # @param gridftp_incoming_port_range
+#   See globus-connect-server.conf GridFTP/IncomingPortRange
+#   Globus v4 only
 # @param gridftp_outgoing_port_range
+#   See globus-connect-server.conf GridFTP/OutgoingPortRange
+#   Globus v4 only
 # @param gridftp_data_interface
+#   See globus-connect-server.conf GridFTP/DataInterface
+#   Globus v4 only
 # @param gridftp_restrict_paths
+#   See globus-connect-server.conf GridFTP/RestrictPaths
+#   Globus v4 only
 # @param gridftp_sharing
+#   See globus-connect-server.conf GridFTP/Sharing
+#   Globus v4 only
 # @param gridftp_sharing_restrict_paths
+#   See globus-connect-server.conf GridFTP/SharingRestrictPaths
+#   Globus v4 only
 # @param gridftp_sharing_state_dir
+#   See globus-connect-server.conf GridFTP/SharingStateDir
+#   Globus v4 only
 # @param gridftp_sharing_users_allow
+#   See globus-connect-server.conf GridFTP/UsersAllow
+#   Globus v4 only
 # @param gridftp_sharing_groups_allow
+#   See globus-connect-server.conf GridFTP/GroupsAllow
+#   Globus v4 only
 # @param gridftp_sharing_users_deny
+#   See globus-connect-server.conf GridFTP/UsersDeny
+#   Globus v4 only
 # @param gridftp_sharing_groups_deny
-# @param gridftp_require_encryption
+#   See globus-connect-server.conf GridFTP/GroupsDeny
+#   Globus v4 only
 # @param myproxy_server
+#   See globus-connect-server.conf MyProxy/Server
+#   Globus v4 only
 # @param myproxy_server_port
+#   See globus-connect-server.conf MyProxy/ServerPort
+#   Globus v4 only
 # @param myproxy_server_behind_nat
+#   See globus-connect-server.conf MyProxy/ServerBehindNAT
+#   Globus v4 only
 # @param myproxy_ca_directory
+#   See globus-connect-server.conf MyProxy/CADirectory
+#   Globus v4 only
 # @param myproxy_config_file
+#   See globus-connect-server.conf MyProxy/ConfigFile
+#   Globus v4 only
 # @param myproxy_ca_subject_dn
+#   See globus-connect-server.conf MyProxy/CaSubjectDN
+#   Globus v4 only
 # @param myproxy_firewall_sources
+#   Sources to open in firewall for MyProxy
+#   Globus v4 only
 # @param oauth_server
+#   See globus-connect-server.conf OAuth/Server
+#   Globus v4 only
 # @param oauth_server_behind_firewall
+#   See globus-connect-server.conf OAuth/ServerBehindFirewall
+#   Globus v4 only
 # @param oauth_stylesheet
+#   See globus-connect-server.conf OAuth/Stylesheet
+#   Globus v4 only
 # @param oauth_logo
+#   See globus-connect-server.conf OAuth/Logo
+#   Globus v4 only
 #
 class globus (
-  Variant[Enum['4','5'],Integer[4,5]] $version = '4',
+  Variant[Enum['4','5'],Integer[4,5]] $version = '5',
 
   Boolean $include_io_server = true,
   Boolean $include_id_server = true,
@@ -97,7 +247,6 @@ class globus (
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl = "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
-  Boolean $remove_cilogon_cron = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
   Boolean $manage_service = true,
@@ -106,29 +255,41 @@ class globus (
   Boolean $manage_epel = true,
   Array $repo_dependencies = ['yum-plugin-priorities'],
 
-  String $package_name = 'globus-connect-server53',
+  Boolean $manage_user = true,
+  Optional[Integer] $group_gid = undef,
+  Optional[Integer] $user_uid = undef,
+  String $package_name = 'globus-connect-server54',
+
+  # Required - v5
+  Optional[String] $display_name = undef,
+  Optional[String] $client_id = undef,
+  Optional[String] $client_secret = undef,
+  Optional[String] $owner = undef,
+  Stdlib::Absolutepath $deployment_key = '/var/lib/globus-connect-server/gcs-manager/deployment-key.json',
+  # endpoint setup - v5
+  Optional[String] $organization = undef,
+  Optional[Array] $keywords = undef,
+  Optional[String] $department = undef,
+  Optional[String] $contact_email = undef,
+  Optional[String] $contact_info = undef,
+  Optional[String] $info_link = undef,
+  Optional[String] $description = undef,
+  Boolean $public = true,
+  # node setup - v5
+  Array[Stdlib::Port, 2, 2] $incoming_port_range = [50000, 51000],
+  Optional[Array[Stdlib::Port, 2, 2]] $outgoing_port_range = undef,
+  Optional[Stdlib::IP::Address] $ip_address = undef,
+  Optional[Stdlib::Absolutepath] $export_node = undef,
+  Optional[Stdlib::Absolutepath] $import_node = undef,
 
   # Globus Config - v4
   String $globus_user = '%(GLOBUS_USER)s',
   String $globus_password = '%(GLOBUS_PASSWORD)s',
 
-  # Globus Config - v5
-  String $globus_client_id = '',
-  String $globus_client_secret = '',
-
   # Endpoint Config - v4
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = '/~/',
-
-  # Endpoint Config - v5
-  String $endpoint_server_name = $::fqdn,
-
-  # Endpoint Config - v4/v5
   String $endpoint_name = $::hostname,
-
-  # LetsEncrypt Config - v5
-  String $letsencrypt_email = '',
-  Boolean $letsencrypt_agreetos = false,
 
   # Security Config - v4
   Boolean $security_fetch_credentials_from_relay = true,
@@ -140,10 +301,10 @@ class globus (
   Optional[Stdlib::Absolutepath] $security_gridmap = undef,
   Optional[String] $security_cilogon_identity_provider = undef,
 
-  # GridFTP Config - v4/v5
+  # GridFTP Config - v4
   Stdlib::Port $gridftp_server_port = 2811,
-  Array $gridftp_incoming_port_range = ['50000', '51000'],
-  $gridftp_outgoing_port_range = undef, #'50000-51000',
+  Array[Stdlib::Port, 2, 2] $gridftp_incoming_port_range = [50000, 51000],
+  Optional[Array[Stdlib::Port, 2, 2]] $gridftp_outgoing_port_range = undef,
   Optional[String] $gridftp_data_interface = undef,
 
   # GridFTP Config - v4
@@ -157,9 +318,6 @@ class globus (
   Optional[Array] $gridftp_sharing_groups_allow = undef,
   Optional[Array] $gridftp_sharing_users_deny = undef,
   Optional[Array] $gridftp_sharing_groups_deny = undef,
-
-  # GridFTP Config - v5
-  Boolean $gridftp_require_encryption = false,
 
   # MyProxy Config - v4
   Optional[String] $myproxy_server = undef,
@@ -179,14 +337,28 @@ class globus (
 
   $osfamily = $facts.dig('os', 'family')
   $osmajor = $facts.dig('os', 'release', 'major')
-  $supported = ['RedHat-6','RedHat-7']
+  $supported = ['RedHat-7','RedHat-8']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
-    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 6 and 7")
+    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7 and 8")
   }
-  if versioncmp($osmajor, '6') <= 0 {
-    if String($version) == '5' {
-      fail("${module_name}: Version 5 is not supported on OS major release ${osmajor}")
+
+  if String($version) == '4' and $os == 'RedHat-8' {
+    fail("${module_name}: Version 4 is not support on OS ${os}")
+  }
+
+  if String($version) == '5' {
+    if ! $display_name {
+      fail("${module_name}: display_name is required with version 5")
+    }
+    if ! $client_id {
+      fail("${module_name}: client_id is required with version 5")
+    }
+    if ! $client_secret {
+      fail("${module_name}: client_secret is required with version 5")
+    }
+    if ! $owner {
+      fail("${module_name}: owner is required with version 5")
     }
   }
 
@@ -214,12 +386,16 @@ class globus (
     $_oauth_setup_command = undef
   }
 
-  $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
-  if String($version) == '5' {
-    $_setup_command = 'globus-connect-server-setup'
+  # For v5
+  if ! $ip_address {
+    $_ip_address = $facts.dig('networking','ip')
   } else {
-    $_setup_command   = join($_setup_commands, ' && ')
+    $_ip_address = $ip_address
   }
+
+  # For v4
+  $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
+  $_setup_command   = join($_setup_commands, ' && ')
 
   if $manage_service {
     $notify_service = Service['globus-gridftp-server']
@@ -227,11 +403,13 @@ class globus (
     $notify_service = undef
   }
 
+  contain globus::user
   contain globus::install
   contain globus::config
   contain globus::service
 
-  Class['globus::install']
+  Class['globus::user']
+  -> Class['globus::install']
   -> Class['globus::config']
   -> Class['globus::service']
 

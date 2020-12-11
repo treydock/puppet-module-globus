@@ -1,0 +1,6 @@
+---
+globus::python::version: '2'
+globus::cli::virtualenv_provider: /usr/bin/virtualenv-2
+globus::cli::pip_provider: pip2
+globus::sdk::virtualenv_provider: "%{lookup('globus::cli::virtualenv_provider')}"
+globus::sdk::pip_provider: "%{lookup('globus::cli::pip_provider')}"

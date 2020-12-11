@@ -2,7 +2,7 @@
 # @api private
 class globus::install {
 
-  if $globus::version == '4' {
+  if String($globus::version) == '4' {
     if $globus::include_io_server {
       package { 'globus-connect-server-io':
         ensure  => 'present',
@@ -22,7 +22,7 @@ class globus::install {
     }
   }
 
-  if $globus::version == '5' {
+  if String($globus::version) == '5' {
     package { $globus::package_name:
       ensure => 'present',
     }

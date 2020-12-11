@@ -51,6 +51,7 @@ jobs:
       matrix:
         set:
           - "centos-7"
+          - "centos-8"
         puppet:
           - "puppet5"
           - "puppet6"
