@@ -6,6 +6,9 @@ shared_examples_for 'globus::servicev4' do |_facts|
                                                                  hasrestart: 'true')
   end
 
+  it { is_expected.not_to contain_service('gcs_manager') }
+  it { is_expected.not_to contain_service('gcs_manager_assistant') }
+
   context 'when manage_service => false' do
     let(:params) { default_params.merge(manage_service: false) }
 

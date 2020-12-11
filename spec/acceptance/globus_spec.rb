@@ -51,6 +51,21 @@ describe 'globus class:' do
       its(:content) { is_expected.to match %r{^Public = False$} }
       its(:content) { is_expected.to match %r{^DefaultDirectory = /~/$} }
     end
+
+    describe service('globus-gridftp-server') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    describe service('gcs_manager') do
+      it { is_expected.not_to be_enabled }
+      it { is_expected.not_to be_running }
+    end
+
+    describe service('gcs_manager_assistant') do
+      it { is_expected.not_to be_enabled }
+      it { is_expected.not_to be_running }
+    end
   end
 
   context 'with v5 parameters' do
@@ -90,6 +105,21 @@ describe 'globus class:' do
 
     describe package('globus-connect-server54') do
       it { is_expected.to be_installed }
+    end
+
+    describe service('globus-gridftp-server') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    describe service('gcs_manager') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    describe service('gcs_manager_assistant') do
+      it { is_expected.to be_enabled }
+      it { is_expected.not_to be_running }
     end
   end
 end
