@@ -268,6 +268,10 @@ class globus (
     fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7 and 8")
   }
 
+  if String($version) == '4' and $os == 'RedHat-8' {
+    fail("${module_name}: Version 4 is not support on OS ${os}")
+  }
+
   if String($version) == '5' {
     if ! $display_name {
       fail("${module_name}: display_name is required with version 5")

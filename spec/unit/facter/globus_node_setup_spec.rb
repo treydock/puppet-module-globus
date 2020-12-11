@@ -7,12 +7,12 @@ describe 'globus_node_setup Fact' do
   end
 
   it 'returns true if info.json exists' do
-    allow(File).to receive(:exists?).with('/var/lib/globus-connect-server/info.json').and_return(true)
+    allow(File).to receive(:exist?).with('/var/lib/globus-connect-server/info.json').and_return(true)
     expect(Facter.fact(:globus_node_setup).value).to eq(true)
   end
 
   it 'returns false if info.json does not exist' do
-    allow(File).to receive(:exists?).with('/var/lib/globus-connect-server/info.json').and_return(false)
+    allow(File).to receive(:exist?).with('/var/lib/globus-connect-server/info.json').and_return(false)
     expect(Facter.fact(:globus_node_setup).value).to eq(false)
   end
 end

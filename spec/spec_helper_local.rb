@@ -15,3 +15,8 @@ def platforms
     },
   }
 end
+
+def support_v4(facts)
+  return false if facts[:os]['release']['major'].to_i == 8 && facts[:os]['family'] == 'RedHat'
+  true
+end

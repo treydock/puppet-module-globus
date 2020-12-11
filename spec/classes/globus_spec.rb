@@ -45,7 +45,7 @@ describe 'globus' do
         it { is_expected.not_to contain_class('epel') }
       end
 
-      context 'version => 4' do
+      context 'version => 4', if: support_v4(facts) do
         let(:default_params) { { version: '4' } }
         let(:params) { default_params }
 
