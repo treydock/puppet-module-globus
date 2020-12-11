@@ -194,7 +194,7 @@ class globus::config {
   }
 
   if $globus::manage_firewall {
-    if String($globus::version) == '4' {
+    if String($globus::version) == '5' or $globus::include_io_server {
       firewall { '500 allow GridFTP control channel':
         action => 'accept',
         dport  => $globus::gridftp_server_port,
@@ -210,11 +210,12 @@ class globus::config {
       }
     }
 
-    $_gridftp_incoming_ports = join($globus::gridftp_incoming_port_range, '-')
-    firewall { '500 allow GridFTP data channels':
-      action => 'accept',
-      dport  => $_gridftp_incoming_ports,
-      proto  => 'tcp',
+    if String($globus::version) == '5' or $globus::include_io_server {
+      firewall { '500 allow GridFTP data channels':
+        action => 'accept',
+        dport  => join($globus::gridftp_incoming_port_range, '-'),
+        proto  => 'tcp',
+      }
     }
 
     if String($globus::version) == '4' and $globus::include_id_server {

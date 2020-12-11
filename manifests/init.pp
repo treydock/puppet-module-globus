@@ -201,9 +201,9 @@ class globus (
   Optional[String] $description = undef,
   Boolean $public = true,
   # node setup - v5
-  Array $incoming_port_range = ['50000', '51000'],
-  Optional[Array] $outgoing_port_range = undef,
-  Optional[String] $ip_address = undef,
+  Array[Stdlib::Port, 2, 2] $incoming_port_range = [50000, 51000],
+  Optional[Array[Stdlib::Port, 2, 2]] $outgoing_port_range = undef,
+  Optional[Stdlib::IP::Address] $ip_address = undef,
   Optional[Stdlib::Absolutepath] $export_node = undef,
   Optional[Stdlib::Absolutepath] $import_node = undef,
 
@@ -228,8 +228,8 @@ class globus (
 
   # GridFTP Config - v4
   Stdlib::Port $gridftp_server_port = 2811,
-  Array $gridftp_incoming_port_range = ['50000', '51000'],
-  $gridftp_outgoing_port_range = undef, #'50000-51000',
+  Array[Stdlib::Port, 2, 2] $gridftp_incoming_port_range = [50000, 51000],
+  Optional[Array[Stdlib::Port, 2, 2]] $gridftp_outgoing_port_range = undef,
   Optional[String] $gridftp_data_interface = undef,
 
   # GridFTP Config - v4
