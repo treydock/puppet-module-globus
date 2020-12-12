@@ -1,4 +1,4 @@
 ---
-globus::repo_baseurl: "https://downloads.globus.org/toolkit/gt6/stable/rpm/%{lookup('globus::url_os')}/%{facts.os.release.major}/$basearch/"
-globus::repo_baseurl_v5: "https://downloads.globus.org/globus-connect-server/stable/rpm/%{lookup('globus::url_os')}/%{facts.os.release.major}/$basearch/"
+globus::toolkit_repo_baseurl: "https://downloads.globus.org/toolkit/gt6/stable/rpm/%{lookup('globus::url_os')}/%{facts.os.release.major}/$basearch/"
+globus::gcs_repo_baseurl: "https://downloads.globus.org/globus-connect-server/stable/rpm/%{lookup('globus::url_os')}/%{facts.os.release.major}/$basearch/"
 globus::release_url: 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'

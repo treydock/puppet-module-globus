@@ -24,7 +24,7 @@ describe 'globus class:' do
     end
 
     describe yumrepo('globus-connect-server-5') do
-      it { is_expected.not_to exist }
+      it { is_expected.to exist }
       it { is_expected.not_to be_enabled }
     end
 
