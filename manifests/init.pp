@@ -22,16 +22,16 @@
 # @param release_url
 #   Release URL of Globus release RPM
 #   Globus v4 & v5
-# @param repo_baseurl
-#   Globus RPM repo baseurl
+# @param toolkit_repo_baseurl
+#   Globus Toolkit RPM repo baseurl
 #   Globus v4 & v5
-# @param repo_testing_baseurl
-#   Globus testing RPM repo baseurl
+# @param toolkit_repo_testing_baseurl
+#   Globus Toolkit testing RPM repo baseurl
 #   Globus v4 & v5
-# @param repo_baseurl_v5
-#   Globus v5 repo baseurl
+# @param gcs_repo_baseurl
+#   Globus Connect Server repo baseurl
 #   Globus v4 & v5
-# @param repo_testing_baseurl_v5
+# @param gcs_repo_testing_baseurl
 #   Globus v5 testing repo baseurl
 #   Globus v4 & v5
 # @param extra_gridftp_settings
@@ -243,10 +243,10 @@ class globus (
   Boolean $include_id_server = true,
   Boolean $include_oauth_server = false,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = 'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm',
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl = "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl_v5 = "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $toolkit_repo_baseurl = "https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $toolkit_repo_testing_baseurl = "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_baseurl = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_testing_baseurl = "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
   Boolean $manage_service = true,
