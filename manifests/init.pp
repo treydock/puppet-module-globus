@@ -337,11 +337,7 @@ class globus (
 
   $osfamily = $facts.dig('os', 'family')
   $osmajor = $facts.dig('os', 'release', 'major')
-  $supported = ['RedHat-7','RedHat-8']
   $os = "${osfamily}-${osmajor}"
-  if ! ($os in $supported) {
-    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7 and 8")
-  }
 
   if String($version) == '4' and $os == 'RedHat-8' {
     fail("${module_name}: Version 4 is not support on OS ${os}")
@@ -413,7 +409,7 @@ class globus (
   -> Class['globus::config']
   -> Class['globus::service']
 
-  case $::osfamily {
+  case $osfamily {
     'RedHat': {
       if $manage_epel {
         include ::epel
@@ -422,6 +418,11 @@ class globus (
       contain globus::repo::el
 
       Class['globus::repo::el'] -> Class['globus::install']
+    }
+    'Debian': {
+      contain globus::repo::deb
+
+      Class['globus::repo::deb'] -> Class['globus::install']
     }
     default: {
       # Do nothing

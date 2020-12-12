@@ -11,7 +11,7 @@ HOSTS:
     docker_image_commands:
       - 'yum install -y dnf-utils'
       - 'dnf config-manager --set-enabled powertools'
-      - 'yum install -y wget which cronie iproute initscripts'
+      - 'yum install -y wget which cronie iproute initscripts langpacks-en glibc-all-langpacks'
     docker_container_name: 'globus-el8'
 CONFIG:
   log_level: debug

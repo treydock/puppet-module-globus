@@ -2,11 +2,14 @@ fixtures:
   repositories:
     stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
     epel: https://github.com/voxpupuli/puppet-epel.git
+    apt: https://github.com/puppetlabs/puppetlabs-apt.git
     inifile: https://github.com/puppetlabs/puppetlabs-inifile.git
     firewall: https://github.com/puppetlabs/puppetlabs-firewall.git
     yumrepo_core:
       repo: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
       puppet_version: ">= 6.0.0"
-    python: https://github.com/voxpupuli/puppet-python.git
+    python:
+      repo: https://github.com/voxpupuli/puppet-python.git
+      ref: v5.0.0
   symlinks:
     globus: "#{source_dir}"

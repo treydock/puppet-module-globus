@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'globus class:' do
-  context 'with version => 4', if: fact('os.release.major').to_i == 7 do
+  context 'with version => 4', unless: (fact('os.family') == 'RedHat' && fact('os.release.major').to_i == 8) do
     it 'runs successfully' do
       pp = "
         class { 'globus':
@@ -18,12 +18,12 @@ describe 'globus class:' do
       apply_manifest(pp, catch_changes: true)
     end
 
-    describe yumrepo('Globus-Toolkit') do
+    describe yumrepo('Globus-Toolkit'), if: fact('os.family') == 'RedHat' do
       it { is_expected.to exist }
       it { is_expected.to be_enabled }
     end
 
-    describe yumrepo('globus-connect-server-5') do
+    describe yumrepo('globus-connect-server-5'), if: fact('os.family') == 'RedHat' do
       it { is_expected.to exist }
       it { is_expected.not_to be_enabled }
     end
@@ -80,17 +80,22 @@ describe 'globus class:' do
         manage_firewall     => false,
       }
       "
-      on hosts, 'yum -y remove globus\\*'
+      if fact('os.family') == 'RedHat'
+        on hosts, 'yum -y remove globus\\*'
+      end
+      if fact('os.family') == 'Debian'
+        on hosts, "apt-get -y remove 'globus.*'"
+      end
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
 
-    describe yumrepo('Globus-Toolkit') do
+    describe yumrepo('Globus-Toolkit'), if: fact('os.family') == 'RedHat' do
       it { is_expected.to exist }
       it { is_expected.to be_enabled }
     end
 
-    describe yumrepo('globus-connect-server-5') do
+    describe yumrepo('globus-connect-server-5'), if: fact('os.family') == 'RedHat' do
       it { is_expected.to exist }
       it { is_expected.to be_enabled }
     end

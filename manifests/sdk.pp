@@ -21,19 +21,40 @@ class globus::sdk (
   String $pip_provider = 'pip',
 ) {
 
-  if $manage_python {
-    include globus::python
-    Package['virtualenv'] -> Python::Virtualenv['globus-sdk']
+  if $facts.dig('os','name') == 'Ubuntu' and $facts.dig('os','release','major') == '20.04' {
+    fail('globus::cli: Not supported on this operating system')
   }
 
-  python::virtualenv { 'globus-sdk':
-    ensure     => 'present',
-    version    => $globus::python::version,
-    virtualenv => $virtualenv_provider,
-    venv_dir   => $install_path,
-    distribute => false,
+  if $manage_python {
+    include globus::python
+    $virtualenv_require = Package['virtualenv']
+  } else {
+    $virtualenv_require = undef
   }
-  -> python::pip { 'globus-sdk':
+
+  if $facts['os']['family'] == 'RedHat' {
+    python::virtualenv { 'globus-sdk':
+      ensure     => 'present',
+      version    => $globus::python::version,
+      virtualenv => $virtualenv_provider,
+      venv_dir   => $install_path,
+      distribute => false,
+      before     => Python::Pip['globus-sdk'],
+      require    => $virtualenv_require,
+    }
+  } elsif $facts['os']['family'] == 'Debian' {
+    python::pyvenv { 'globus-sdk':
+      ensure   => 'present',
+      version  => $globus::python::version,
+      venv_dir => $install_path,
+      before   => Python::Pip['globus-sdk'],
+      require  => $virtualenv_require,
+    }
+  } else {
+    fail('globus::sdk: Unsupported OS family')
+  }
+
+  python::pip { 'globus-sdk':
     ensure       => $ensure,
     pip_provider => $pip_provider,
     virtualenv   => $install_path,

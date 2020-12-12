@@ -1,4 +1,12 @@
-shared_examples_for 'globus::user' do |_facts|
+shared_examples_for 'globus::user' do |facts|
+  let(:shell) do
+    if facts[:os]['family'] == 'RedHat'
+      '/sbin/nologin'
+    elsif facts[:os]['family'] == 'Debian'
+      '/bin/false'
+    end
+  end
+
   it do
     is_expected.to contain_group('gcsweb').with(
       ensure: 'present',
@@ -13,7 +21,7 @@ shared_examples_for 'globus::user' do |_facts|
       ensure:  'present',
       uid: nil,
       gid: 'gcsweb',
-      shell: '/sbin/nologin',
+      shell: shell,
       home: '/var/lib/globus-connect-server/gcs-manager',
       managehome: 'false',
       system: 'true',

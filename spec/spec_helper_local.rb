@@ -5,13 +5,33 @@ def platforms
   {
     'RedHat-7' => {
       python_version: 'system',
-      virtualenv_provider: '/usr/bin/virtualenv',
+      virtualenv_provider: 'virtualenv',
       pip_provider: 'pip',
     },
     'RedHat-8' => {
       python_version: '2',
-      virtualenv_provider: '/usr/bin/virtualenv-2',
+      virtualenv_provider: 'virtualenv-2',
       pip_provider: 'pip2',
+    },
+    'Debian-9' => {
+      python_version: 'system',
+      virtualenv_provider: 'virtualenv',
+      pip_provider: 'pip',
+    },
+    'Debian-10' => {
+      python_version: 'system',
+      virtualenv_provider: 'virtualenv',
+      pip_provider: 'pip',
+    },
+    'Debian-18.04' => {
+      python_version: 'system',
+      virtualenv_provider: 'virtualenv',
+      pip_provider: 'pip',
+    },
+    'Debian-20.04' => {
+      python_version: 'system',
+      virtualenv_provider: 'virtualenv',
+      pip_provider: 'pip',
     },
   }
 end
