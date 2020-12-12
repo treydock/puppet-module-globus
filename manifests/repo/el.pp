@@ -6,6 +6,17 @@ class globus::repo::el {
   } else {
     $gcs_enabled = '0'
   }
+  if $globus::enable_testing_repos {
+    $testing_enabled = '1'
+    if $gcs_enabled == '0' {
+      $gcs_testing_enabled = '0'
+    } else {
+      $gcs_testing_enabled = '1'
+    }
+  } else {
+    $testing_enabled = '0'
+    $gcs_testing_enabled = '0'
+  }
   if String($globus::version) == '4' {
     ensure_packages([$globus::repo_dependencies])
   }
@@ -32,7 +43,7 @@ class globus::repo::el {
     baseurl        => $globus::toolkit_repo_testing_baseurl,
     failovermethod => 'priority',
     priority       => '98',
-    enabled        => '0',
+    enabled        => $testing_enabled,
     gpgcheck       => '1',
     gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
   }
@@ -53,7 +64,7 @@ class globus::repo::el {
     baseurl        => $globus::gcs_repo_testing_baseurl,
     failovermethod => 'priority',
     priority       => '98',
-    enabled        => '0',
+    enabled        => $gcs_testing_enabled,
     gpgcheck       => '1',
     gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
     require        => Exec['RPM-GPG-KEY-Globus'],

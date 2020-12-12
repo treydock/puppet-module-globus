@@ -34,6 +34,8 @@
 # @param gcs_repo_testing_baseurl
 #   Globus v5 testing repo baseurl
 #   Globus v4 & v5
+# @param enable_testing_repos
+#   Boolean that sets if testing repos should be added
 # @param extra_gridftp_settings
 #   Additional settings for GridFTP
 #   Globus v4 & v5
@@ -247,6 +249,7 @@ class globus (
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $toolkit_repo_testing_baseurl = "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_baseurl = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_testing_baseurl = "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Boolean $enable_testing_repos = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
   Boolean $manage_service = true,

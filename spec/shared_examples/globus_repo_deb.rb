@@ -46,6 +46,7 @@ shared_examples_for 'globus::repo::deb' do |facts|
       require: 'Exec[extract-globus-repo-key]',
     )
   end
+  it { is_expected.to contain_apt__source('globus-toolkit-6-testing').with_ensure('absent') }
 
   it do
     is_expected.to contain_apt__source('globus-connect-server-stable').with(
@@ -61,4 +62,5 @@ shared_examples_for 'globus::repo::deb' do |facts|
       require: 'Exec[extract-globus-repo-key]',
     )
   end
+  it { is_expected.to contain_apt__source('globus-connect-server-testing').with_ensure('absent') }
 end

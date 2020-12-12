@@ -11,6 +11,17 @@ class globus::repo::deb {
   } else {
     $gcs_ensure = 'absent'
   }
+  if $globus::enable_testing_repos {
+    $testing_ensure = 'present'
+    if $gcs_ensure == 'absent' {
+      $gcs_testing_ensure = 'absent'
+    } else {
+      $gcs_testing_ensure = 'present'
+    }
+  } else {
+    $testing_ensure = 'absent'
+    $gcs_testing_ensure = 'absent'
+  }
 
   file { $repo_dir:
     ensure => 'directory',
@@ -49,7 +60,7 @@ class globus::repo::deb {
   }
 
   apt::source { 'globus-toolkit-6-testing':
-    ensure   => 'present',
+    ensure   => $testing_ensure,
     location => $globus::toolkit_repo_testing_baseurl,
     release  => $facts['os']['distro']['codename'],
     repos    => 'contrib',
@@ -79,7 +90,7 @@ class globus::repo::deb {
   }
 
   apt::source { 'globus-connect-server-testing':
-    ensure   => $gcs_ensure,
+    ensure   => $gcs_testing_ensure,
     location => $globus::gcs_repo_testing_baseurl,
     release  => $facts['os']['distro']['codename'],
     repos    => 'contrib',
