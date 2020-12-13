@@ -2,6 +2,12 @@
 # @api private
 class globus::user {
 
+  if $globus::osfamily == 'Debian' {
+    $shell = '/bin/false'
+  } else {
+    $shell = '/sbin/nologin'
+  }
+
   if String($globus::version) == '5' and $globus::manage_user {
     group { 'gcsweb':
       ensure     => 'present',
@@ -14,7 +20,7 @@ class globus::user {
       ensure     => 'present',
       uid        => $globus::user_uid,
       gid        => 'gcsweb',
-      shell      => '/sbin/nologin',
+      shell      => $shell,
       home       => '/var/lib/globus-connect-server/gcs-manager',
       managehome => false,
       system     => true,

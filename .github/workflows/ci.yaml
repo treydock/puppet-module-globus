@@ -52,9 +52,16 @@ jobs:
         set:
           - "centos-7"
           - "centos-8"
+          - "debian-9"
+          - "debian-10"
+          - "ubuntu-1804"
+          - "ubuntu-2004"
         puppet:
           - "puppet5"
           - "puppet6"
+        exclude:
+          - puppet: "puppet5"
+            set: "ubuntu-2004"
     env:
       BUNDLE_WITHOUT: development:release
       BEAKER_debug: true

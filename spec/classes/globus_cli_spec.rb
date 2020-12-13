@@ -6,8 +6,11 @@ describe 'globus::cli' do
       let(:facts) do
         facts
       end
-
       let(:platform_os) { "#{facts[:os]['family']}-#{facts[:os]['release']['major']}" }
+
+      if facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '20.04'
+        before(:each) { skip('Unsupported OS') }
+      end
 
       it { is_expected.to compile.with_all_deps }
 
@@ -20,14 +23,29 @@ describe 'globus::cli' do
         )
       end
 
-      it do
-        is_expected.to contain_python__virtualenv('globus-cli').with(
-          'ensure'     => 'present',
-          'version'    => platforms[platform_os][:python_version],
-          'virtualenv' => platforms[platform_os][:virtualenv_provider],
-          'venv_dir'   => '/opt/globus-cli',
-          'distribute' => 'false',
-        )
+      if facts[:os]['family'] == 'RedHat'
+        it do
+          is_expected.to contain_python__virtualenv('globus-cli').with(
+            'ensure'     => 'present',
+            'version'    => platforms[platform_os][:python_version],
+            'virtualenv' => platforms[platform_os][:virtualenv_provider],
+            'venv_dir'   => '/opt/globus-cli',
+            'distribute' => 'false',
+          )
+        end
+        it { is_expected.to contain_python__virtualenv('globus-cli').that_comes_before('Python::Pip[globus-cli]') }
+        it { is_expected.to contain_python__virtualenv('globus-cli').that_requires('Package[virtualenv]') }
+      end
+      if facts[:os]['family'] == 'Debian'
+        it do
+          is_expected.to contain_python__pyvenv('globus-cli').with(
+            'ensure'     => 'present',
+            'version'    => platforms[platform_os][:python_version],
+            'venv_dir'   => '/opt/globus-cli',
+          )
+        end
+        it { is_expected.to contain_python__pyvenv('globus-cli').that_comes_before('Python::Pip[globus-cli]') }
+        it { is_expected.to contain_python__pyvenv('globus-cli').that_requires('Package[virtualenv]') }
       end
 
       it do

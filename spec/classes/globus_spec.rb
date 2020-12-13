@@ -21,8 +21,13 @@ describe 'globus' do
 
       it { is_expected.to create_class('globus') }
 
-      it { is_expected.to contain_class('epel').that_comes_before('Class[globus::repo::el]') }
-      it { is_expected.to contain_class('globus::repo::el').that_comes_before('Class[globus::install]') }
+      if facts[:os]['family'] == 'RedHat'
+        it { is_expected.to contain_class('epel').that_comes_before('Class[globus::repo::el]') }
+        it { is_expected.to contain_class('globus::repo::el').that_comes_before('Class[globus::install]') }
+      end
+      if facts[:os]['family'] == 'Debian'
+        it { is_expected.to contain_class('globus::repo::deb').that_comes_before('Class[globus::install]') }
+      end
       it { is_expected.to contain_class('globus::user').that_comes_before('Class[globus::install]') }
       it { is_expected.to contain_class('globus::install').that_comes_before('Class[globus::config]') }
       it { is_expected.to contain_class('globus::config').that_comes_before('Class[globus::service]') }
@@ -31,7 +36,13 @@ describe 'globus' do
       context 'version => 5' do
         let(:params) { default_params }
 
-        it_behaves_like 'globus::repo::el', facts
+        if facts[:os]['family'] == 'RedHat'
+          it_behaves_like 'globus::repo::el', facts
+        end
+        if facts[:os]['family'] == 'Debian'
+          it { is_expected.not_to contain_class('epel') }
+          it_behaves_like 'globus::repo::deb', facts
+        end
         it_behaves_like 'globus::user', facts
         it_behaves_like 'globus::install', facts
         it_behaves_like 'globus::config', facts
@@ -54,7 +65,13 @@ describe 'globus' do
         it { is_expected.not_to contain_group('gcsweb') }
         it { is_expected.not_to contain_user('gcsweb') }
 
-        it_behaves_like 'globus::repo::elv4', facts
+        if facts[:os]['family'] == 'RedHat'
+          it_behaves_like 'globus::repo::elv4', facts
+        end
+        if facts[:os]['family'] == 'Debian'
+          it { is_expected.not_to contain_class('epel') }
+          it_behaves_like 'globus::repo::debv4', facts
+        end
         it_behaves_like 'globus::installv4', facts
         it_behaves_like 'globus::configv4', facts
         it_behaves_like 'globus::servicev4', facts

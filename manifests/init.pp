@@ -34,6 +34,8 @@
 # @param gcs_repo_testing_baseurl
 #   Globus v5 testing repo baseurl
 #   Globus v4 & v5
+# @param enable_testing_repos
+#   Boolean that sets if testing repos should be added
 # @param extra_gridftp_settings
 #   Additional settings for GridFTP
 #   Globus v4 & v5
@@ -247,6 +249,7 @@ class globus (
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $toolkit_repo_testing_baseurl = "https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_baseurl = "https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/",
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_testing_baseurl = "https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/",
+  Boolean $enable_testing_repos = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
   Boolean $manage_service = true,
@@ -337,11 +340,7 @@ class globus (
 
   $osfamily = $facts.dig('os', 'family')
   $osmajor = $facts.dig('os', 'release', 'major')
-  $supported = ['RedHat-7','RedHat-8']
   $os = "${osfamily}-${osmajor}"
-  if ! ($os in $supported) {
-    fail("Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 7 and 8")
-  }
 
   if String($version) == '4' and $os == 'RedHat-8' {
     fail("${module_name}: Version 4 is not support on OS ${os}")
@@ -413,7 +412,7 @@ class globus (
   -> Class['globus::config']
   -> Class['globus::service']
 
-  case $::osfamily {
+  case $osfamily {
     'RedHat': {
       if $manage_epel {
         include ::epel
@@ -422,6 +421,11 @@ class globus (
       contain globus::repo::el
 
       Class['globus::repo::el'] -> Class['globus::install']
+    }
+    'Debian': {
+      contain globus::repo::deb
+
+      Class['globus::repo::deb'] -> Class['globus::install']
     }
     default: {
       # Do nothing
