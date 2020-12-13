@@ -174,3 +174,11 @@ Tested using
 
 * RedHat/CentOS 7
 * RedHat/CentOS 8
+* Debian 9
+* Debian 10
+* Ubuntu 18.04
+* Ubuntu 20.04
+
+## Limitations
+
+At this time `globus::cli` and `globus::sdk` are not supported on Ubuntu 20.04 due to limitations in the Python module
