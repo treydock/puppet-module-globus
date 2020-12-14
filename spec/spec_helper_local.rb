@@ -9,9 +9,9 @@ def platforms
       pip_provider: 'pip',
     },
     'RedHat-8' => {
-      python_version: '2',
-      virtualenv_provider: 'virtualenv-2',
-      pip_provider: 'pip2',
+      python_version: '3',
+      virtualenv_provider: 'virtualenv-3',
+      pip_provider: 'pip3',
     },
     'Debian-9' => {
       python_version: 'system',
