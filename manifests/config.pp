@@ -113,6 +113,7 @@ class globus::config {
     $endpoint_setup_args = globus::endpoint_setup_args({
       display_name => $globus::display_name,
       client_id => $globus::client_id,
+      client_secret => $globus::client_secret,
       owner => $globus::owner,
       deployment_key => $globus::deployment_key,
       organization => $globus::organization,

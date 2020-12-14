@@ -2,9 +2,11 @@ shared_examples_for 'globus::config' do |_facts|
   let(:endpoint_setup) do
     [
       'globus-connect-server endpoint setup',
-      "'Example' --client-id foo",
+      "'Example' --client-id foo --secret 'bar'",
       "--owner 'admin@example.com'",
+      "--organization 'Example'",
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
+      '--agree-to-letsencrypt-tos',
     ]
   end
   let(:node_setup) do
@@ -12,7 +14,7 @@ shared_examples_for 'globus::config' do |_facts|
       'globus-connect-server node setup',
       '--client-id foo',
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
-      '--incoming-port-range 50000,51000',
+      '--incoming-port-range 50000 51000',
       '--ip-address 172.16.254.254',
     ]
   end
