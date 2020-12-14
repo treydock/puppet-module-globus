@@ -89,30 +89,14 @@
     
       
         <p class="example_title"><div class='inline'>
-<p>Install and configure a Globus IO endpoint that uses OAuth. This example
-assumes host cert/key will not be provided by Globus.</p>
+<p>Install and setup a Globus v5.4 endpoint</p>
 </div></p>
       
       <pre class="example code"><code>class { &#39;globus&#39;:
-  include_id_server =&gt; false,
-  globus_user =&gt; &#39;myusername&#39;,
-  globus_password =&gt; &#39;password&#39;,
-  endpoint_name =&gt; &#39;myorg&#39;,
-  endpoint_public =&gt; true,
-  myproxy_server =&gt; &#39;myproxy.example.com:7512&#39;,
-  oauth_server =&gt; &#39;myproxy.example.com&#39;,
-  security_identity_method =&gt; &#39;OAuth&#39;,
-  security_fetch_credentials_from_relay =&gt; false,
-  security_certificate_file =&gt; &#39;/etc/grid-security/hostcert.pem&#39;,
-  security_key_file =&gt; &#39;/etc/grid-security/hostkey.pem&#39;,
-  gridftp_server =&gt; $::fqdn,
-  gridftp_restrict_paths =&gt; [&#39;RW~&#39;,&#39;N~/.*&#39;,&#39;RW/project&#39;],
-  # Example of extra settings
-  extra_gridftp_settings =&gt; [
-    &#39;log_level ALL&#39;,
-    &#39;log_single /var/log/gridftp-auth.log&#39;,
-    &#39;log_transfer /var/log/gridftp-transfer.log&#39;,
-  ],
+  display_name  =&gt; &#39;REPLACE My Site Globus&#39;,
+  client_id     =&gt; &#39;REPLACE-client-id-from-globus&#39;,
+  client_secret =&gt; &#39;REPLACE-client-id-from-globus&#39;,
+  owner         =&gt; &#39;REPLACE-user@example.com&#39;,
 }</code></pre>
     
   </div>
@@ -127,8 +111,13 @@ assumes host cert/key will not be provided by Globus.</p>
         <span class='type'>(<tt>Variant[Enum['4','5'],Integer[4,5]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;4&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;5&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Major version of Globus to install. Only needed to install Globus v4</p>
+</div>
       
     </li>
   
@@ -143,6 +132,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Setup Globus v4 IO server Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -155,6 +149,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Setup Globus v4 ID server Globus v4 only</p>
+</div>
       
     </li>
   
@@ -169,6 +168,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Setup Globus v4 OAuth server Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -182,11 +186,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Release URL of Globus release RPM Globus v4 &amp; v5</p>
+</div>
+      
     </li>
   
     <li>
       
-        <span class='name'>repo_baseurl</span>
+        <span class='name'>toolkit_repo_baseurl</span>
       
       
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
@@ -195,11 +204,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Globus Toolkit RPM repo baseurl Globus v4 &amp; v5</p>
+</div>
+      
     </li>
   
     <li>
       
-        <span class='name'>repo_testing_baseurl</span>
+        <span class='name'>toolkit_repo_testing_baseurl</span>
       
       
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
@@ -208,11 +222,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Globus Toolkit testing RPM repo baseurl Globus v4 &amp; v5</p>
+</div>
+      
     </li>
   
     <li>
       
-        <span class='name'>repo_baseurl_v5</span>
+        <span class='name'>gcs_repo_baseurl</span>
       
       
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
@@ -221,11 +240,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Globus Connect Server repo baseurl Globus v4 &amp; v5</p>
+</div>
+      
     </li>
   
     <li>
       
-        <span class='name'>repo_testing_baseurl_v5</span>
+        <span class='name'>gcs_repo_testing_baseurl</span>
       
       
         <span class='type'>(<tt>Variant[Stdlib::Httpsurl, Stdlib::Httpurl]</tt>)</span>
@@ -234,11 +258,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&quot;https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Globus v5 testing repo baseurl Globus v4 &amp; v5</p>
+</div>
+      
     </li>
   
     <li>
       
-        <span class='name'>remove_cilogon_cron</span>
+        <span class='name'>enable_testing_repos</span>
       
       
         <span class='type'>(<tt>Boolean</tt>)</span>
@@ -246,6 +275,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Boolean that sets if testing repos should be added</p>
+</div>
       
     </li>
   
@@ -260,6 +294,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Additional settings for GridFTP Globus v4 &amp; v5</p>
+</div>
+      
     </li>
   
     <li>
@@ -272,6 +311,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Used when running GridFTP from Globus with OSG, see README. Globus v4 only</p>
+</div>
       
     </li>
   
@@ -286,6 +330,12 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if globus-gridftp-server service is managed Globus v4 &amp;
+v5</p>
+</div>
+      
     </li>
   
     <li>
@@ -298,6 +348,12 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if the commands to setup Globus are run (v4 and v5) Globus
+v4 &amp; v5</p>
+</div>
       
     </li>
   
@@ -312,6 +368,12 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if firewall rules are managed by this module Globus v4 &amp;
+v5</p>
+</div>
+      
     </li>
   
     <li>
@@ -324,6 +386,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if EPEL is managed by this repo Globus v4 &amp; v5</p>
+</div>
       
     </li>
   
@@ -338,6 +405,66 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>[&#39;yum-plugin-priorities&#39;]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Additional repo dependencies Globus v4 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>manage_user</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Boolean to set if the gcsweb user and group are managed by this module
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>group_gid</span>
+      
+      
+        <span class='type'>(<tt>Optional[Integer]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The gcsweb group GID Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user_uid</span>
+      
+      
+        <span class='type'>(<tt>Optional[Integer]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The gcsweb user UID Globus v5 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -348,8 +475,356 @@ assumes host cert/key will not be provided by Globus.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;globus-connect-server53&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;globus-connect-server54&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Globus v5 package name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>display_name</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Display name to use when running &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>client_id</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–client-id use when running &#39;globus-connect-server endpoint setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>client_secret</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–client-secret use when running &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>owner</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–owner use when running &#39;globus-connect-server endpoint setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>organization</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–organization use when running &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>deployment_key</span>
+      
+      
+        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;/var/lib/globus-connect-server/gcs-manager/deployment-key.json&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–deployment-key use when running &#39;globus-connect-server endpoint
+setup&#39; The parent directory of this path must be writable by gcsweb
+user Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>keywords</span>
+      
+      
+        <span class='type'>(<tt>Optional[Array]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–keywords use when running &#39;globus-connect-server endpoint setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>department</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–department use when running &#39;globus-connect-server endpoint setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>contact_email</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–contact-email use when running &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>contact_info</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–contact-info use when running &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>info_link</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–info-link use when running &#39;globus-connect-server endpoint setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>description</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–description use when running &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>public</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>When false pass –private flag to &#39;globus-connect-server endpoint
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>incoming_port_range</span>
+      
+      
+        <span class='type'>(<tt>Array[Stdlib::Port, 2, 2]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[50000, 51000]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–incoming-port-range use when running &#39;globus-connect-server node
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>outgoing_port_range</span>
+      
+      
+        <span class='type'>(<tt>Optional[Array[Stdlib::Port, 2, 2]]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–outgoing-port-range use when running &#39;globus-connect-server node
+setup&#39; Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ip_address</span>
+      
+      
+        <span class='type'>(<tt>Optional[Stdlib::IP::Address]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–ip-address use when running &#39;globus-connect-server node setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>export_node</span>
+      
+      
+        <span class='type'>(<tt>Optional[Stdlib::Absolutepath]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–export-node use when running &#39;globus-connect-server node setup&#39;
+Globus v5 only</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>import_node</span>
+      
+      
+        <span class='type'>(<tt>Optional[Stdlib::Absolutepath]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>–import-node use when running &#39;globus-connect-server node setup&#39;
+Globus v5 only</p>
+</div>
       
     </li>
   
@@ -364,6 +839,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;%(GLOBUS_USER)s&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Globus/User Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -377,31 +857,10 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;%(GLOBUS_PASSWORD)s&#39;</tt>)</em>
       
       
-    </li>
-  
-    <li>
-      
-        <span class='name'>globus_client_id</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>globus_client_secret</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
-      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Globus/Password Globus v4 only</p>
+</div>
       
     </li>
   
@@ -416,6 +875,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>$::hostname</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Endpoint/Name Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -428,6 +892,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Endpoint/Public Globus v4 only</p>
+</div>
       
     </li>
   
@@ -442,44 +911,10 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;/~/&#39;</tt>)</em>
       
       
-    </li>
-  
-    <li>
-      
-        <span class='name'>endpoint_server_name</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>$::fqdn</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>letsencrypt_email</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>letsencrypt_agreetos</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>false</tt>)</em>
-      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Endpoint/DefaultDirectory Globus v4 only</p>
+</div>
       
     </li>
   
@@ -494,6 +929,12 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/FetchCredentialFromRelay Globus v4
+only</p>
+</div>
+      
     </li>
   
     <li>
@@ -506,6 +947,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>&#39;/var/lib/globus-connect-server/grid-security/hostcert.pem&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/CertificateFile Globus v4 only</p>
+</div>
       
     </li>
   
@@ -520,6 +966,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;/var/lib/globus-connect-server/grid-security/hostkey.pem&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/KeyFile Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -532,6 +983,12 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>&#39;/var/lib/globus-connect-server/grid-security/certificates/&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/TrustedCertificateDirectory Globus
+v4 only</p>
+</div>
       
     </li>
   
@@ -546,6 +1003,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;MyProxy&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/IdentityMethod Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -558,6 +1020,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/AuthorizationMethod Globus v4 only</p>
+</div>
       
     </li>
   
@@ -572,6 +1039,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/Gridmap Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -584,6 +1056,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf Security/IdentityProvider Globus v4 only</p>
+</div>
       
     </li>
   
@@ -598,6 +1075,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/Server Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -610,6 +1092,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>2811</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/ServerPort Globus v4</p>
+</div>
       
     </li>
   
@@ -624,6 +1111,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/ServerBehindNat Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -631,11 +1123,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <span class='name'>gridftp_incoming_port_range</span>
       
       
-        <span class='type'>(<tt>Array</tt>)</span>
+        <span class='type'>(<tt>Array[Stdlib::Port, 2, 2]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[&#39;50000&#39;, &#39;51000&#39;]</tt>)</em>
+        <em class="default">(defaults to: <tt>[50000, 51000]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/IncomingPortRange Globus v4 only</p>
+</div>
       
     </li>
   
@@ -644,11 +1141,16 @@ assumes host cert/key will not be provided by Globus.</p>
         <span class='name'>gridftp_outgoing_port_range</span>
       
       
-        <span class='type'>(<tt>Any</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[Stdlib::Port, 2, 2]]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/OutgoingPortRange Globus v4 only</p>
+</div>
       
     </li>
   
@@ -663,6 +1165,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/DataInterface Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -675,6 +1182,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>[&#39;RW~&#39;, &#39;N~/.*&#39;]</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/RestrictPaths Globus v4 only</p>
+</div>
       
     </li>
   
@@ -689,6 +1201,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/Sharing Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -701,6 +1218,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/SharingRestrictPaths Globus v4 only</p>
+</div>
       
     </li>
   
@@ -715,6 +1237,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;$HOME/.globus/sharing&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/SharingStateDir Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -727,6 +1254,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/UsersAllow Globus v4 only</p>
+</div>
       
     </li>
   
@@ -741,6 +1273,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/GroupsAllow Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -753,6 +1290,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/UsersDeny Globus v4 only</p>
+</div>
       
     </li>
   
@@ -767,18 +1309,10 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
-    </li>
-  
-    <li>
-      
-        <span class='name'>gridftp_require_encryption</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>false</tt>)</em>
-      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf GridFTP/GroupsDeny Globus v4 only</p>
+</div>
       
     </li>
   
@@ -793,6 +1327,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf MyProxy/Server Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -805,6 +1344,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>7512</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf MyProxy/ServerPort Globus v4 only</p>
+</div>
       
     </li>
   
@@ -819,6 +1363,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf MyProxy/ServerBehindNAT Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -831,6 +1380,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>&#39;/var/lib/globus-connect-server/myproxy-ca&#39;</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf MyProxy/CADirectory Globus v4 only</p>
+</div>
       
     </li>
   
@@ -845,6 +1399,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>&#39;/var/lib/globus-connect-server/myproxy-server.conf&#39;</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf MyProxy/ConfigFile Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -857,6 +1416,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf MyProxy/CaSubjectDN Globus v4 only</p>
+</div>
       
     </li>
   
@@ -871,6 +1435,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>[&#39;174.129.226.69&#39;, &#39;54.237.254.192/29&#39;]</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>Sources to open in firewall for MyProxy Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -883,6 +1452,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf OAuth/Server Globus v4 only</p>
+</div>
       
     </li>
   
@@ -897,6 +1471,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf OAuth/ServerBehindFirewall Globus v4 only</p>
+</div>
+      
     </li>
   
     <li>
@@ -909,6 +1488,11 @@ assumes host cert/key will not be provided by Globus.</p>
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf OAuth/Stylesheet Globus v4 only</p>
+</div>
       
     </li>
   
@@ -923,6 +1507,11 @@ assumes host cert/key will not be provided by Globus.</p>
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>See globus-connect-server.conf OAuth/Logo Globus v4 only</p>
+</div>
+      
     </li>
   
 </ul>
@@ -936,158 +1525,6 @@ assumes host cert/key will not be provided by Globus.</p>
         <pre class="lines">
 
 
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
 241
 242
 243
@@ -1100,23 +1537,208 @@ assumes host cert/key will not be provided by Globus.</p>
 250
 251
 252
-253</pre>
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 89</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 241</span>
 
 class globus (
-  Variant[Enum[&#39;4&#39;,&#39;5&#39;],Integer[4,5]] $version = &#39;4&#39;,
+  Variant[Enum[&#39;4&#39;,&#39;5&#39;],Integer[4,5]] $version = &#39;5&#39;,
 
   Boolean $include_io_server = true,
   Boolean $include_id_server = true,
   Boolean $include_oauth_server = false,
   Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $release_url = &#39;https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm&#39;,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_baseurl_v5 = &quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
-  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $repo_testing_baseurl_v5 = &quot;https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
-  Boolean $remove_cilogon_cron = false,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $toolkit_repo_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $toolkit_repo_testing_baseurl = &quot;https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_baseurl = &quot;https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Variant[Stdlib::Httpsurl, Stdlib::Httpurl] $gcs_repo_testing_baseurl = &quot;https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}/\$basearch/&quot;,
+  Boolean $enable_testing_repos = false,
   Array $extra_gridftp_settings = [],
   Optional[String] $first_gridftp_callback = undef,
   Boolean $manage_service = true,
@@ -1125,29 +1747,41 @@ class globus (
   Boolean $manage_epel = true,
   Array $repo_dependencies = [&#39;yum-plugin-priorities&#39;],
 
-  String $package_name = &#39;globus-connect-server53&#39;,
+  Boolean $manage_user = true,
+  Optional[Integer] $group_gid = undef,
+  Optional[Integer] $user_uid = undef,
+  String $package_name = &#39;globus-connect-server54&#39;,
+
+  # Required - v5
+  Optional[String] $display_name = undef,
+  Optional[String] $client_id = undef,
+  Optional[String] $client_secret = undef,
+  Optional[String] $owner = undef,
+  Optional[String] $organization = undef,
+  Stdlib::Absolutepath $deployment_key = &#39;/var/lib/globus-connect-server/gcs-manager/deployment-key.json&#39;,
+  # endpoint setup - v5
+  Optional[Array] $keywords = undef,
+  Optional[String] $department = undef,
+  Optional[String] $contact_email = undef,
+  Optional[String] $contact_info = undef,
+  Optional[String] $info_link = undef,
+  Optional[String] $description = undef,
+  Boolean $public = true,
+  # node setup - v5
+  Array[Stdlib::Port, 2, 2] $incoming_port_range = [50000, 51000],
+  Optional[Array[Stdlib::Port, 2, 2]] $outgoing_port_range = undef,
+  Optional[Stdlib::IP::Address] $ip_address = undef,
+  Optional[Stdlib::Absolutepath] $export_node = undef,
+  Optional[Stdlib::Absolutepath] $import_node = undef,
 
   # Globus Config - v4
   String $globus_user = &#39;%(GLOBUS_USER)s&#39;,
   String $globus_password = &#39;%(GLOBUS_PASSWORD)s&#39;,
 
-  # Globus Config - v5
-  String $globus_client_id = &#39;&#39;,
-  String $globus_client_secret = &#39;&#39;,
-
   # Endpoint Config - v4
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = &#39;/~/&#39;,
-
-  # Endpoint Config - v5
-  String $endpoint_server_name = $::fqdn,
-
-  # Endpoint Config - v4/v5
   String $endpoint_name = $::hostname,
-
-  # LetsEncrypt Config - v5
-  String $letsencrypt_email = &#39;&#39;,
-  Boolean $letsencrypt_agreetos = false,
 
   # Security Config - v4
   Boolean $security_fetch_credentials_from_relay = true,
@@ -1159,10 +1793,10 @@ class globus (
   Optional[Stdlib::Absolutepath] $security_gridmap = undef,
   Optional[String] $security_cilogon_identity_provider = undef,
 
-  # GridFTP Config - v4/v5
+  # GridFTP Config - v4
   Stdlib::Port $gridftp_server_port = 2811,
-  Array $gridftp_incoming_port_range = [&#39;50000&#39;, &#39;51000&#39;],
-  $gridftp_outgoing_port_range = undef, #&#39;50000-51000&#39;,
+  Array[Stdlib::Port, 2, 2] $gridftp_incoming_port_range = [50000, 51000],
+  Optional[Array[Stdlib::Port, 2, 2]] $gridftp_outgoing_port_range = undef,
   Optional[String] $gridftp_data_interface = undef,
 
   # GridFTP Config - v4
@@ -1176,9 +1810,6 @@ class globus (
   Optional[Array] $gridftp_sharing_groups_allow = undef,
   Optional[Array] $gridftp_sharing_users_deny = undef,
   Optional[Array] $gridftp_sharing_groups_deny = undef,
-
-  # GridFTP Config - v5
-  Boolean $gridftp_require_encryption = false,
 
   # MyProxy Config - v4
   Optional[String] $myproxy_server = undef,
@@ -1198,14 +1829,27 @@ class globus (
 
   $osfamily = $facts.dig(&#39;os&#39;, &#39;family&#39;)
   $osmajor = $facts.dig(&#39;os&#39;, &#39;release&#39;, &#39;major&#39;)
-  $supported = [&#39;RedHat-6&#39;,&#39;RedHat-7&#39;]
   $os = &quot;${osfamily}-${osmajor}&quot;
-  if ! ($os in $supported) {
-    fail(&quot;Unsupported OS: ${osfamily}, module ${module_name} only supports RedHat 6 and 7&quot;)
+
+  if String($version) == &#39;4&#39; and $os == &#39;RedHat-8&#39; {
+    fail(&quot;${module_name}: Version 4 is not support on OS ${os}&quot;)
   }
-  if versioncmp($osmajor, &#39;6&#39;) &lt;= 0 {
-    if String($version) == &#39;5&#39; {
-      fail(&quot;${module_name}: Version 5 is not supported on OS major release ${osmajor}&quot;)
+
+  if String($version) == &#39;5&#39; {
+    if ! $display_name {
+      fail(&quot;${module_name}: display_name is required with version 5&quot;)
+    }
+    if ! $client_id {
+      fail(&quot;${module_name}: client_id is required with version 5&quot;)
+    }
+    if ! $client_secret {
+      fail(&quot;${module_name}: client_secret is required with version 5&quot;)
+    }
+    if ! $owner {
+      fail(&quot;${module_name}: owner is required with version 5&quot;)
+    }
+    if ! $organization {
+      fail(&quot;${module_name}: organization is required with version 5&quot;)
     }
   }
 
@@ -1233,12 +1877,16 @@ class globus (
     $_oauth_setup_command = undef
   }
 
-  $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
-  if String($version) == &#39;5&#39; {
-    $_setup_command = &#39;globus-connect-server-setup&#39;
+  # For v5
+  if ! $ip_address {
+    $_ip_address = $facts.dig(&#39;networking&#39;,&#39;ip&#39;)
   } else {
-    $_setup_command   = join($_setup_commands, &#39; &amp;&amp; &#39;)
+    $_ip_address = $ip_address
   }
+
+  # For v4
+  $_setup_commands  = delete_undef_values([$_io_setup_command, $_id_setup_command, $_oauth_setup_command])
+  $_setup_command   = join($_setup_commands, &#39; &amp;&amp; &#39;)
 
   if $manage_service {
     $notify_service = Service[&#39;globus-gridftp-server&#39;]
@@ -1246,15 +1894,17 @@ class globus (
     $notify_service = undef
   }
 
+  contain globus::user
   contain globus::install
   contain globus::config
   contain globus::service
 
-  Class[&#39;globus::install&#39;]
+  Class[&#39;globus::user&#39;]
+  -&gt; Class[&#39;globus::install&#39;]
   -&gt; Class[&#39;globus::config&#39;]
   -&gt; Class[&#39;globus::service&#39;]
 
-  case $::osfamily {
+  case $osfamily {
     &#39;RedHat&#39;: {
       if $manage_epel {
         include ::epel
@@ -1263,6 +1913,11 @@ class globus (
       contain globus::repo::el
 
       Class[&#39;globus::repo::el&#39;] -&gt; Class[&#39;globus::install&#39;]
+    }
+    &#39;Debian&#39;: {
+      contain globus::repo::deb
+
+      Class[&#39;globus::repo::deb&#39;] -&gt; Class[&#39;globus::install&#39;]
     }
     default: {
       # Do nothing

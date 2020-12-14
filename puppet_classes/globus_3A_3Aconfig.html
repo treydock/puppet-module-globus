@@ -288,7 +288,52 @@
 195
 196
 197
-198</pre>
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 3</span>
@@ -309,114 +354,158 @@ class globus::config {
     $_resources_require_setup       = undef
   }
 
-  file { &#39;/etc/globus-connect-server.conf&#39;:
-    ensure =&gt; &#39;file&#39;,
-    owner  =&gt; &#39;root&#39;,
-    group  =&gt; &#39;root&#39;,
-    mode   =&gt; &#39;0600&#39;,
-  }
-
-  resources { &#39;globus_connect_config&#39;: purge =&gt; true }
-
-  Globus_connect_config {
-    notify =&gt; $_globus_connect_config_notify,
-  }
-
-  Globus_connect_config &lt;| tag == &quot;v${globus::version}&quot; |&gt;
-
-  # Globus Configs
-  @globus_connect_config { &#39;Globus/User&#39;: value =&gt; $globus::globus_user, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Globus/Password&#39;: value =&gt; $globus::globus_password, secret =&gt; true, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Globus/ClientId&#39;: value =&gt; $globus::globus_client_id, tag =&gt; &#39;v5&#39; }
-  @globus_connect_config { &#39;Globus/ClientSecret&#39;: value =&gt; $globus::globus_client_secret, secret =&gt; true, tag =&gt; &#39;v5&#39; }
-
-  # Endpoint Configs
-  @globus_connect_config { &#39;Endpoint/Name&#39;: value =&gt; $globus::endpoint_name, tag =&gt; [&#39;v4&#39;,&#39;v5&#39;] }
-  @globus_connect_config { &#39;Endpoint/ServerName&#39;: value =&gt; $globus::endpoint_server_name, tag =&gt; &#39;v5&#39; }
-  @globus_connect_config { &#39;Endpoint/Public&#39;: value =&gt; $globus::endpoint_public, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Endpoint/DefaultDirectory&#39;: value =&gt; $globus::endpoint_default_directory, tag =&gt; &#39;v4&#39; }
-
-  # LetsEncrypt Configs (v5)
-  @globus_connect_config { &#39;LetsEncrypt/Email&#39;: value =&gt; $globus::letsencrypt_email, tag =&gt; &#39;v5&#39; }
-  @globus_connect_config { &#39;LetsEncrypt/AgreeToS&#39;: value =&gt; $globus::letsencrypt_agreetos, tag =&gt; &#39;v5&#39; }
-
-  # Security Configs
-  @globus_connect_config { &#39;Security/FetchCredentialFromRelay&#39;: value =&gt; $globus::security_fetch_credentials_from_relay, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Security/CertificateFile&#39;: value =&gt; $globus::security_certificate_file, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Security/KeyFile&#39;: value =&gt; $globus::security_key_file, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Security/TrustedCertificateDirectory&#39;: value =&gt; $globus::security_trusted_certificate_directory, tag =&gt; &#39;v4&#39; }
-  @globus_connect_config { &#39;Security/IdentityMethod&#39;: value =&gt; $globus::security_identity_method, tag =&gt; &#39;v4&#39; }
-  if $globus::security_authorization_method {
-    @globus_connect_config { &#39;Security/AuthorizationMethod&#39;: value =&gt; $globus::security_authorization_method, tag =&gt; &#39;v4&#39; }
-  }
-  if $globus::security_gridmap {
-    @globus_connect_config { &#39;Security/Gridmap&#39;: value =&gt; $globus::security_gridmap, tag =&gt; &#39;v4&#39; }
-  }
-  if $globus::security_cilogon_identity_provider {
-    @globus_connect_config { &#39;Security/CILogonIdentityProvider&#39;: value =&gt; $globus::security_cilogon_identity_provider, tag =&gt; &#39;v4&#39; }
-  }
-
-  # GridFTP Configs
-  if $globus::version == &#39;5&#39; or ($globus::include_io_server and $globus::_gridftp_server) {
-    @globus_connect_config { &#39;GridFTP/Server&#39;: value =&gt; $globus::_gridftp_server, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;GridFTP/ServerBehindNAT&#39;: value =&gt; $globus::gridftp_server_behind_nat, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;GridFTP/IncomingPortRange&#39;: value =&gt; join($globus::gridftp_incoming_port_range, &#39;,&#39;), tag =&gt; [&#39;v4&#39;,&#39;v5&#39;] }
-    if $globus::gridftp_outgoing_port_range {
-      @globus_connect_config { &#39;GridFTP/OutgoingPortRange&#39;: value =&gt; join($globus::gridftp_outgoing_port_range, &#39;,&#39;), tag =&gt; [&#39;v4&#39;,&#39;v5&#39;] }
+  if String($globus::version) == &#39;4&#39; {
+    file { &#39;/etc/globus-connect-server.conf&#39;:
+      ensure =&gt; &#39;file&#39;,
+      owner  =&gt; &#39;root&#39;,
+      group  =&gt; &#39;root&#39;,
+      mode   =&gt; &#39;0600&#39;,
     }
-    if $globus::gridftp_data_interface {
-      @globus_connect_config { &#39;GridFTP/DataInterface&#39;: value =&gt; $globus::gridftp_data_interface, tag =&gt; [&#39;v4&#39;,&#39;v5&#39;] }
-    }
-    @globus_connect_config { &#39;GridFTP/RestrictPaths&#39;: value =&gt; join($globus::gridftp_restrict_paths, &#39;,&#39;), tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;GridFTP/Sharing&#39;: value =&gt; $globus::gridftp_sharing, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;GridFTP/RequireEncryption&#39;: value =&gt; $globus::gridftp_require_encryption, tag =&gt; &#39;v5&#39; }
-    if $globus::gridftp_sharing_restrict_paths {
-      @globus_connect_config { &#39;GridFTP/SharingRestrictPaths&#39;: value =&gt; join($globus::gridftp_sharing_restrict_paths, &#39;,&#39;), tag =&gt; &#39;v4&#39; }
-    }
-    @globus_connect_config { &#39;GridFTP/SharingStateDir&#39;: value =&gt; $globus::gridftp_sharing_state_dir, tag =&gt; &#39;v4&#39; }
-    if $globus::gridftp_sharing_users_allow {
-      @globus_connect_config { &#39;GridFTP/SharingUsersAllow&#39;: value =&gt; join($globus::gridftp_sharing_users_allow, &#39;,&#39;), tag =&gt; &#39;v4&#39; }
-    }
-    if $globus::gridftp_sharing_groups_allow {
-      @globus_connect_config { &#39;GridFTP/SharingGroupsAllow&#39;: value =&gt; join($globus::gridftp_sharing_groups_allow, &#39;,&#39;), tag =&gt; &#39;v4&#39; }
-    }
-    if $globus::gridftp_sharing_users_deny {
-      @globus_connect_config { &#39;GridFTP/SharingUsersDeny&#39;: value =&gt; join($globus::gridftp_sharing_users_deny, &#39;,&#39;), tag =&gt; &#39;v4&#39; }
-    }
-    if $globus::gridftp_sharing_groups_deny {
-      @globus_connect_config { &#39;GridFTP/SharingGroupsDeny&#39;: value =&gt; join($globus::gridftp_sharing_groups_deny, &#39;,&#39;), tag =&gt; &#39;v4&#39; }
-    }
-  }
 
-  # MyProxy Configs
-  if $globus::_myproxy_server {
-    @globus_connect_config { &#39;MyProxy/Server&#39;: value =&gt; $globus::_myproxy_server, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;MyProxy/ServerBehindNAT&#39;: value =&gt; $globus::myproxy_server_behind_nat, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;MyProxy/CADirectory&#39;: value =&gt; $globus::myproxy_ca_directory, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;MyProxy/ConfigFile&#39;: value =&gt; $globus::myproxy_config_file, tag =&gt; &#39;v4&#39; }
-    if $globus::myproxy_ca_subject_dn {
-      @globus_connect_config { &#39;MyProxy/CaSubjectDN&#39;: value =&gt; $globus::myproxy_ca_subject_dn, tag =&gt; &#39;v4&#39; }
-    }
-  }
+    resources { &#39;globus_connect_config&#39;: purge =&gt; true }
 
-  # OAuth Configs
-  if $globus::_oauth_server {
-    @globus_connect_config { &#39;OAuth/Server&#39;: value =&gt; $globus::_oauth_server, tag =&gt; &#39;v4&#39; }
-    @globus_connect_config { &#39;OAuth/ServerBehindNAT&#39;: value =&gt; $globus::oauth_server_behind_firewall, tag =&gt; &#39;v4&#39; }
-    if $globus::oauth_stylesheet {
-      @globus_connect_config { &#39;OAuth/Stylesheet&#39;: value =&gt; $globus::oauth_stylesheet, tag =&gt; &#39;v4&#39; }
+    Globus_connect_config {
+      notify =&gt; $_globus_connect_config_notify,
     }
-    if $globus::oauth_logo {
-      @globus_connect_config { &#39;OAuth/Logo&#39;: value =&gt; $globus::oauth_logo, tag =&gt; &#39;v4&#39; }
+
+    # Globus Configs
+    globus_connect_config { &#39;Globus/User&#39;: value =&gt; $globus::globus_user }
+    globus_connect_config { &#39;Globus/Password&#39;: value =&gt; $globus::globus_password, secret =&gt; true }
+
+    # Endpoint Configs
+    globus_connect_config { &#39;Endpoint/Name&#39;: value =&gt; $globus::endpoint_name }
+    globus_connect_config { &#39;Endpoint/Public&#39;: value =&gt; $globus::endpoint_public }
+    globus_connect_config { &#39;Endpoint/DefaultDirectory&#39;: value =&gt; $globus::endpoint_default_directory }
+
+    # Security Configs
+    globus_connect_config { &#39;Security/FetchCredentialFromRelay&#39;: value =&gt; $globus::security_fetch_credentials_from_relay }
+    globus_connect_config { &#39;Security/CertificateFile&#39;: value =&gt; $globus::security_certificate_file }
+    globus_connect_config { &#39;Security/KeyFile&#39;: value =&gt; $globus::security_key_file }
+    globus_connect_config { &#39;Security/TrustedCertificateDirectory&#39;: value =&gt; $globus::security_trusted_certificate_directory }
+    globus_connect_config { &#39;Security/IdentityMethod&#39;: value =&gt; $globus::security_identity_method }
+    if $globus::security_authorization_method {
+      globus_connect_config { &#39;Security/AuthorizationMethod&#39;: value =&gt; $globus::security_authorization_method }
+    }
+    if $globus::security_gridmap {
+      globus_connect_config { &#39;Security/Gridmap&#39;: value =&gt; $globus::security_gridmap }
+    }
+    if $globus::security_cilogon_identity_provider {
+      globus_connect_config { &#39;Security/CILogonIdentityProvider&#39;: value =&gt; $globus::security_cilogon_identity_provider }
+    }
+
+    # GridFTP Configs
+    if $globus::include_io_server and $globus::_gridftp_server {
+      globus_connect_config { &#39;GridFTP/Server&#39;: value =&gt; $globus::_gridftp_server }
+      globus_connect_config { &#39;GridFTP/ServerBehindNAT&#39;: value =&gt; $globus::gridftp_server_behind_nat }
+      globus_connect_config { &#39;GridFTP/IncomingPortRange&#39;: value =&gt; join($globus::gridftp_incoming_port_range, &#39;,&#39;) }
+      if $globus::gridftp_outgoing_port_range {
+        globus_connect_config { &#39;GridFTP/OutgoingPortRange&#39;: value =&gt; join($globus::gridftp_outgoing_port_range, &#39;,&#39;) }
+      }
+      if $globus::gridftp_data_interface {
+        globus_connect_config { &#39;GridFTP/DataInterface&#39;: value =&gt; $globus::gridftp_data_interface }
+      }
+      globus_connect_config { &#39;GridFTP/RestrictPaths&#39;: value =&gt; join($globus::gridftp_restrict_paths, &#39;,&#39;) }
+      globus_connect_config { &#39;GridFTP/Sharing&#39;: value =&gt; $globus::gridftp_sharing }
+      if $globus::gridftp_sharing_restrict_paths {
+        globus_connect_config { &#39;GridFTP/SharingRestrictPaths&#39;: value =&gt; join($globus::gridftp_sharing_restrict_paths, &#39;,&#39;) }
+      }
+      globus_connect_config { &#39;GridFTP/SharingStateDir&#39;: value =&gt; $globus::gridftp_sharing_state_dir }
+      if $globus::gridftp_sharing_users_allow {
+        globus_connect_config { &#39;GridFTP/SharingUsersAllow&#39;: value =&gt; join($globus::gridftp_sharing_users_allow, &#39;,&#39;) }
+      }
+      if $globus::gridftp_sharing_groups_allow {
+        globus_connect_config { &#39;GridFTP/SharingGroupsAllow&#39;: value =&gt; join($globus::gridftp_sharing_groups_allow, &#39;,&#39;) }
+      }
+      if $globus::gridftp_sharing_users_deny {
+        globus_connect_config { &#39;GridFTP/SharingUsersDeny&#39;: value =&gt; join($globus::gridftp_sharing_users_deny, &#39;,&#39;) }
+      }
+      if $globus::gridftp_sharing_groups_deny {
+        globus_connect_config { &#39;GridFTP/SharingGroupsDeny&#39;: value =&gt; join($globus::gridftp_sharing_groups_deny, &#39;,&#39;) }
+      }
+    }
+
+    # MyProxy Configs
+    if $globus::_myproxy_server {
+      globus_connect_config { &#39;MyProxy/Server&#39;: value =&gt; $globus::_myproxy_server }
+      globus_connect_config { &#39;MyProxy/ServerBehindNAT&#39;: value =&gt; $globus::myproxy_server_behind_nat }
+      globus_connect_config { &#39;MyProxy/CADirectory&#39;: value =&gt; $globus::myproxy_ca_directory }
+      globus_connect_config { &#39;MyProxy/ConfigFile&#39;: value =&gt; $globus::myproxy_config_file }
+      if $globus::myproxy_ca_subject_dn {
+        globus_connect_config { &#39;MyProxy/CaSubjectDN&#39;: value =&gt; $globus::myproxy_ca_subject_dn }
+      }
+    }
+
+    # OAuth Configs
+    if $globus::_oauth_server {
+      globus_connect_config { &#39;OAuth/Server&#39;: value =&gt; $globus::_oauth_server }
+      globus_connect_config { &#39;OAuth/ServerBehindNAT&#39;: value =&gt; $globus::oauth_server_behind_firewall }
+      if $globus::oauth_stylesheet {
+        globus_connect_config { &#39;OAuth/Stylesheet&#39;: value =&gt; $globus::oauth_stylesheet }
+      }
+      if $globus::oauth_logo {
+        globus_connect_config { &#39;OAuth/Logo&#39;: value =&gt; $globus::oauth_logo }
+      }
     }
   }
-
-  if $globus::remove_cilogon_cron {
-    file { &#39;/etc/cron.hourly/globus-connect-server-cilogon-basic-crl&#39;:
-      ensure =&gt; &#39;absent&#39;
+  if String($globus::version) == &#39;5&#39; {
+    $endpoint_setup_args = globus::endpoint_setup_args({
+      display_name =&gt; $globus::display_name,
+      client_id =&gt; $globus::client_id,
+      client_secret =&gt; $globus::client_secret,
+      owner =&gt; $globus::owner,
+      deployment_key =&gt; $globus::deployment_key,
+      organization =&gt; $globus::organization,
+      keywords =&gt; $globus::keywords,
+      department =&gt; $globus::department,
+      contact_email =&gt; $globus::contact_email,
+      contact_info =&gt; $globus::contact_info,
+      info_link =&gt; $globus::info_link,
+      description =&gt; $globus::description,
+      public =&gt; $globus::public,
+    })
+    $endpoint_setup = &quot;globus-connect-server endpoint setup ${endpoint_setup_args}&quot;
+    file { &#39;/root/globus-endpoint-setup&#39;:
+      ensure    =&gt; &#39;file&#39;,
+      owner     =&gt; &#39;root&#39;,
+      group     =&gt; &#39;root&#39;,
+      mode      =&gt; &#39;0700&#39;,
+      show_diff =&gt; false,
+      content   =&gt; &quot;export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${endpoint_setup}\n&quot;
     }
-    file { &#39;/etc/cron.hourly/globus-connect-server-cilogon-silver-crl&#39;:
-      ensure =&gt; &#39;absent&#39;
+    $node_setup_args = globus::node_setup_args({
+      client_id =&gt; $globus::client_id,
+      deployment_key =&gt; $globus::deployment_key,
+      incoming_port_range =&gt; $globus::incoming_port_range,
+      outgoing_port_range =&gt; $globus::outgoing_port_range,
+      ip_address =&gt; $globus::_ip_address,
+      export_node =&gt; $globus::export_node,
+      import_node =&gt; $globus::import_node,
+    })
+    $node_setup = &quot;globus-connect-server node setup ${node_setup_args}&quot;
+    file { &#39;/root/globus-node-setup&#39;:
+      ensure    =&gt; &#39;file&#39;,
+      owner     =&gt; &#39;root&#39;,
+      group     =&gt; &#39;root&#39;,
+      mode      =&gt; &#39;0700&#39;,
+      show_diff =&gt; false,
+      content   =&gt; &quot;export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${node_setup}\n&quot;
+    }
+    if $globus::run_setup_commands {
+      exec { &#39;globus-endpoint-setup&#39;:
+        path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
+        command     =&gt; $endpoint_setup,
+        environment =&gt; [&quot;GLOBUS_CLIENT_SECRET=${globus::client_secret}&quot;],
+        creates     =&gt; $globus::deployment_key,
+        logoutput   =&gt; true,
+      }
+      exec { &#39;globus-node-setup&#39;:
+        path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
+        command     =&gt; $node_setup,
+        environment =&gt; [&quot;GLOBUS_CLIENT_SECRET=${globus::client_secret}&quot;],
+        creates     =&gt; &#39;/var/lib/globus-connect-server/info.json&#39;,
+        logoutput   =&gt; true,
+        require     =&gt; Exec[&#39;globus-endpoint-setup&#39;],
+      }
     }
   }
 
@@ -431,7 +520,7 @@ class globus::config {
     }
   }
 
-  if $globus::version == &#39;4&#39; and $globus::first_gridftp_callback {
+  if String($globus::version) == &#39;4&#39; and $globus::first_gridftp_callback {
     $_first_gridftp_callback_match = regsubst($globus::first_gridftp_callback, &#39;\|&#39;, &#39;\\|&#39;, &#39;G&#39;)
     exec { &#39;add-gridftp-callback&#39;:
       path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
@@ -444,7 +533,7 @@ class globus::config {
   }
 
   if $globus::manage_firewall {
-    if String($globus::version) == &#39;4&#39; {
+    if String($globus::version) == &#39;4&#39; and $globus::include_io_server {
       firewall { &#39;500 allow GridFTP control channel&#39;:
         action =&gt; &#39;accept&#39;,
         dport  =&gt; $globus::gridftp_server_port,
@@ -460,11 +549,12 @@ class globus::config {
       }
     }
 
-    $_gridftp_incoming_ports = join($globus::gridftp_incoming_port_range, &#39;-&#39;)
-    firewall { &#39;500 allow GridFTP data channels&#39;:
-      action =&gt; &#39;accept&#39;,
-      dport  =&gt; $_gridftp_incoming_ports,
-      proto  =&gt; &#39;tcp&#39;,
+    if String($globus::version) == &#39;5&#39; or $globus::include_io_server {
+      firewall { &#39;500 allow GridFTP data channels&#39;:
+        action =&gt; &#39;accept&#39;,
+        dport  =&gt; join($globus::gridftp_incoming_port_range, &#39;-&#39;),
+        proto  =&gt; &#39;tcp&#39;,
+      }
     }
 
     if String($globus::version) == &#39;4&#39; and $globus::include_id_server {

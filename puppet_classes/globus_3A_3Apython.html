@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: globus::install
+  Puppet Class: globus::python
   
     &mdash; Documentation by YARD 0.9.25
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "puppet_classes::globus::install";
+  pathId = "puppet_classes::globus::python";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (g)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">globus::install</span>
+    <span class="title">globus::python</span>
   
 </div>
 
@@ -59,20 +59,20 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: globus::install</h1>
+      <div id="content"><h1>Puppet Class: globus::python</h1>
 <div class="box_info">
   
   
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/install.pp
+      manifests/python.pp
     </dd>
   </dl>
 </div>
 
   <h2>Summary</h2>
-  manage Globus install
+  Manage Globus Python dependency
 
 <h2>Overview</h2>
 <div class="docstring">
@@ -83,7 +83,24 @@
 
 
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>version</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;system&#39;</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
 
 
 </div><div class="method_details_list">
@@ -100,60 +117,18 @@
 7
 8
 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31</pre>
+10</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/install.pp', line 3</span>
+        <pre class="code"><span class="info file"># File 'manifests/python.pp', line 3</span>
 
-class globus::install {
-
-  if String($globus::version) == &#39;4&#39; {
-    if $globus::include_io_server {
-      package { &#39;globus-connect-server-io&#39;:
-        ensure  =&gt; &#39;present&#39;,
-      }
-    }
-
-    if $globus::include_id_server {
-      package { &#39;globus-connect-server-id&#39;:
-        ensure  =&gt; &#39;present&#39;,
-      }
-    }
-
-    if $globus::include_oauth_server {
-      package { &#39;globus-connect-server-web&#39;:
-        ensure  =&gt; &#39;present&#39;,
-      }
-    }
+class globus::python (
+  String $version = &#39;system&#39;,
+) {
+  class { &#39;python&#39;:
+    version    =&gt; $version,
+    virtualenv =&gt; &#39;present&#39;,
   }
-
-  if String($globus::version) == &#39;5&#39; {
-    package { $globus::package_name:
-      ensure =&gt; &#39;present&#39;,
-    }
-  }
-
 }</pre>
       </td>
     </tr>
