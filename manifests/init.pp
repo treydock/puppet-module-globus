@@ -80,12 +80,12 @@
 # @param owner
 #   --owner use when running 'globus-connect-server endpoint setup'
 #   Globus v5 only
+# @param organization
+#   --organization use when running 'globus-connect-server endpoint setup'
+#   Globus v5 only
 # @param deployment_key
 #   --deployment-key use when running 'globus-connect-server endpoint setup'
 #   The parent directory of this path must be writable by gcsweb user
-#   Globus v5 only
-# @param organization
-#   --organization use when running 'globus-connect-server endpoint setup'
 #   Globus v5 only
 # @param keywords
 #   --keywords use when running 'globus-connect-server endpoint setup'
@@ -268,9 +268,9 @@ class globus (
   Optional[String] $client_id = undef,
   Optional[String] $client_secret = undef,
   Optional[String] $owner = undef,
+  Optional[String] $organization = undef,
   Stdlib::Absolutepath $deployment_key = '/var/lib/globus-connect-server/gcs-manager/deployment-key.json',
   # endpoint setup - v5
-  Optional[String] $organization = undef,
   Optional[Array] $keywords = undef,
   Optional[String] $department = undef,
   Optional[String] $contact_email = undef,
@@ -358,6 +358,9 @@ class globus (
     }
     if ! $owner {
       fail("${module_name}: owner is required with version 5")
+    }
+    if ! $organization {
+      fail("${module_name}: organization is required with version 5")
     }
   }
 

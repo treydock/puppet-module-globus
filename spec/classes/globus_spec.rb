@@ -13,6 +13,7 @@ describe 'globus' do
           client_secret: 'bar',
           owner: 'admin@example.com',
           display_name: 'Example',
+          organization: 'Example',
         }
       end
       let(:params) { default_params }

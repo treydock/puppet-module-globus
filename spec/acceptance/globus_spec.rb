@@ -76,6 +76,7 @@ describe 'globus class:' do
         client_id           => 'REPLACE-client-id-from-globus',
         client_secret       => 'REPLACE-client-id-from-globus',
         owner               => 'REPLACE-user@example.com',
+        organization        => 'REPLACE-My Site',
         run_setup_commands  => false,
         manage_firewall     => false,
       }
