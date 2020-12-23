@@ -4,34 +4,34 @@ Dir["#{dir}/shared_examples/**/*.rb"].sort.each { |f| require f }
 def platforms
   {
     'RedHat-7' => {
-      python_version: 'system',
-      virtualenv_provider: 'virtualenv',
-      pip_provider: 'pip',
+      python_version: '3',
+      pip_provider: 'pip3',
+      venv_python_version: '3.6',
     },
     'RedHat-8' => {
       python_version: '3',
-      virtualenv_provider: 'virtualenv-3',
       pip_provider: 'pip3',
+      venv_python_version: '3.6',
     },
     'Debian-9' => {
-      python_version: 'system',
-      virtualenv_provider: 'virtualenv',
+      python_version: '3',
       pip_provider: 'pip',
+      venv_python_version: 'system',
     },
     'Debian-10' => {
-      python_version: 'system',
-      virtualenv_provider: 'virtualenv',
+      python_version: '3',
       pip_provider: 'pip',
+      venv_python_version: 'system',
     },
     'Debian-18.04' => {
-      python_version: 'system',
-      virtualenv_provider: 'virtualenv',
+      python_version: '3',
       pip_provider: 'pip',
+      venv_python_version: 'system',
     },
     'Debian-20.04' => {
-      python_version: 'system',
-      virtualenv_provider: 'virtualenv',
+      python_version: '3',
       pip_provider: 'pip',
+      venv_python_version: 'system',
     },
   }
 end

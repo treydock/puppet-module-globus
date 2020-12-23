@@ -1,10 +1,13 @@
 # @summary Manage Globus Python dependency
 # @api private
 class globus::python (
-  String $version = 'system',
+  String $version = '3',
+  Array $package_dependencies = [],
+  String $pip_provider = 'pip',
+  String $venv_python_version = 'system',
 ) {
   class { 'python':
-    version    => $version,
-    virtualenv => 'present',
+    version => $version,
+    dev     => 'present',
   }
 }
