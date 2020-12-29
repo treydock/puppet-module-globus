@@ -165,6 +165,24 @@ To install the Globus SDK to `/opt/globus-sdk`:
 ```puppet
 include globus::sdk
 ```
+
+### Facts
+
+The `globus_info` fact exposes the information stored in `/var/lib/globus-connect-server/info.json`.  Example:
+
+```
+# facter -p globus_info
+{
+  endpoint_id => "1c6b6e6a-3791-4213-b3e6-00000001",
+  domain_name => "00000001.8443.data.globus.org",
+  manager_version => "5.4.11",
+  DATA_TYPE => "info#1.0.0",
+  client_id => "1c6b6e6a-3791-4213-b3e6-00000001",
+  api_version => "1.3.0"
+}
+
+```
+
 ## Reference
 
 [http://treydock.github.io/puppet-module-globus/](http://treydock.github.io/puppet-module-globus/)
