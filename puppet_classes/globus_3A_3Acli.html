@@ -148,42 +148,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>virtualenv_provider</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;virtualenv&#39;</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Virtualenv command to use</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>pip_provider</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;pip&#39;</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Pip command to use</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 
@@ -195,6 +159,10 @@
         <pre class="lines">
 
 
+12
+13
+14
+15
 16
 17
 18
@@ -225,40 +193,15 @@
 43
 44
 45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69</pre>
+46</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cli.pp', line 16</span>
+        <pre class="code"><span class="info file"># File 'manifests/cli.pp', line 12</span>
 
 class globus::cli (
   String[1] $ensure = &#39;present&#39;,
   Stdlib::Absolutepath $install_path = &#39;/opt/globus-cli&#39;,
   Boolean $manage_python = true,
-  String $virtualenv_provider = &#39;virtualenv&#39;,
-  String $pip_provider = &#39;pip&#39;,
 ) {
 
   if $facts.dig(&#39;os&#39;,&#39;name&#39;) == &#39;Ubuntu&#39; and $facts.dig(&#39;os&#39;,&#39;release&#39;,&#39;major&#39;) == &#39;20.04&#39; {
@@ -267,36 +210,19 @@ class globus::cli (
 
   if $manage_python {
     include globus::python
-    $virtualenv_require = Package[&#39;virtualenv&#39;]
-  } else {
-    $virtualenv_require = undef
   }
 
-  if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; {
-    python::virtualenv { &#39;globus-cli&#39;:
-      ensure     =&gt; &#39;present&#39;,
-      version    =&gt; $globus::python::version,
-      virtualenv =&gt; $virtualenv_provider,
-      venv_dir   =&gt; $install_path,
-      distribute =&gt; false,
-      before     =&gt; Python::Pip[&#39;globus-cli&#39;],
-      require    =&gt; $virtualenv_require,
-    }
-  } elsif $facts[&#39;os&#39;][&#39;family&#39;] == &#39;Debian&#39; {
-    python::pyvenv { &#39;globus-cli&#39;:
-      ensure   =&gt; &#39;present&#39;,
-      version  =&gt; $globus::python::version,
-      venv_dir =&gt; $install_path,
-      before   =&gt; Python::Pip[&#39;globus-cli&#39;],
-      require  =&gt; $virtualenv_require,
-    }
-  } else {
-    fail(&#39;globus::cli: Unsupported OS family&#39;)
+  python::pyvenv { &#39;globus-cli&#39;:
+    ensure     =&gt; &#39;present&#39;,
+    version    =&gt; $globus::python::venv_python_version,
+    venv_dir   =&gt; $install_path,
+    systempkgs =&gt; true,
+    before     =&gt; Python::Pip[&#39;globus-cli&#39;],
   }
 
   python::pip { &#39;globus-cli&#39;:
     ensure       =&gt; $ensure,
-    pip_provider =&gt; $pip_provider,
+    pip_provider =&gt; $globus::python::pip_provider,
     virtualenv   =&gt; $install_path,
   }
 

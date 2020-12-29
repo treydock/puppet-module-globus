@@ -94,6 +94,45 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>&#39;3&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>package_dependencies</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>pip_provider</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;pip&#39;</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>venv_python_version</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
         <em class="default">(defaults to: <tt>&#39;system&#39;</tt>)</em>
       
       
@@ -117,17 +156,23 @@
 7
 8
 9
-10</pre>
+10
+11
+12
+13</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/python.pp', line 3</span>
 
 class globus::python (
-  String $version = &#39;system&#39;,
+  String $version = &#39;3&#39;,
+  Array $package_dependencies = [],
+  String $pip_provider = &#39;pip&#39;,
+  String $venv_python_version = &#39;system&#39;,
 ) {
   class { &#39;python&#39;:
-    version    =&gt; $version,
-    virtualenv =&gt; &#39;present&#39;,
+    version =&gt; $version,
+    dev     =&gt; &#39;present&#39;,
   }
 }</pre>
       </td>
