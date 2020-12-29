@@ -785,22 +785,6 @@ Boolean to set if Python is managed by this class
 
 Default value: ``true``
 
-##### `virtualenv_provider`
-
-Data type: `String`
-
-Virtualenv command to use
-
-Default value: `'virtualenv'`
-
-##### `pip_provider`
-
-Data type: `String`
-
-Pip command to use
-
-Default value: `'pip'`
-
 ### `globus::sdk`
 
 Manage Globus SDK
@@ -840,22 +824,6 @@ Data type: `Boolean`
 Boolean to set if Python is managed by this class
 
 Default value: ``true``
-
-##### `virtualenv_provider`
-
-Data type: `String`
-
-Virtualenv command to use
-
-Default value: `'/usr/bin/virtualenv'`
-
-##### `pip_provider`
-
-Data type: `String`
-
-Pip command to use
-
-Default value: `'pip'`
 
 ## Resource types
 
