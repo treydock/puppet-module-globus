@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.2.0](https://github.com/treydock/puppet-module-globus/tree/v5.2.0) (2020-12-29)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v5.1.0...v5.2.0)
+
+### Added
+
+- Add globus\_info fact [\#23](https://github.com/treydock/puppet-module-globus/pull/23) ([treydock](https://github.com/treydock))
+
 ## [v5.1.0](https://github.com/treydock/puppet-module-globus/tree/v5.1.0) (2020-12-29)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v5.0.0...v5.1.0)
