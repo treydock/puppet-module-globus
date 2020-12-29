@@ -8,5 +8,9 @@ describe 'globus::sdk class:', unless: fact('os.release.major') == '20.04' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
+
+    describe command("/opt/globus-cli/bin/python -c 'import globus_sdk'") do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
   end
 end

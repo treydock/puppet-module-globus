@@ -19,34 +19,19 @@ describe 'globus::sdk' do
       it do
         is_expected.to contain_class('python').with(
           version: platforms[platform_os][:python_version],
-          virtualenv: 'present',
+          dev: 'present',
         )
       end
 
-      if facts[:os]['family'] == 'RedHat'
-        it do
-          is_expected.to contain_python__virtualenv('globus-sdk').with(
-            'ensure'     => 'present',
-            'version'    => platforms[platform_os][:python_version],
-            'virtualenv' => platforms[platform_os][:virtualenv_provider],
-            'venv_dir'   => '/opt/globus-sdk',
-            'distribute' => 'false',
-          )
-        end
-        it { is_expected.to contain_python__virtualenv('globus-sdk').that_comes_before('Python::Pip[globus-sdk]') }
-        it { is_expected.to contain_python__virtualenv('globus-sdk').that_requires('Package[virtualenv]') }
+      it do
+        is_expected.to contain_python__pyvenv('globus-sdk').with(
+          'ensure'     => 'present',
+          'version'    => platforms[platform_os][:venv_python_version],
+          'venv_dir'   => '/opt/globus-sdk',
+          'systempkgs' => 'true',
+        )
       end
-      if facts[:os]['family'] == 'Debian'
-        it do
-          is_expected.to contain_python__pyvenv('globus-sdk').with(
-            'ensure'     => 'present',
-            'version'    => platforms[platform_os][:python_version],
-            'venv_dir'   => '/opt/globus-sdk',
-          )
-        end
-        it { is_expected.to contain_python__pyvenv('globus-sdk').that_comes_before('Python::Pip[globus-sdk]') }
-        it { is_expected.to contain_python__pyvenv('globus-sdk').that_requires('Package[virtualenv]') }
-      end
+      it { is_expected.to contain_python__pyvenv('globus-sdk').that_comes_before('Python::Pip[globus-sdk]') }
 
       it do
         is_expected.to contain_python__pip('globus-sdk').with(

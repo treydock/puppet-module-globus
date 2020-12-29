@@ -2,3 +2,5 @@
 globus::url_os: el
 globus::repo_dependencies:
   - yum-plugin-priorities
+globus::python::pip_provider: pip3
+globus::python::venv_python_version: '3.6'
