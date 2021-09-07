@@ -15,7 +15,7 @@ Currently this module supports Globus 4.x and 5.4.
 | -------------- | ----------------------------- |
 | 4.x            | 3.x                           |
 | 4.x & 5.3      | 4.x                           |
-| 4.x & 5.4      | 5.x                           |
+| 4.x & 5.4      | 5.x-6.x                       |
 
 
 ### Upgrading to module version 5.x
