@@ -785,6 +785,14 @@ Boolean to set if Python is managed by this class
 
 Default value: ``true``
 
+##### `timer_ensure`
+
+Data type: `String[1]`
+
+Set globus-timer-cli ensure value
+
+Default value: `'absent'`
+
 ### `globus::sdk`
 
 Manage Globus SDK

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.0](https://github.com/treydock/puppet-module-globus/tree/v6.0.0) (2021-09-07)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v5.2.0...v6.0.0)
+
+### Changed
+
+- Drop Puppet 5 support, add Puppet 7 [\#25](https://github.com/treydock/puppet-module-globus/pull/25) ([treydock](https://github.com/treydock))
+
+### Added
+
+- Support globus::cli and globus::sdk on ubuntu 20.04 [\#28](https://github.com/treydock/puppet-module-globus/pull/28) ([treydock](https://github.com/treydock))
+- Update module dependency ranges [\#27](https://github.com/treydock/puppet-module-globus/pull/27) ([treydock](https://github.com/treydock))
+- Support installing globus-timer-cli [\#24](https://github.com/treydock/puppet-module-globus/pull/24) ([treydock](https://github.com/treydock))
+
+### Fixed
+
+- Fix node setup fact and only run gcs\_manager once node is actually setup [\#26](https://github.com/treydock/puppet-module-globus/pull/26) ([treydock](https://github.com/treydock))
+
 ## [v5.2.0](https://github.com/treydock/puppet-module-globus/tree/v5.2.0) (2020-12-29)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v5.1.0...v5.2.0)
