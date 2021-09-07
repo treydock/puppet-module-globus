@@ -9,14 +9,13 @@
       - ubuntu-1804
       - ubuntu-2004
     puppet:
-      - puppet5
       - puppet6
-  acceptance_excludes:
-    - puppet: puppet5
-      set: ubuntu-2004
+      - puppet7
 .gitlab-ci.yml:
   delete: true
 appveyor.yml:
   delete: true
-spec/acceptance/nodesets/ubuntu-1604.yml:
-  delete: true
+spec/acceptance/nodesets/centos-7.yml:
+  extra_commands:
+    - 'echo "LC_ALL=en_US.UTF-8" >> /etc/environment'
+    - 'echo "LANG=en_US.UTF-8" > /etc/locale.conf'
