@@ -148,6 +148,24 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>timer_ensure</span>
+      
+      
+        <span class='type'>(<tt>String[1]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;absent&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Set globus-timer-cli ensure value</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -159,8 +177,6 @@
         <pre class="lines">
 
 
-12
-13
 14
 15
 16
@@ -193,20 +209,32 @@
 43
 44
 45
-46</pre>
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/cli.pp', line 12</span>
+        <pre class="code"><span class="info file"># File 'manifests/cli.pp', line 14</span>
 
 class globus::cli (
   String[1] $ensure = &#39;present&#39;,
   Stdlib::Absolutepath $install_path = &#39;/opt/globus-cli&#39;,
   Boolean $manage_python = true,
+  String[1] $timer_ensure = &#39;absent&#39;,
 ) {
-
-  if $facts.dig(&#39;os&#39;,&#39;name&#39;) == &#39;Ubuntu&#39; and $facts.dig(&#39;os&#39;,&#39;release&#39;,&#39;major&#39;) == &#39;20.04&#39; {
-    fail(&#39;globus::cli: Not supported on this operating system&#39;)
-  }
 
   if $manage_python {
     include globus::python
@@ -232,6 +260,22 @@ class globus::cli (
     require =&gt; Python::Pip[&#39;globus-cli&#39;],
   }
 
+  if $timer_ensure != &#39;absent&#39; {
+    $timer_cli_ensure = &#39;link&#39;
+  } else {
+    $timer_cli_ensure = &#39;absent&#39;
+  }
+
+  python::pip { &#39;globus-timer-cli&#39;:
+    ensure       =&gt; $timer_ensure,
+    pip_provider =&gt; $globus::python::pip_provider,
+    virtualenv   =&gt; $install_path,
+  }
+  file { &#39;/usr/bin/globus-timer&#39;:
+    ensure  =&gt; $timer_cli_ensure,
+    target  =&gt; &quot;${install_path}/bin/globus-timer&quot;,
+    require =&gt; Python::Pip[&#39;globus-timer-cli&#39;],
+  }
 }</pre>
       </td>
     </tr>

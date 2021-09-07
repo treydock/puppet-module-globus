@@ -182,11 +182,7 @@
 32
 33
 34
-35
-36
-37
-38
-39</pre>
+35</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/sdk.pp', line 12</span>
@@ -196,10 +192,6 @@ class globus::sdk (
   Stdlib::Absolutepath $install_path = &#39;/opt/globus-sdk&#39;,
   Boolean $manage_python = true,
 ) {
-
-  if $facts.dig(&#39;os&#39;,&#39;name&#39;) == &#39;Ubuntu&#39; and $facts.dig(&#39;os&#39;,&#39;release&#39;,&#39;major&#39;) == &#39;20.04&#39; {
-    fail(&#39;globus::cli: Not supported on this operating system&#39;)
-  }
 
   if $manage_python {
     include globus::python
