@@ -8,7 +8,7 @@ describe 'globus_info Fact' do
   end
 
   it 'returns Globus info' do
-    allow(Facter::Util::Globus).to receive(:read_info).and_return(my_fixture_read('info.json'))
+    allow(Facter::Util::Globus).to receive(:read_info).and_return(JSON.parse(my_fixture_read('info.json')))
     value = Facter.fact(:globus_info).value
     expect(value).not_to be_nil
     expect(value['domain_name']).to eq('example0001.data.globus.org')
@@ -17,11 +17,6 @@ describe 'globus_info Fact' do
 
   it 'returns nil if info.json does not exist' do
     allow(Facter::Util::Globus).to receive(:read_info).and_return(nil)
-    expect(Facter.fact(:globus_info).value).to be_nil
-  end
-
-  it 'returns nil if info.json is invalid' do
-    allow(Facter::Util::Globus).to receive(:read_info).and_return('[')
     expect(Facter.fact(:globus_info).value).to be_nil
   end
 end

@@ -4,6 +4,7 @@ Facter.add('globus_node_setup') do
   confine kernel: 'Linux'
 
   setcode do
-    Facter::Util::Globus.info_exists?
+    info = Facter::Util::Globus.read_info
+    !info.nil?
   end
 end

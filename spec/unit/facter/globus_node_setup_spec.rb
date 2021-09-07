@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'facter/util/globus'
 
 describe 'globus_node_setup Fact' do
   before :each do
@@ -7,12 +8,12 @@ describe 'globus_node_setup Fact' do
   end
 
   it 'returns true if info.json exists' do
-    allow(File).to receive(:exist?).with('/var/lib/globus-connect-server/info.json').and_return(true)
+    allow(Facter::Util::Globus).to receive(:read_info).and_return(JSON.parse(my_fixture_read('info.json')))
     expect(Facter.fact(:globus_node_setup).value).to eq(true)
   end
 
   it 'returns false if info.json does not exist' do
-    allow(File).to receive(:exist?).with('/var/lib/globus-connect-server/info.json').and_return(false)
+    allow(Facter::Util::Globus).to receive(:read_info).and_return(nil)
     expect(Facter.fact(:globus_node_setup).value).to eq(false)
   end
 end
