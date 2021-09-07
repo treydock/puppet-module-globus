@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'globus::cli class:', unless: fact('os.release.major') == '20.04' do
+describe 'globus::cli class:' do
   context 'with default parameters' do
     it 'runs successfully' do
       # Python is too old on Debian 9 for globus-timer-cli
@@ -18,7 +18,7 @@ describe 'globus::cli class:', unless: fact('os.release.major') == '20.04' do
     describe command('globus --version') do
       its(:exit_status) { is_expected.to eq 0 }
     end
-    describe command('globus-timer --version'), unless: (fact('os.family') == 'Debian' && ['9', '20.04'].include?(fact('os.release.major'))) do
+    describe command('globus-timer --version'), unless: (fact('os.name') == 'Debian' && fact('os.release.major') == '9') do
       its(:exit_status) { is_expected.to eq 0 }
     end
   end

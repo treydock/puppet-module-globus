@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'globus::sdk class:', unless: fact('os.release.major') == '20.04' do
+describe 'globus::sdk class:' do
   context 'with default parameters' do
     it 'runs successfully' do
       pp = 'include globus::sdk'
