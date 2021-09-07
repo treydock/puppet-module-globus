@@ -8,10 +8,6 @@ describe 'globus::cli' do
       end
       let(:platform_os) { "#{facts[:os]['family']}-#{facts[:os]['release']['major']}" }
 
-      if facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '20.04'
-        before(:each) { skip('Unsupported OS') }
-      end
-
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to create_class('globus::cli') }

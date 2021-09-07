@@ -15,10 +15,6 @@ class globus::sdk (
   Boolean $manage_python = true,
 ) {
 
-  if $facts.dig('os','name') == 'Ubuntu' and $facts.dig('os','release','major') == '20.04' {
-    fail('globus::cli: Not supported on this operating system')
-  }
-
   if $manage_python {
     include globus::python
   }
