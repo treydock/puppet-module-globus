@@ -120,7 +120,7 @@ describe 'globus class:' do
 
     describe service('gcs_manager') do
       it { is_expected.to be_enabled }
-      it { is_expected.to be_running }
+      it { is_expected.not_to be_running }
     end
 
     describe service('gcs_manager_assistant') do

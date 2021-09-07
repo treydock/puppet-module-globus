@@ -10,6 +10,14 @@ class Facter::Util::Globus
 
   def self.read_info
     return nil unless info_exists?
-    File.read(info)
+    f = File.read(info)
+    return nil if f.nil?
+    value = nil
+    begin
+      value = JSON.parse(f)
+    rescue JSON::ParserError
+      return nil
+    end
+    value
   end
 end

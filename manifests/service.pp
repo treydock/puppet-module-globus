@@ -19,7 +19,7 @@ class globus::service {
       $gcs_ensure = undef
     }
     service { 'gcs_manager':
-      ensure     => 'running',
+      ensure     => $gcs_ensure,
       enable     => true,
       hasstatus  => true,
       hasrestart => true,
