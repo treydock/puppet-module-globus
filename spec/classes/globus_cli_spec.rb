@@ -45,6 +45,40 @@ describe 'globus::cli' do
         is_expected.to contain_file('/usr/bin/globus').with('ensure' => 'link',
                                                             'target' => '/opt/globus-cli/bin/globus')
       end
+
+      it do
+        is_expected.to contain_python__pip('globus-timer-cli').with(
+          'ensure'        => 'absent',
+          'pip_provider'  => platforms[platform_os][:pip_provider],
+          'virtualenv'    => '/opt/globus-cli',
+        )
+      end
+
+      it do
+        is_expected.to contain_file('/usr/bin/globus-timer').with(
+          'ensure' => 'absent',
+          'target' => '/opt/globus-cli/bin/globus-timer',
+        )
+      end
+
+      context 'when timer_ensure is present' do
+        let(:params) { { timer_ensure: 'present' } }
+
+        it do
+          is_expected.to contain_python__pip('globus-timer-cli').with(
+            'ensure'        => 'present',
+            'pip_provider'  => platforms[platform_os][:pip_provider],
+            'virtualenv'    => '/opt/globus-cli',
+          )
+        end
+
+        it do
+          is_expected.to contain_file('/usr/bin/globus-timer').with(
+            'ensure' => 'link',
+            'target' => '/opt/globus-cli/bin/globus-timer',
+          )
+        end
+      end
     end
   end
 end
