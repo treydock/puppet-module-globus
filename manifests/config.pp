@@ -164,7 +164,7 @@ class globus::config {
         path        => '/usr/bin:/bin:/usr/sbin:/sbin',
         command     => $node_setup,
         environment => ["GLOBUS_CLIENT_SECRET=${globus::client_secret}"],
-        creates     => '/var/lib/globus-connect-server/info.json',
+        unless      => 'test -s /var/lib/globus-connect-server/info.json',
         logoutput   => true,
         require     => Exec['globus-endpoint-setup'],
       }
