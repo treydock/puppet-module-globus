@@ -60,7 +60,7 @@ shared_examples_for 'globus::config' do |_facts|
       path: '/usr/bin:/bin:/usr/sbin:/sbin',
       command: node_setup.join(' '),
       environment: ['GLOBUS_CLIENT_SECRET=bar'],
-      creates: '/var/lib/globus-connect-server/info.json',
+      unless: 'test -s /var/lib/globus-connect-server/info.json',
       logoutput: 'true',
       require: 'Exec[globus-endpoint-setup]',
     )
