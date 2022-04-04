@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.1](https://github.com/treydock/puppet-module-globus/tree/v6.0.1) (2022-04-04)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v6.0.0...v6.0.1)
+
+### UNCATEGORIZED PRS; GO LABEL THEM
+
+- Fix execution condition of Exec\['globus-node-setup'\] [\#29](https://github.com/treydock/puppet-module-globus/pull/29) ([cmd-ntrf](https://github.com/cmd-ntrf))
+
 ## [v6.0.0](https://github.com/treydock/puppet-module-globus/tree/v6.0.0) (2021-09-07)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v5.2.0...v6.0.0)
