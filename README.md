@@ -200,7 +200,7 @@ The `globus_info` fact exposes the information stored in `/var/lib/globus-connec
 Tested using
 
 * RedHat/CentOS 7
-* RedHat/CentOS 8
+* RedHat/Rocky 8
 * Debian 9
 * Debian 10
 * Ubuntu 18.04
