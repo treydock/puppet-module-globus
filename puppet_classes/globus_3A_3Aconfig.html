@@ -502,7 +502,7 @@ class globus::config {
         path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
         command     =&gt; $node_setup,
         environment =&gt; [&quot;GLOBUS_CLIENT_SECRET=${globus::client_secret}&quot;],
-        creates     =&gt; &#39;/var/lib/globus-connect-server/info.json&#39;,
+        unless      =&gt; &#39;test -s /var/lib/globus-connect-server/info.json&#39;,
         logoutput   =&gt; true,
         require     =&gt; Exec[&#39;globus-endpoint-setup&#39;],
       }
