@@ -9,7 +9,7 @@ describe 'globus::sdk class:' do
       apply_manifest(pp, catch_changes: true)
     end
 
-    describe command("/opt/globus-cli/bin/python -c 'import globus_sdk'") do
+    describe command("/opt/globus-sdk/bin/python -c 'import globus_sdk'") do
       its(:exit_status) { is_expected.to eq 0 }
     end
   end

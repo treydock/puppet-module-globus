@@ -15,7 +15,7 @@ Currently this module supports Globus 4.x and 5.4.
 | -------------- | ----------------------------- |
 | 4.x            | 3.x                           |
 | 4.x & 5.3      | 4.x                           |
-| 4.x & 5.4      | 5.x-6.x                       |
+| 4.x & 5.4      | 5.x-7.x                       |
 
 
 ### Upgrading to module version 5.x
@@ -158,6 +158,14 @@ To install the Globus CLI to `/opt/globus-cli` and create symlink for executable
 include globus::cli
 ```
 
+### Globus Timer
+
+To install the Globus Timer CLI to `/opt/globus-timer` and create symlink for executable at `/usr/bin/globus-timer`:
+
+```puppet
+include globus::timer
+```
+
 ### Globus SDK
 
 To install the Globus SDK to `/opt/globus-sdk`:
@@ -197,7 +205,3 @@ Tested using
 * Debian 10
 * Ubuntu 18.04
 * Ubuntu 20.04
-
-## Limitations
-
-At this time `globus::cli` and `globus::sdk` are not supported on Ubuntu 20.04 due to limitations in the Python module
