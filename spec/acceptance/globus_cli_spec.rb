@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'globus::cli class:' do
+describe 'globus::cli class:', unless: fact('os.name') == 'Debian' && fact('os.release.major') == '9' do
   context 'with default parameters' do
     it 'runs successfully' do
       pp = 'include globus::cli'

@@ -205,3 +205,7 @@ Tested using
 * Debian 10
 * Ubuntu 18.04
 * Ubuntu 20.04
+
+## Limitations
+
+At this time `globus::cli`, `globus::timer` and `globus::sdk` are not supported on Debian 9 due to older system Python
