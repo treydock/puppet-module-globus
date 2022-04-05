@@ -2,11 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.0.0](https://github.com/treydock/puppet-module-globus/tree/v7.0.0) (2022-04-05)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v6.0.1...v7.0.0)
+
+### Changed
+
+- Replace CentOS 8 with Rocky 8 [\#31](https://github.com/treydock/puppet-module-globus/pull/31) ([treydock](https://github.com/treydock))
+- Move globus-timer-cli into dedicated class to avoid conflicts with globus-cli [\#30](https://github.com/treydock/puppet-module-globus/pull/30) ([treydock](https://github.com/treydock))
+
 ## [v6.0.1](https://github.com/treydock/puppet-module-globus/tree/v6.0.1) (2022-04-04)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v6.0.0...v6.0.1)
 
-### UNCATEGORIZED PRS; GO LABEL THEM
+### Fixed
 
 - Fix execution condition of Exec\['globus-node-setup'\] [\#29](https://github.com/treydock/puppet-module-globus/pull/29) ([cmd-ntrf](https://github.com/cmd-ntrf))
 

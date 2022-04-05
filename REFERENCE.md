@@ -11,6 +11,7 @@
 * [`globus`](#globus): Manage Globus
 * [`globus::cli`](#globuscli): Manage Globus CLI
 * [`globus::sdk`](#globussdk): Manage Globus SDK
+* [`globus::timer`](#globustimer): Manage Globus Timer
 
 #### Private Classes
 
@@ -842,7 +843,6 @@ The following parameters are available in the `globus::cli` class:
 * [`ensure`](#ensure)
 * [`install_path`](#install_path)
 * [`manage_python`](#manage_python)
-* [`timer_ensure`](#timer_ensure)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -867,14 +867,6 @@ Data type: `Boolean`
 Boolean to set if Python is managed by this class
 
 Default value: ``true``
-
-##### <a name="timer_ensure"></a>`timer_ensure`
-
-Data type: `String[1]`
-
-Set globus-timer-cli ensure value
-
-Default value: `'absent'`
 
 ### <a name="globussdk"></a>`globus::sdk`
 
@@ -911,6 +903,50 @@ Data type: `Stdlib::Absolutepath`
 Path to install Globus CLI virtualenv
 
 Default value: `'/opt/globus-sdk'`
+
+##### <a name="manage_python"></a>`manage_python`
+
+Data type: `Boolean`
+
+Boolean to set if Python is managed by this class
+
+Default value: ``true``
+
+### <a name="globustimer"></a>`globus::timer`
+
+Manage Globus Timer
+
+#### Examples
+
+##### 
+
+```puppet
+include ::globus::timer
+```
+
+#### Parameters
+
+The following parameters are available in the `globus::timer` class:
+
+* [`ensure`](#ensure)
+* [`install_path`](#install_path)
+* [`manage_python`](#manage_python)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `String[1]`
+
+The ensure parameter for PIP installed globus-timer-cli
+
+Default value: `'present'`
+
+##### <a name="install_path"></a>`install_path`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to install Globus Timer CLI virtualenv
+
+Default value: `'/opt/globus-timer'`
 
 ##### <a name="manage_python"></a>`manage_python`
 
