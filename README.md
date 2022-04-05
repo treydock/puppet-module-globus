@@ -200,8 +200,12 @@ The `globus_info` fact exposes the information stored in `/var/lib/globus-connec
 Tested using
 
 * RedHat/CentOS 7
-* RedHat/CentOS 8
+* RedHat/Rocky 8
 * Debian 9
 * Debian 10
 * Ubuntu 18.04
 * Ubuntu 20.04
+
+## Limitations
+
+At this time `globus::cli`, `globus::timer` and `globus::sdk` are not supported on Debian 9 due to older system Python
