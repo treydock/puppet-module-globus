@@ -74,7 +74,7 @@ src="https://github.com/treydock/puppet-module-globus/workflows/CI/badge.svg?bra
 <p>Currently this module supports Globus 4.x and 5.4.</p>
 
 <p>| Globus Version | Globus Puppet module versions | | ————– | —————————– | |
-4.x | 3.x | | 4.x &amp; 5.3 | 4.x | | 4.x &amp; 5.4 | 5.x-6.x |</p>
+4.x | 3.x | | 4.x &amp; 5.3 | 4.x | | 4.x &amp; 5.4 | 5.x-7.x |</p>
 
 <h3 id="label-Upgrading+to+module+version+5.x">Upgrading to module version 5.x</h3>
 
@@ -228,6 +228,14 @@ symlink for executable at <code>/usr/bin/globus</code>:</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_globus'>globus</span><span class='op'>::</span><span class='id identifier rubyid_cli'>cli</span>
 </code></pre>
 
+<h3 id="label-Globus+Timer">Globus Timer</h3>
+
+<p>To install the Globus Timer CLI to <code>/opt/globus-timer</code> and
+create symlink for executable at <code>/usr/bin/globus-timer</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_globus'>globus</span><span class='op'>::</span><span class='id identifier rubyid_timer'>timer</span>
+</code></pre>
+
 <h3 id="label-Globus+SDK">Globus SDK</h3>
 
 <p>To install the Globus SDK to <code>/opt/globus-sdk</code>:</p>
@@ -262,7 +270,7 @@ href="http://treydock.github.io/puppet-module-globus/">treydock.github.io/puppet
 <ul><li>
 <p>RedHat/CentOS 7</p>
 </li><li>
-<p>RedHat/CentOS 8</p>
+<p>RedHat/Rocky 8</p>
 </li><li>
 <p>Debian 9</p>
 </li><li>
@@ -275,8 +283,9 @@ href="http://treydock.github.io/puppet-module-globus/">treydock.github.io/puppet
 
 <h2 id="label-Limitations">Limitations</h2>
 
-<p>At this time <code>globus::cli</code> and <code>globus::sdk</code> are not
-supported on Ubuntu 20.04 due to limitations in the Python module</p>
+<p>At this time <code>globus::cli</code>, <code>globus::timer</code> and
+<code>globus::sdk</code> are not supported on Debian 9 due to older system
+Python</p>
 </div></div>
 
       <div id="footer">
