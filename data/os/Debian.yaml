@@ -4,3 +4,4 @@ globus::toolkit_repo_baseurl: https://downloads.globus.org/toolkit/gt6/stable/de
 globus::toolkit_repo_testing_baseurl: https://downloads.globus.org/toolkit/gt6/testing/deb
 globus::gcs_repo_baseurl: https://downloads.globus.org/globus-connect-server/stable/deb
 globus::gcs_repo_testing_baseurl: https://downloads.globus.org/globus-connect-server/testing/deb
+globus::python::venv_ensure: present
