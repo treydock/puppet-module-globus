@@ -9,5 +9,6 @@ class globus::python (
   class { 'python':
     version => $version,
     dev     => 'present',
+    venv    => 'present',
   }
 }
