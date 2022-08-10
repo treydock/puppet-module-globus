@@ -185,7 +185,7 @@ class globus::repo::el {
     $gcs_testing_enabled = &#39;0&#39;
   }
   if String($globus::version) == &#39;4&#39; {
-    ensure_packages([$globus::repo_dependencies])
+    ensure_packages($globus::repo_dependencies)
   }
 
   exec { &#39;RPM-GPG-KEY-Globus&#39;:
