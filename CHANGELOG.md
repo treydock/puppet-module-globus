@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.0.0](https://github.com/treydock/puppet-module-globus/tree/v8.0.0) (2022-08-10)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v7.0.0...v8.0.0)
+
+### Changed
+
+- Require python module \>= 6.3.0 [\#34](https://github.com/treydock/puppet-module-globus/pull/34) ([treydock](https://github.com/treydock))
+
+### Added
+
+- Set allowed puppet-epel version to \< 5.0.0 [\#32](https://github.com/treydock/puppet-module-globus/pull/32) ([yorickps](https://github.com/yorickps))
+
+### Fixed
+
+- Fix ensure\_packages usage [\#33](https://github.com/treydock/puppet-module-globus/pull/33) ([treydock](https://github.com/treydock))
+
 ## [v7.0.0](https://github.com/treydock/puppet-module-globus/tree/v7.0.0) (2022-04-05)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v6.0.1...v7.0.0)
