@@ -23,13 +23,13 @@
   delete: true
 appveyor.yml:
   delete: true
+spec/acceptance/nodesets/el7.yml:
+  extra_commands:
+    - 'echo "LC_ALL=en_US.UTF-8" >> /etc/environment'
+    - 'echo "LANG=en_US.UTF-8" > /etc/locale.conf'
 spec/acceptance/nodesets/el9.yml:
   delete: true
 spec/acceptance/nodesets/debian-11.yml:
   delete: true
 spec/acceptance/nodesets/ubuntu-2204.yml:
   delete: true
-spec/acceptance/nodesets/centos-7.yml:
-  extra_commands:
-    - 'echo "LC_ALL=en_US.UTF-8" >> /etc/environment'
-    - 'echo "LANG=en_US.UTF-8" > /etc/locale.conf'

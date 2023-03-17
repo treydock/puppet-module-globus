@@ -115,7 +115,12 @@ describe 'globus class:' do
       it { is_expected.to be_installed }
     end
 
-    describe service('globus-gridftp-server') do
+    describe service('globus-gridftp-server'), if: fact('os.release.major').to_s == '8' do
+      it { is_expected.to be_enabled }
+      it { is_expected.not_to be_running }
+    end
+
+    describe service('globus-gridftp-server'), unless: fact('os.release.major').to_s == '8' do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
