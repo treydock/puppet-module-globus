@@ -507,7 +507,7 @@ Data type: `String`
 See globus-connect-server.conf Endpoint/Name
 Globus v4 only
 
-Default value: `$::hostname`
+Default value: `$facts['networking']['hostname']`
 
 ##### <a name="endpoint_public"></a>`endpoint_public`
 
