@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facter/util/globus'
 
 Facter.add('globus_node_setup') do

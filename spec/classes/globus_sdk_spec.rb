@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'globus::sdk' do
@@ -21,19 +23,20 @@ describe 'globus::sdk' do
 
       it do
         is_expected.to contain_python__pyvenv('globus-sdk').with(
-          'ensure'     => 'present',
-          'version'    => platforms[platform_os][:venv_python_version],
-          'venv_dir'   => '/opt/globus-sdk',
+          'ensure' => 'present',
+          'version' => platforms[platform_os][:venv_python_version],
+          'venv_dir' => '/opt/globus-sdk',
           'systempkgs' => 'true',
         )
       end
+
       it { is_expected.to contain_python__pyvenv('globus-sdk').that_comes_before('Python::Pip[globus-sdk]') }
 
       it do
         is_expected.to contain_python__pip('globus-sdk').with(
-          'ensure'        => 'present',
-          'pip_provider'  => platforms[platform_os][:pip_provider],
-          'virtualenv'    => '/opt/globus-sdk',
+          'ensure' => 'present',
+          'pip_provider' => platforms[platform_os][:pip_provider],
+          'virtualenv' => '/opt/globus-sdk',
         )
       end
     end

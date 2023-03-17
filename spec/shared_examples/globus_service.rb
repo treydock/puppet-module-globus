@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::service' do |os_facts|
   it do
     is_expected.to contain_service('globus-gridftp-server').with(

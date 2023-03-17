@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::repo::elv4' do |facts|
   if facts[:operatingsystem] == 'Fedora'
     let(:url_os) { 'fedora' }
@@ -30,6 +32,7 @@ shared_examples_for 'globus::repo::elv4' do |facts|
       gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
     )
   end
+
   it { is_expected.to contain_yumrepo('Globus-Toolkit-6-Testing').with_enabled('0') }
 
   it 'creates Yumrepo[globus-connect-server-5' do
@@ -44,5 +47,6 @@ shared_examples_for 'globus::repo::elv4' do |facts|
       require: 'Exec[RPM-GPG-KEY-Globus]',
     )
   end
+
   it { is_expected.to contain_yumrepo('globus-connect-server-5-testing').with_enabled('0') }
 end

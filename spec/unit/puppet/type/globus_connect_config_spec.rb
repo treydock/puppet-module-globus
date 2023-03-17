@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 # these tests are a little concerning b/c they are hacking around the
 # modulepath, so these tests will not catch issues that may eventually arise

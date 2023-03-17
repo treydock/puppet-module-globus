@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'globus::timer' do
@@ -21,19 +23,20 @@ describe 'globus::timer' do
 
       it do
         is_expected.to contain_python__pyvenv('globus-timer').with(
-          'ensure'     => 'present',
-          'version'    => platforms[platform_os][:venv_python_version],
-          'venv_dir'   => '/opt/globus-timer',
+          'ensure' => 'present',
+          'version' => platforms[platform_os][:venv_python_version],
+          'venv_dir' => '/opt/globus-timer',
           'systempkgs' => 'true',
         )
       end
+
       it { is_expected.to contain_python__pyvenv('globus-timer').that_comes_before('Python::Pip[globus-timer-cli]') }
 
       it do
         is_expected.to contain_python__pip('globus-timer-cli').with(
-          'ensure'        => 'present',
-          'pip_provider'  => platforms[platform_os][:pip_provider],
-          'virtualenv'    => '/opt/globus-timer',
+          'ensure' => 'present',
+          'pip_provider' => platforms[platform_os][:pip_provider],
+          'virtualenv' => '/opt/globus-timer',
         )
       end
 

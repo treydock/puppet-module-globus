@@ -1,11 +1,18 @@
 fixtures:
-  repositories:
-    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
-    epel: https://github.com/voxpupuli/puppet-epel.git
-    apt: https://github.com/puppetlabs/puppetlabs-apt.git
-    inifile: https://github.com/puppetlabs/puppetlabs-inifile.git
-    firewall: https://github.com/puppetlabs/puppetlabs-firewall.git
-    yumrepo_core: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
-    python: https://github.com/voxpupuli/puppet-python.git
+  forge_modules:
+    stdlib:
+      repo: puppetlabs/stdlib
+    epel:
+      repo: puppet/epel
+    apt:
+      repo: puppetlabs/apt
+    inifile:
+      repo: puppetlabs/inifile
+    firewall:
+      repo: puppetlabs/firewall
+    yumrepo_core:
+      repo: puppetlabs/yumrepo_core
+    python:
+      repo: puppet/python
   symlinks:
     globus: "#{source_dir}"

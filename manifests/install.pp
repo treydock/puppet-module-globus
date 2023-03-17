@@ -1,7 +1,6 @@
 # @summary manage Globus install
 # @api private
 class globus::install {
-
   if String($globus::version) == '4' {
     if $globus::include_io_server {
       package { 'globus-connect-server-io':
@@ -27,5 +26,4 @@ class globus::install {
       ensure => 'present',
     }
   }
-
 }
