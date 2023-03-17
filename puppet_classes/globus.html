@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -872,7 +872,7 @@ Globus v5 only</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$::hostname</tt>)</em>
+        <em class="default">(defaults to: <tt>$facts[&#39;networking&#39;][&#39;hostname&#39;]</tt>)</em>
       
       
         &mdash;
@@ -1720,9 +1720,7 @@ v4 only</p>
 433
 434
 435
-436
-437
-438</pre>
+436</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/init.pp', line 241</span>
@@ -1781,7 +1779,7 @@ class globus (
   # Endpoint Config - v4
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = &#39;/~/&#39;,
-  String $endpoint_name = $::hostname,
+  String $endpoint_name = $facts[&#39;networking&#39;][&#39;hostname&#39;],
 
   # Security Config - v4
   Boolean $security_fetch_credentials_from_relay = true,
@@ -1826,7 +1824,6 @@ class globus (
   Optional[String] $oauth_stylesheet = undef,
   Optional[String] $oauth_logo = undef,
 ) {
-
   $osfamily = $facts.dig(&#39;os&#39;, &#39;family&#39;)
   $osmajor = $facts.dig(&#39;os&#39;, &#39;release&#39;, &#39;major&#39;)
   $os = &quot;${osfamily}-${osmajor}&quot;
@@ -1854,7 +1851,7 @@ class globus (
   }
 
   if $include_io_server {
-    $_gridftp_server    = pick($gridftp_server, &quot;${::fqdn}:${gridftp_server_port}&quot;)
+    $_gridftp_server    = pick($gridftp_server, &quot;${facts[&#39;networking&#39;][&#39;fqdn&#39;]}:${gridftp_server_port}&quot;)
     $_io_setup_command  = &#39;globus-connect-server-io-setup&#39;
   } else {
     $_gridftp_server    = $gridftp_server
@@ -1862,7 +1859,7 @@ class globus (
   }
 
   if $include_id_server {
-    $_myproxy_server    = pick($myproxy_server, &quot;${::fqdn}:${myproxy_server_port}&quot;)
+    $_myproxy_server    = pick($myproxy_server, &quot;${facts[&#39;networking&#39;][&#39;fqdn&#39;]}:${myproxy_server_port}&quot;)
     $_id_setup_command  = &#39;globus-connect-server-id-setup&#39;
   } else {
     $_myproxy_server    = $myproxy_server
@@ -1870,7 +1867,7 @@ class globus (
   }
 
   if $include_oauth_server {
-    $_oauth_server        = pick($oauth_server, $::fqdn)
+    $_oauth_server        = pick($oauth_server, $facts[&#39;networking&#39;][&#39;fqdn&#39;])
     $_oauth_setup_command = &#39;globus-connect-server-web-setup&#39;
   } else {
     $_oauth_server        = $oauth_server
@@ -1907,7 +1904,7 @@ class globus (
   case $osfamily {
     &#39;RedHat&#39;: {
       if $manage_epel {
-        include ::epel
+        include epel
         Class[&#39;epel&#39;] -&gt; Class[&#39;globus::repo::el&#39;]
       }
       contain globus::repo::el
@@ -1923,7 +1920,6 @@ class globus (
       # Do nothing
     }
   }
-
 }</pre>
       </td>
     </tr>

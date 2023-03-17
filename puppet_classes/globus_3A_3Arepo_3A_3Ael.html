@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::repo::el
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -192,7 +192,7 @@ class globus::repo::el {
     path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
     command =&gt; &quot;wget -qO- ${globus::release_url} | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus &gt; /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&quot;,
     creates =&gt; &#39;/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus&#39;,
-    before  =&gt; Yumrepo[&#39;Globus-Toolkit&#39;]
+    before  =&gt; Yumrepo[&#39;Globus-Toolkit&#39;],
   }
 
   yumrepo { &#39;Globus-Toolkit&#39;:

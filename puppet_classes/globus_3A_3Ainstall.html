@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::install
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -121,13 +121,18 @@
 28
 29
 30
-31</pre>
+31
+32
+33
+34
+35
+36
+37</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/install.pp', line 3</span>
 
 class globus::install {
-
   if String($globus::version) == &#39;4&#39; {
     if $globus::include_io_server {
       package { &#39;globus-connect-server-io&#39;:
@@ -149,11 +154,18 @@ class globus::install {
   }
 
   if String($globus::version) == &#39;5&#39; {
+    if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; and versioncmp($facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;], &#39;8&#39;) &gt;= 0 {
+      package { &#39;mod_auth_openidc-dnf-module&#39;:
+        ensure   =&gt; &#39;disabled&#39;,
+        name     =&gt; &#39;mod_auth_openidc&#39;,
+        provider =&gt; &#39;dnfmodule&#39;,
+        before   =&gt; Package[$globus::package_name],
+      }
+    }
     package { $globus::package_name:
       ensure =&gt; &#39;present&#39;,
     }
   }
-
 }</pre>
       </td>
     </tr>

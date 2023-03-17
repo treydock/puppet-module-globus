@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::repo::deb
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -195,14 +195,12 @@
 102
 103
 104
-105
-106</pre>
+105</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/repo/deb.pp', line 3</span>
 
 class globus::repo::deb {
-
   $release_name = basename($globus::release_url)
   $repo_dir     = &#39;/usr/share/globus-toolkit-repo&#39;
   $release_path = &quot;${repo_dir}/${release_name}&quot;

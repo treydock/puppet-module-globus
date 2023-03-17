@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::service
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -124,14 +124,25 @@
 31
 32
 33
-34</pre>
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/service.pp', line 3</span>
 
 class globus::service {
-
-  if ($globus::include_io_server or String($globus::version) == &#39;5&#39;) and $globus::manage_service {
+  if $globus::include_io_server and String($globus::version) == &#39;4&#39; and $globus::manage_service {
     service { &#39;globus-gridftp-server&#39;:
       ensure     =&gt; &#39;running&#39;,
       enable     =&gt; true,
@@ -144,8 +155,21 @@ class globus::service {
     # Only attempt to start GCS services if Globus node is setup
     if $facts[&#39;globus_node_setup&#39;] {
       $gcs_ensure = &#39;running&#39;
+      $gridftp_ensure = &#39;running&#39;
     } else {
+      # EL8 seems to have issues starting on fresh install
+      if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; and versioncmp($facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;], &#39;8&#39;) == 0 {
+        $gridftp_ensure = undef
+      } else {
+        $gridftp_ensure = &#39;running&#39;
+      }
       $gcs_ensure = undef
+    }
+    service { &#39;globus-gridftp-server&#39;:
+      ensure     =&gt; $gridftp_ensure,
+      enable     =&gt; true,
+      hasstatus  =&gt; true,
+      hasrestart =&gt; true,
     }
     service { &#39;gcs_manager&#39;:
       ensure     =&gt; $gcs_ensure,

@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::timer
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -186,8 +186,7 @@
 36
 37
 38
-39
-40</pre>
+39</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/timer.pp', line 12</span>
@@ -197,7 +196,6 @@ class globus::timer (
   Stdlib::Absolutepath $install_path = &#39;/opt/globus-timer&#39;,
   Boolean $manage_python = true,
 ) {
-
   if $manage_python {
     include globus::python
   }

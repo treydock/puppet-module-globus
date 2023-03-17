@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::user
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -119,15 +119,12 @@
 26
 27
 28
-29
-30
-31</pre>
+29</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/user.pp', line 3</span>
 
 class globus::user {
-
   if $globus::osfamily == &#39;Debian&#39; {
     $shell = &#39;/bin/false&#39;
   } else {
@@ -153,7 +150,6 @@ class globus::user {
       forcelocal =&gt; true,
     }
   }
-
 }</pre>
       </td>
     </tr>

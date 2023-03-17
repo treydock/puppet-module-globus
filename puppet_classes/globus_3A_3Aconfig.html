@@ -6,7 +6,7 @@
 <title>
   Puppet Class: globus::config
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -331,15 +331,12 @@
 238
 239
 240
-241
-242
-243</pre>
+241</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 3</span>
 
 class globus::config {
-
   if $globus::run_setup_commands {
     $_globus_connect_config_notify = Exec[&#39;globus-connect-server-setup&#39;]
     $_resources_require_setup      = Exec[&#39;globus-connect-server-setup&#39;]
@@ -449,19 +446,19 @@ class globus::config {
   }
   if String($globus::version) == &#39;5&#39; {
     $endpoint_setup_args = globus::endpoint_setup_args({
-      display_name =&gt; $globus::display_name,
-      client_id =&gt; $globus::client_id,
-      client_secret =&gt; $globus::client_secret,
-      owner =&gt; $globus::owner,
-      deployment_key =&gt; $globus::deployment_key,
-      organization =&gt; $globus::organization,
-      keywords =&gt; $globus::keywords,
-      department =&gt; $globus::department,
-      contact_email =&gt; $globus::contact_email,
-      contact_info =&gt; $globus::contact_info,
-      info_link =&gt; $globus::info_link,
-      description =&gt; $globus::description,
-      public =&gt; $globus::public,
+        display_name =&gt; $globus::display_name,
+        client_id =&gt; $globus::client_id,
+        client_secret =&gt; $globus::client_secret,
+        owner =&gt; $globus::owner,
+        deployment_key =&gt; $globus::deployment_key,
+        organization =&gt; $globus::organization,
+        keywords =&gt; $globus::keywords,
+        department =&gt; $globus::department,
+        contact_email =&gt; $globus::contact_email,
+        contact_info =&gt; $globus::contact_info,
+        info_link =&gt; $globus::info_link,
+        description =&gt; $globus::description,
+        public =&gt; $globus::public,
     })
     $endpoint_setup = &quot;globus-connect-server endpoint setup ${endpoint_setup_args}&quot;
     file { &#39;/root/globus-endpoint-setup&#39;:
@@ -470,16 +467,16 @@ class globus::config {
       group     =&gt; &#39;root&#39;,
       mode      =&gt; &#39;0700&#39;,
       show_diff =&gt; false,
-      content   =&gt; &quot;export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${endpoint_setup}\n&quot;
+      content   =&gt; &quot;export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${endpoint_setup}\n&quot;,
     }
     $node_setup_args = globus::node_setup_args({
-      client_id =&gt; $globus::client_id,
-      deployment_key =&gt; $globus::deployment_key,
-      incoming_port_range =&gt; $globus::incoming_port_range,
-      outgoing_port_range =&gt; $globus::outgoing_port_range,
-      ip_address =&gt; $globus::_ip_address,
-      export_node =&gt; $globus::export_node,
-      import_node =&gt; $globus::import_node,
+        client_id =&gt; $globus::client_id,
+        deployment_key =&gt; $globus::deployment_key,
+        incoming_port_range =&gt; $globus::incoming_port_range,
+        outgoing_port_range =&gt; $globus::outgoing_port_range,
+        ip_address =&gt; $globus::_ip_address,
+        export_node =&gt; $globus::export_node,
+        import_node =&gt; $globus::import_node,
     })
     $node_setup = &quot;globus-connect-server node setup ${node_setup_args}&quot;
     file { &#39;/root/globus-node-setup&#39;:
@@ -488,7 +485,7 @@ class globus::config {
       group     =&gt; &#39;root&#39;,
       mode      =&gt; &#39;0700&#39;,
       show_diff =&gt; false,
-      content   =&gt; &quot;export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${node_setup}\n&quot;
+      content   =&gt; &quot;export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${node_setup}\n&quot;,
     }
     if $globus::run_setup_commands {
       exec { &#39;globus-endpoint-setup&#39;:
@@ -577,7 +574,6 @@ class globus::config {
       }
     }
   }
-
 }</pre>
       </td>
     </tr>
