@@ -25,7 +25,7 @@ class globus::repo::el {
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
     command => "wget -qO- ${globus::release_url} | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus",
     creates => '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
-    before  => Yumrepo['Globus-Toolkit']
+    before  => Yumrepo['Globus-Toolkit'],
   }
 
   yumrepo { 'Globus-Toolkit':

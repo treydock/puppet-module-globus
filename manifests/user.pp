@@ -1,7 +1,6 @@
 # @summary Manage globus user and group
 # @api private
 class globus::user {
-
   if $globus::osfamily == 'Debian' {
     $shell = '/bin/false'
   } else {
@@ -27,5 +26,4 @@ class globus::user {
       forcelocal => true,
     }
   }
-
 }

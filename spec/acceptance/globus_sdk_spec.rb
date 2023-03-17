@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'globus::sdk class:', unless: fact('os.name') == 'Debian' && fact('os.release.major') == '9' do

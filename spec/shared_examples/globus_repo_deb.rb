@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::repo::deb' do |facts|
   let(:release_url) { 'http://downloads.globus.org/toolkit/gt6/stable/installers/repo/deb/globus-toolkit-repo_latest_all.deb' }
   let(:release_path) { '/usr/share/globus-toolkit-repo/globus-toolkit-repo_latest_all.deb' }
@@ -41,11 +43,12 @@ shared_examples_for 'globus::repo::deb' do |facts|
       include: { 'src' => 'true' },
       key: {
         'id' => '66A86341D3CDB1B26BE4D46F44AE7EC2FAF24365',
-        'source' => repo_key,
+        'source' => repo_key
       },
       require: 'Exec[extract-globus-repo-key]',
     )
   end
+
   it { is_expected.to contain_apt__source('globus-toolkit-6-testing').with_ensure('absent') }
 
   it do
@@ -57,10 +60,11 @@ shared_examples_for 'globus::repo::deb' do |facts|
       include: { 'src' => 'true' },
       key: {
         'id' => '66A86341D3CDB1B26BE4D46F44AE7EC2FAF24365',
-        'source' => repo_key,
+        'source' => repo_key
       },
       require: 'Exec[extract-globus-repo-key]',
     )
   end
+
   it { is_expected.to contain_apt__source('globus-connect-server-testing').with_ensure('absent') }
 end

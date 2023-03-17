@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'globus::cli' do
@@ -21,19 +23,20 @@ describe 'globus::cli' do
 
       it do
         is_expected.to contain_python__pyvenv('globus-cli').with(
-          'ensure'     => 'present',
-          'version'    => platforms[platform_os][:venv_python_version],
-          'venv_dir'   => '/opt/globus-cli',
+          'ensure' => 'present',
+          'version' => platforms[platform_os][:venv_python_version],
+          'venv_dir' => '/opt/globus-cli',
           'systempkgs' => 'true',
         )
       end
+
       it { is_expected.to contain_python__pyvenv('globus-cli').that_comes_before('Python::Pip[globus-cli]') }
 
       it do
         is_expected.to contain_python__pip('globus-cli').with(
-          'ensure'        => 'present',
-          'pip_provider'  => platforms[platform_os][:pip_provider],
-          'virtualenv'    => '/opt/globus-cli',
+          'ensure' => 'present',
+          'pip_provider' => platforms[platform_os][:pip_provider],
+          'virtualenv' => '/opt/globus-cli',
         )
       end
 

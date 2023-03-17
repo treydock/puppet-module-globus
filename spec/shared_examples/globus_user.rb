@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::user' do |facts|
   let(:shell) do
-    if facts[:os]['family'] == 'RedHat'
+    case facts[:os]['family']
+    when 'RedHat'
       '/sbin/nologin'
-    elsif facts[:os]['family'] == 'Debian'
+    when 'Debian'
       '/bin/false'
     end
   end
@@ -18,7 +21,7 @@ shared_examples_for 'globus::user' do |facts|
 
   it do
     is_expected.to contain_user('gcsweb').with(
-      ensure:  'present',
+      ensure: 'present',
       uid: nil,
       gid: 'gcsweb',
       shell: shell,

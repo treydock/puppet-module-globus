@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |c|
   c.before(:suite) do
     on hosts, 'mkdir -p /opt/puppetlabs/puppet/cache/lib/facter/'

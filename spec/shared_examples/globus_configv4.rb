@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::configv4' do |facts|
   it 'purges unmanaged configs' do
     is_expected.to contain_resources('globus_connect_config').with_purge('true')
@@ -18,7 +20,7 @@ shared_examples_for 'globus::configv4' do |facts|
 
   it { is_expected.to contain_globus_connect_config('Globus/User').with_value('%(GLOBUS_USER)s').with_notify('Exec[globus-connect-server-setup]') }
   it { is_expected.to contain_globus_connect_config('Globus/Password').with_value('%(GLOBUS_PASSWORD)s').with_secret('true') }
-  it { is_expected.to contain_globus_connect_config('Endpoint/Name').with_value(facts[:hostname]) }
+  it { is_expected.to contain_globus_connect_config('Endpoint/Name').with_value(facts[:networking]['hostname']) }
   it { is_expected.to contain_globus_connect_config('Endpoint/Public').with_value('false') }
   it { is_expected.to contain_globus_connect_config('Endpoint/DefaultDirectory').with_value('/~/') }
   it { is_expected.to contain_globus_connect_config('Security/FetchCredentialFromRelay').with_value('true') }
@@ -107,7 +109,7 @@ shared_examples_for 'globus::configv4' do |facts|
                              '$LCMAPS_DB_FILE "/etc/lcmaps.db"',
                              '$LCMAPS_POLICY_NAME "authorize_only"',
                              '$LLGT_LIFT_PRIVILEGED_PROTECTION "1"',
-                             '$LCMAPS_DEBUG_LEVEL "2"',
+                             '$LCMAPS_DEBUG_LEVEL "2"'
                            ])
     end
 
@@ -128,7 +130,7 @@ shared_examples_for 'globus::configv4' do |facts|
                         '$LCMAPS_DB_FILE "/etc/lcmaps.db"',
                         '$LCMAPS_POLICY_NAME "authorize_only"',
                         '$LLGT_LIFT_PRIVILEGED_PROTECTION "1"',
-                        '$LCMAPS_DEBUG_LEVEL "2"',
+                        '$LCMAPS_DEBUG_LEVEL "2"'
                       ])
     end
   end

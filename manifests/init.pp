@@ -292,7 +292,7 @@ class globus (
   # Endpoint Config - v4
   Boolean $endpoint_public = false,
   String $endpoint_default_directory = '/~/',
-  String $endpoint_name = $::hostname,
+  String $endpoint_name = $facts['networking']['hostname'],
 
   # Security Config - v4
   Boolean $security_fetch_credentials_from_relay = true,
@@ -337,7 +337,6 @@ class globus (
   Optional[String] $oauth_stylesheet = undef,
   Optional[String] $oauth_logo = undef,
 ) {
-
   $osfamily = $facts.dig('os', 'family')
   $osmajor = $facts.dig('os', 'release', 'major')
   $os = "${osfamily}-${osmajor}"
@@ -365,7 +364,7 @@ class globus (
   }
 
   if $include_io_server {
-    $_gridftp_server    = pick($gridftp_server, "${::fqdn}:${gridftp_server_port}")
+    $_gridftp_server    = pick($gridftp_server, "${facts['networking']['fqdn']}:${gridftp_server_port}")
     $_io_setup_command  = 'globus-connect-server-io-setup'
   } else {
     $_gridftp_server    = $gridftp_server
@@ -373,7 +372,7 @@ class globus (
   }
 
   if $include_id_server {
-    $_myproxy_server    = pick($myproxy_server, "${::fqdn}:${myproxy_server_port}")
+    $_myproxy_server    = pick($myproxy_server, "${facts['networking']['fqdn']}:${myproxy_server_port}")
     $_id_setup_command  = 'globus-connect-server-id-setup'
   } else {
     $_myproxy_server    = $myproxy_server
@@ -381,7 +380,7 @@ class globus (
   }
 
   if $include_oauth_server {
-    $_oauth_server        = pick($oauth_server, $::fqdn)
+    $_oauth_server        = pick($oauth_server, $facts['networking']['fqdn'])
     $_oauth_setup_command = 'globus-connect-server-web-setup'
   } else {
     $_oauth_server        = $oauth_server
@@ -418,7 +417,7 @@ class globus (
   case $osfamily {
     'RedHat': {
       if $manage_epel {
-        include ::epel
+        include epel
         Class['epel'] -> Class['globus::repo::el']
       }
       contain globus::repo::el
@@ -434,5 +433,4 @@ class globus (
       # Do nothing
     }
   }
-
 }

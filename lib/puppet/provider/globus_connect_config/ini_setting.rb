@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:globus_connect_config).provide(
   :ini_setting,
   parent: Puppet::Type.type(:ini_setting).provider(:ruby),

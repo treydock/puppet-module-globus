@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Util class for Globus facts
 class Facter::Util::Globus
   def self.info
@@ -10,8 +12,10 @@ class Facter::Util::Globus
 
   def self.read_info
     return nil unless info_exists?
+
     f = File.read(info)
     return nil if f.nil?
+
     value = nil
     begin
       value = JSON.parse(f)

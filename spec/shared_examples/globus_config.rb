@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::config' do |_facts|
   let(:endpoint_setup) do
     [
@@ -6,7 +8,7 @@ shared_examples_for 'globus::config' do |_facts|
       "--owner 'admin@example.com'",
       "--organization 'Example'",
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
-      '--agree-to-letsencrypt-tos',
+      '--agree-to-letsencrypt-tos'
     ]
   end
   let(:node_setup) do
@@ -15,7 +17,7 @@ shared_examples_for 'globus::config' do |_facts|
       '--client-id foo',
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
       '--incoming-port-range 50000 51000',
-      '--ip-address 172.16.254.254',
+      '--ip-address 172.16.254.254'
     ]
   end
 
@@ -101,7 +103,7 @@ shared_examples_for 'globus::config' do |_facts|
                              '$LCMAPS_DB_FILE "/etc/lcmaps.db"',
                              '$LCMAPS_POLICY_NAME "authorize_only"',
                              '$LLGT_LIFT_PRIVILEGED_PROTECTION "1"',
-                             '$LCMAPS_DEBUG_LEVEL "2"',
+                             '$LCMAPS_DEBUG_LEVEL "2"'
                            ])
     end
 
@@ -122,7 +124,7 @@ shared_examples_for 'globus::config' do |_facts|
                         '$LCMAPS_DB_FILE "/etc/lcmaps.db"',
                         '$LCMAPS_POLICY_NAME "authorize_only"',
                         '$LLGT_LIFT_PRIVILEGED_PROTECTION "1"',
-                        '$LCMAPS_DEBUG_LEVEL "2"',
+                        '$LCMAPS_DEBUG_LEVEL "2"'
                       ])
     end
   end

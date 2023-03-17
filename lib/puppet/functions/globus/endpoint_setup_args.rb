@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Functions.create_function(:'globus::endpoint_setup_args') do
   dispatch :args do
     param 'Hash', :values

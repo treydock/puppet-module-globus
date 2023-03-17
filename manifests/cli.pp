@@ -14,7 +14,6 @@ class globus::cli (
   Stdlib::Absolutepath $install_path = '/opt/globus-cli',
   Boolean $manage_python = true,
 ) {
-
   if $manage_python {
     include globus::python
   }

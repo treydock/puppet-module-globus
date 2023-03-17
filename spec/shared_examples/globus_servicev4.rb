@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'globus::servicev4' do |_facts|
   it do
     is_expected.to contain_service('globus-gridftp-server').with(ensure: 'running',

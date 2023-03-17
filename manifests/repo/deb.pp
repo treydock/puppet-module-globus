@@ -1,7 +1,6 @@
 # @summary Manage globus repo
 # @api private
 class globus::repo::deb {
-
   $release_name = basename($globus::release_url)
   $repo_dir     = '/usr/share/globus-toolkit-repo'
   $release_path = "${repo_dir}/${release_name}"

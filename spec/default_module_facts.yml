@@ -1,4 +1,6 @@
 ---
 networking:
+  hostname: foo
+  fqdn: foo.example.com
   ip: '172.16.254.254'
 python3_version: '3.5.0'
