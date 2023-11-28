@@ -7,7 +7,7 @@ class globus::user {
     $shell = '/sbin/nologin'
   }
 
-  if String($globus::version) == '5' and $globus::manage_user {
+  if $globus::manage_user {
     group { 'gcsweb':
       ensure     => 'present',
       gid        => $globus::group_gid,

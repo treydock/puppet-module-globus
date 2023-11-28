@@ -15,17 +15,12 @@ def platforms
       pip_provider: 'pip3',
       venv_python_version: '3.6'
     },
-    'Debian-9' => {
+    'RedHat-9' => {
       python_version: '3',
-      pip_provider: 'pip',
-      venv_python_version: 'system'
+      pip_provider: 'pip3',
+      venv_python_version: '3.9'
     },
-    'Debian-10' => {
-      python_version: '3',
-      pip_provider: 'pip',
-      venv_python_version: 'system'
-    },
-    'Debian-18.04' => {
+    'Debian-11' => {
       python_version: '3',
       pip_provider: 'pip',
       venv_python_version: 'system'
@@ -34,12 +29,11 @@ def platforms
       python_version: '3',
       pip_provider: 'pip',
       venv_python_version: 'system'
+    },
+    'Debian-22.04' => {
+      python_version: '3',
+      pip_provider: 'pip',
+      venv_python_version: 'system'
     }
   }
-end
-
-def support_v4(facts)
-  return false if facts[:os]['release']['major'].to_i == 8 && facts[:os]['family'] == 'RedHat'
-
-  true
 end

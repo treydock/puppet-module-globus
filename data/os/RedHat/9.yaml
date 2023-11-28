@@ -1,4 +1,4 @@
 ---
 globus::url_os: el
 globus::python::pip_provider: pip3
-globus::python::venv_python_version: '3.6'
+globus::python::venv_python_version: '3.9'
