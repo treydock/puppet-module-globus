@@ -1,17 +1,9 @@
 # frozen_string_literal: true
 
 shared_examples_for 'globus::service' do |os_facts|
-  let(:gridftp_ensure) do
-    if os_facts[:os]['release']['major'].to_s == '8'
-      nil
-    else
-      'running'
-    end
-  end
-
   it do
     is_expected.to contain_service('globus-gridftp-server').with(
-      ensure: gridftp_ensure,
+      ensure: nil,
       enable: 'true',
       hasstatus: 'true',
       hasrestart: 'true',

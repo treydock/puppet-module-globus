@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'globus::timer' do
   on_supported_os.each do |os, facts|
-    context "on #{os}" do
+    context "when #{os}" do
       let(:facts) do
         facts
       end

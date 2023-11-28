@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'globus' do
   on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
+    context "when #{os}" do
       let(:facts) do
         os_facts
       end
@@ -36,7 +36,7 @@ describe 'globus' do
       it { is_expected.to contain_class('globus::config').that_comes_before('Class[globus::service]') }
       it { is_expected.to contain_class('globus::service') }
 
-      context 'when version => 5' do
+      context 'when default params' do
         let(:params) { default_params }
 
         if os_facts[:os]['family'] == 'RedHat'
@@ -58,28 +58,6 @@ describe 'globus' do
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_class('epel') }
-      end
-
-      context 'when version => 4', if: support_v4(os_facts) do
-        let(:default_params) { { version: '4' } }
-        let(:params) { default_params }
-
-        it { is_expected.to compile.with_all_deps }
-
-        it { is_expected.not_to contain_group('gcsweb') }
-        it { is_expected.not_to contain_user('gcsweb') }
-
-        if os_facts[:os]['family'] == 'RedHat'
-          it_behaves_like 'globus::repo::elv4', os_facts
-        end
-        if os_facts[:os]['family'] == 'Debian'
-          it { is_expected.not_to contain_class('epel') }
-
-          it_behaves_like 'globus::repo::debv4', os_facts
-        end
-        it_behaves_like 'globus::installv4', os_facts
-        it_behaves_like 'globus::configv4', os_facts
-        it_behaves_like 'globus::servicev4', os_facts
       end
     end
   end

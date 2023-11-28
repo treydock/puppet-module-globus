@@ -35,23 +35,6 @@ shared_examples_for 'globus::repo::deb' do |facts|
   end
 
   it do
-    is_expected.to contain_apt__source('globus-toolkit-6-stable').with(
-      ensure: 'present',
-      location: baseurl,
-      release: facts[:os]['distro']['codename'],
-      repos: 'contrib',
-      include: { 'src' => 'true' },
-      key: {
-        'id' => '66A86341D3CDB1B26BE4D46F44AE7EC2FAF24365',
-        'source' => repo_key
-      },
-      require: 'Exec[extract-globus-repo-key]',
-    )
-  end
-
-  it { is_expected.to contain_apt__source('globus-toolkit-6-testing').with_ensure('absent') }
-
-  it do
     is_expected.to contain_apt__source('globus-connect-server-stable').with(
       ensure: 'present',
       location: baseurl_gcs,
