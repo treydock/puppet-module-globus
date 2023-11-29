@@ -3,9 +3,9 @@
 class globus::config {
   $endpoint_setup_args = globus::endpoint_setup_args({
       display_name => $globus::display_name,
-      client_id => $globus::client_id,
-      client_secret => $globus::client_secret,
       owner => $globus::owner,
+      project_id => $globus::project_id,
+      project_admin => $globus::project_admin,
       deployment_key => $globus::deployment_key,
       organization => $globus::organization,
       keywords => $globus::keywords,
@@ -23,10 +23,9 @@ class globus::config {
     group     => 'root',
     mode      => '0700',
     show_diff => false,
-    content   => "export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${endpoint_setup}\n",
+    content   => "${endpoint_setup}\n",
   }
   $node_setup_args = globus::node_setup_args({
-      client_id => $globus::client_id,
       deployment_key => $globus::deployment_key,
       incoming_port_range => $globus::incoming_port_range,
       outgoing_port_range => $globus::outgoing_port_range,
@@ -41,23 +40,21 @@ class globus::config {
     group     => 'root',
     mode      => '0700',
     show_diff => false,
-    content   => "export GLOBUS_CLIENT_SECRET=${globus::client_secret}\n${node_setup}\n",
+    content   => "${node_setup}\n",
   }
   if $globus::run_setup_commands {
     exec { 'globus-endpoint-setup':
-      path        => '/usr/bin:/bin:/usr/sbin:/sbin',
-      command     => $endpoint_setup,
-      environment => ["GLOBUS_CLIENT_SECRET=${globus::client_secret}"],
-      creates     => $globus::deployment_key,
-      logoutput   => true,
+      path      => '/usr/bin:/bin:/usr/sbin:/sbin',
+      command   => $endpoint_setup,
+      creates   => $globus::deployment_key,
+      logoutput => true,
     }
     exec { 'globus-node-setup':
-      path        => '/usr/bin:/bin:/usr/sbin:/sbin',
-      command     => $node_setup,
-      environment => ["GLOBUS_CLIENT_SECRET=${globus::client_secret}"],
-      unless      => 'test -s /var/lib/globus-connect-server/info.json',
-      logoutput   => true,
-      require     => Exec['globus-endpoint-setup'],
+      path      => '/usr/bin:/bin:/usr/sbin:/sbin',
+      command   => $node_setup,
+      unless    => 'test -s /var/lib/globus-connect-server/info.json',
+      logoutput => true,
+      require   => Exec['globus-endpoint-setup'],
     }
   }
 

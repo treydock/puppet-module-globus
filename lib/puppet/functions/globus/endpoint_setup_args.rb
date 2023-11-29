@@ -7,9 +7,9 @@ Puppet::Functions.create_function(:'globus::endpoint_setup_args') do
   def args(values)
     flags = []
     flags << "'#{values['display_name']}'"
-    flags << "--client-id #{values['client_id']}"
-    flags << "--secret '#{values['client_secret']}'"
     flags << "--owner '#{values['owner']}'"
+    flags << "--project-id '#{values['project_id']}" unless values['project_id'].nil?
+    flags << "--project-admin '#{values['project_admin']}" unless values['project_admin'].nil?
     flags << "--organization '#{values['organization']}'"
     flags << "--deployment-key #{values['deployment_key']}"
     flags << '--agree-to-letsencrypt-tos'

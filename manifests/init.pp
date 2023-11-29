@@ -3,8 +3,6 @@
 # @example Install and setup a Globus v5.4 endpoint
 #   class { 'globus':
 #     display_name  => 'REPLACE My Site Globus',
-#     client_id     => 'REPLACE-client-id-from-globus',
-#     client_secret => 'REPLACE-client-id-from-globus',
 #     owner         => 'REPLACE-user@example.com',
 #   }
 #
@@ -36,10 +34,10 @@
 #   Globus package name
 # @param display_name
 #   Display name to use when running 'globus-connect-server endpoint setup'
-# @param client_id
-#   --client-id use when running 'globus-connect-server endpoint setup'
-# @param client_secret
-#   --client-secret use when running 'globus-connect-server endpoint setup'
+# @param project_id
+#   --project-id use when running 'globus-connect-server endpoint setup'
+# @param project_admin
+#   --project-admin use when running 'globus-connect-server endpoint setup'
 # @param owner
 #   --owner use when running 'globus-connect-server endpoint setup'
 # @param organization
@@ -75,8 +73,6 @@
 class globus (
   # Required
   String[1] $display_name,
-  String[1] $client_id,
-  String[1] $client_secret,
   String[1] $owner,
   String[1] $organization,
 
@@ -97,6 +93,8 @@ class globus (
   Stdlib::Absolutepath $deployment_key = '/var/lib/globus-connect-server/gcs-manager/deployment-key.json',
 
   # endpoint setup
+  Optional[String[1]] $project_id = undef,
+  Optional[String[1]] $project_admin = undef,
   Optional[Array] $keywords = undef,
   Optional[String] $department = undef,
   Optional[String] $contact_email = undef,
