@@ -9,9 +9,9 @@
 #### Public Classes
 
 * [`globus`](#globus): Manage Globus
-* [`globus::cli`](#globuscli): Manage Globus CLI
-* [`globus::sdk`](#globussdk): Manage Globus SDK
-* [`globus::timer`](#globustimer): Manage Globus Timer
+* [`globus::cli`](#globus--cli): Manage Globus CLI
+* [`globus::sdk`](#globus--sdk): Manage Globus SDK
+* [`globus::timer`](#globus--timer): Manage Globus Timer
 
 #### Private Classes
 
@@ -23,14 +23,10 @@
 * `globus::service`: Manage Globus service
 * `globus::user`: Manage globus user and group
 
-### Resource types
-
-* [`globus_connect_config`](#globus_connect_config): Section/setting name to manage from /etc/globus-connect-server.conf
-
 ### Functions
 
-* [`globus::endpoint_setup_args`](#globusendpoint_setup_args)
-* [`globus::node_setup_args`](#globusnode_setup_args)
+* [`globus::endpoint_setup_args`](#globus--endpoint_setup_args)
+* [`globus::node_setup_args`](#globus--node_setup_args)
 
 ## Classes
 
@@ -45,8 +41,6 @@ Manage Globus
 ```puppet
 class { 'globus':
   display_name  => 'REPLACE My Site Globus',
-  client_id     => 'REPLACE-client-id-from-globus',
-  client_secret => 'REPLACE-client-id-from-globus',
   owner         => 'REPLACE-user@example.com',
 }
 ```
@@ -55,776 +49,282 @@ class { 'globus':
 
 The following parameters are available in the `globus` class:
 
-* [`version`](#version)
-* [`include_io_server`](#include_io_server)
-* [`include_id_server`](#include_id_server)
-* [`include_oauth_server`](#include_oauth_server)
-* [`release_url`](#release_url)
-* [`toolkit_repo_baseurl`](#toolkit_repo_baseurl)
-* [`toolkit_repo_testing_baseurl`](#toolkit_repo_testing_baseurl)
-* [`gcs_repo_baseurl`](#gcs_repo_baseurl)
-* [`gcs_repo_testing_baseurl`](#gcs_repo_testing_baseurl)
-* [`enable_testing_repos`](#enable_testing_repos)
-* [`extra_gridftp_settings`](#extra_gridftp_settings)
-* [`first_gridftp_callback`](#first_gridftp_callback)
-* [`manage_service`](#manage_service)
-* [`run_setup_commands`](#run_setup_commands)
-* [`manage_firewall`](#manage_firewall)
-* [`manage_epel`](#manage_epel)
-* [`repo_dependencies`](#repo_dependencies)
-* [`manage_user`](#manage_user)
-* [`group_gid`](#group_gid)
-* [`user_uid`](#user_uid)
-* [`package_name`](#package_name)
-* [`display_name`](#display_name)
-* [`client_id`](#client_id)
-* [`client_secret`](#client_secret)
-* [`owner`](#owner)
-* [`organization`](#organization)
-* [`deployment_key`](#deployment_key)
-* [`keywords`](#keywords)
-* [`department`](#department)
-* [`contact_email`](#contact_email)
-* [`contact_info`](#contact_info)
-* [`info_link`](#info_link)
-* [`description`](#description)
-* [`public`](#public)
-* [`incoming_port_range`](#incoming_port_range)
-* [`outgoing_port_range`](#outgoing_port_range)
-* [`ip_address`](#ip_address)
-* [`export_node`](#export_node)
-* [`import_node`](#import_node)
-* [`globus_user`](#globus_user)
-* [`globus_password`](#globus_password)
-* [`endpoint_name`](#endpoint_name)
-* [`endpoint_public`](#endpoint_public)
-* [`endpoint_default_directory`](#endpoint_default_directory)
-* [`security_fetch_credentials_from_relay`](#security_fetch_credentials_from_relay)
-* [`security_certificate_file`](#security_certificate_file)
-* [`security_key_file`](#security_key_file)
-* [`security_trusted_certificate_directory`](#security_trusted_certificate_directory)
-* [`security_identity_method`](#security_identity_method)
-* [`security_authorization_method`](#security_authorization_method)
-* [`security_gridmap`](#security_gridmap)
-* [`security_cilogon_identity_provider`](#security_cilogon_identity_provider)
-* [`gridftp_server`](#gridftp_server)
-* [`gridftp_server_port`](#gridftp_server_port)
-* [`gridftp_server_behind_nat`](#gridftp_server_behind_nat)
-* [`gridftp_incoming_port_range`](#gridftp_incoming_port_range)
-* [`gridftp_outgoing_port_range`](#gridftp_outgoing_port_range)
-* [`gridftp_data_interface`](#gridftp_data_interface)
-* [`gridftp_restrict_paths`](#gridftp_restrict_paths)
-* [`gridftp_sharing`](#gridftp_sharing)
-* [`gridftp_sharing_restrict_paths`](#gridftp_sharing_restrict_paths)
-* [`gridftp_sharing_state_dir`](#gridftp_sharing_state_dir)
-* [`gridftp_sharing_users_allow`](#gridftp_sharing_users_allow)
-* [`gridftp_sharing_groups_allow`](#gridftp_sharing_groups_allow)
-* [`gridftp_sharing_users_deny`](#gridftp_sharing_users_deny)
-* [`gridftp_sharing_groups_deny`](#gridftp_sharing_groups_deny)
-* [`myproxy_server`](#myproxy_server)
-* [`myproxy_server_port`](#myproxy_server_port)
-* [`myproxy_server_behind_nat`](#myproxy_server_behind_nat)
-* [`myproxy_ca_directory`](#myproxy_ca_directory)
-* [`myproxy_config_file`](#myproxy_config_file)
-* [`myproxy_ca_subject_dn`](#myproxy_ca_subject_dn)
-* [`myproxy_firewall_sources`](#myproxy_firewall_sources)
-* [`oauth_server`](#oauth_server)
-* [`oauth_server_behind_firewall`](#oauth_server_behind_firewall)
-* [`oauth_stylesheet`](#oauth_stylesheet)
-* [`oauth_logo`](#oauth_logo)
+* [`release_url`](#-globus--release_url)
+* [`gcs_repo_baseurl`](#-globus--gcs_repo_baseurl)
+* [`gcs_repo_testing_baseurl`](#-globus--gcs_repo_testing_baseurl)
+* [`enable_testing_repos`](#-globus--enable_testing_repos)
+* [`extra_gridftp_settings`](#-globus--extra_gridftp_settings)
+* [`manage_service`](#-globus--manage_service)
+* [`run_setup_commands`](#-globus--run_setup_commands)
+* [`manage_firewall`](#-globus--manage_firewall)
+* [`manage_epel`](#-globus--manage_epel)
+* [`manage_user`](#-globus--manage_user)
+* [`group_gid`](#-globus--group_gid)
+* [`user_uid`](#-globus--user_uid)
+* [`package_name`](#-globus--package_name)
+* [`display_name`](#-globus--display_name)
+* [`project_id`](#-globus--project_id)
+* [`project_admin`](#-globus--project_admin)
+* [`owner`](#-globus--owner)
+* [`organization`](#-globus--organization)
+* [`deployment_key`](#-globus--deployment_key)
+* [`keywords`](#-globus--keywords)
+* [`department`](#-globus--department)
+* [`contact_email`](#-globus--contact_email)
+* [`contact_info`](#-globus--contact_info)
+* [`info_link`](#-globus--info_link)
+* [`description`](#-globus--description)
+* [`public`](#-globus--public)
+* [`incoming_port_range`](#-globus--incoming_port_range)
+* [`outgoing_port_range`](#-globus--outgoing_port_range)
+* [`ip_address`](#-globus--ip_address)
+* [`export_node`](#-globus--export_node)
+* [`import_node`](#-globus--import_node)
 
-##### <a name="version"></a>`version`
-
-Data type: `Variant[Enum['4','5'],Integer[4,5]]`
-
-Major version of Globus to install. Only needed to install Globus v4
-
-Default value: `'5'`
-
-##### <a name="include_io_server"></a>`include_io_server`
-
-Data type: `Boolean`
-
-Setup Globus v4 IO server
-Globus v4 only
-
-Default value: ``true``
-
-##### <a name="include_id_server"></a>`include_id_server`
-
-Data type: `Boolean`
-
-Setup Globus v4 ID server
-Globus v4 only
-
-Default value: ``true``
-
-##### <a name="include_oauth_server"></a>`include_oauth_server`
-
-Data type: `Boolean`
-
-Setup Globus v4 OAuth server
-Globus v4 only
-
-Default value: ``false``
-
-##### <a name="release_url"></a>`release_url`
+##### <a name="-globus--release_url"></a>`release_url`
 
 Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 Release URL of Globus release RPM
-Globus v4 & v5
 
 Default value: `'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'`
 
-##### <a name="toolkit_repo_baseurl"></a>`toolkit_repo_baseurl`
-
-Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
-
-Globus Toolkit RPM repo baseurl
-Globus v4 & v5
-
-Default value: `"https://downloads.globus.org/toolkit/gt6/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/"`
-
-##### <a name="toolkit_repo_testing_baseurl"></a>`toolkit_repo_testing_baseurl`
-
-Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
-
-Globus Toolkit testing RPM repo baseurl
-Globus v4 & v5
-
-Default value: `"https://downloads.globus.org/toolkit/gt6/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/"`
-
-##### <a name="gcs_repo_baseurl"></a>`gcs_repo_baseurl`
+##### <a name="-globus--gcs_repo_baseurl"></a>`gcs_repo_baseurl`
 
 Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 Globus Connect Server repo baseurl
-Globus v4 & v5
 
 Default value: `"https://downloads.globus.org/globus-connect-server/stable/rpm/el/${facts['os']['release']['major']}/\$basearch/"`
 
-##### <a name="gcs_repo_testing_baseurl"></a>`gcs_repo_testing_baseurl`
+##### <a name="-globus--gcs_repo_testing_baseurl"></a>`gcs_repo_testing_baseurl`
 
 Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
-Globus v5 testing repo baseurl
-Globus v4 & v5
+Globus testing repo baseurl
 
 Default value: `"https://downloads.globus.org/globus-connect-server/testing/rpm/el/${facts['os']['release']['major']}/\$basearch/"`
 
-##### <a name="enable_testing_repos"></a>`enable_testing_repos`
+##### <a name="-globus--enable_testing_repos"></a>`enable_testing_repos`
 
 Data type: `Boolean`
 
 Boolean that sets if testing repos should be added
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="extra_gridftp_settings"></a>`extra_gridftp_settings`
+##### <a name="-globus--extra_gridftp_settings"></a>`extra_gridftp_settings`
 
 Data type: `Array`
 
 Additional settings for GridFTP
-Globus v4 & v5
 
 Default value: `[]`
 
-##### <a name="first_gridftp_callback"></a>`first_gridftp_callback`
-
-Data type: `Optional[String]`
-
-Used when running GridFTP from Globus with OSG, see README.
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-globus--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
 Boolean to set if globus-gridftp-server service is managed
-Globus v4 & v5
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="run_setup_commands"></a>`run_setup_commands`
+##### <a name="-globus--run_setup_commands"></a>`run_setup_commands`
 
 Data type: `Boolean`
 
 Boolean to set if the commands to setup Globus are run (v4 and v5)
-Globus v4 & v5
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_firewall"></a>`manage_firewall`
+##### <a name="-globus--manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
 Boolean to set if firewall rules are managed by this module
-Globus v4 & v5
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_epel"></a>`manage_epel`
+##### <a name="-globus--manage_epel"></a>`manage_epel`
 
 Data type: `Boolean`
 
 Boolean to set if EPEL is managed by this repo
-Globus v4 & v5
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="repo_dependencies"></a>`repo_dependencies`
-
-Data type: `Array`
-
-Additional repo dependencies
-Globus v4 only
-
-Default value: `['yum-plugin-priorities']`
-
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-globus--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
 Boolean to set if the gcsweb user and group are managed by this module
-Globus v5 only
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="group_gid"></a>`group_gid`
+##### <a name="-globus--group_gid"></a>`group_gid`
 
 Data type: `Optional[Integer]`
 
 The gcsweb group GID
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user_uid"></a>`user_uid`
+##### <a name="-globus--user_uid"></a>`user_uid`
 
 Data type: `Optional[Integer]`
 
 The gcsweb user UID
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-globus--package_name"></a>`package_name`
 
 Data type: `String`
 
-Globus v5 package name
+Globus package name
 
 Default value: `'globus-connect-server54'`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-globus--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `String[1]`
 
 Display name to use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+##### <a name="-globus--project_id"></a>`project_id`
 
-##### <a name="client_id"></a>`client_id`
+Data type: `Optional[String[1]]`
 
-Data type: `Optional[String]`
+--project-id use when running 'globus-connect-server endpoint setup'
 
---client-id use when running 'globus-connect-server endpoint setup'
-Globus v5 only
+Default value: `undef`
 
-Default value: ``undef``
+##### <a name="-globus--project_admin"></a>`project_admin`
 
-##### <a name="client_secret"></a>`client_secret`
+Data type: `Optional[String[1]]`
 
-Data type: `Optional[String]`
+--project-admin use when running 'globus-connect-server endpoint setup'
 
---client-secret use when running 'globus-connect-server endpoint setup'
-Globus v5 only
+Default value: `undef`
 
-Default value: ``undef``
+##### <a name="-globus--owner"></a>`owner`
 
-##### <a name="owner"></a>`owner`
-
-Data type: `Optional[String]`
+Data type: `String[1]`
 
 --owner use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+##### <a name="-globus--organization"></a>`organization`
 
-##### <a name="organization"></a>`organization`
-
-Data type: `Optional[String]`
+Data type: `String[1]`
 
 --organization use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
-
-##### <a name="deployment_key"></a>`deployment_key`
+##### <a name="-globus--deployment_key"></a>`deployment_key`
 
 Data type: `Stdlib::Absolutepath`
 
 --deployment-key use when running 'globus-connect-server endpoint setup'
 The parent directory of this path must be writable by gcsweb user
-Globus v5 only
 
 Default value: `'/var/lib/globus-connect-server/gcs-manager/deployment-key.json'`
 
-##### <a name="keywords"></a>`keywords`
+##### <a name="-globus--keywords"></a>`keywords`
 
 Data type: `Optional[Array]`
 
 --keywords use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="department"></a>`department`
+##### <a name="-globus--department"></a>`department`
 
 Data type: `Optional[String]`
 
 --department use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="contact_email"></a>`contact_email`
+##### <a name="-globus--contact_email"></a>`contact_email`
 
 Data type: `Optional[String]`
 
 --contact-email use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="contact_info"></a>`contact_info`
+##### <a name="-globus--contact_info"></a>`contact_info`
 
 Data type: `Optional[String]`
 
 --contact-info use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="info_link"></a>`info_link`
+##### <a name="-globus--info_link"></a>`info_link`
 
 Data type: `Optional[String]`
 
 --info-link use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="description"></a>`description`
+##### <a name="-globus--description"></a>`description`
 
 Data type: `Optional[String]`
 
 --description use when running 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="public"></a>`public`
+##### <a name="-globus--public"></a>`public`
 
 Data type: `Boolean`
 
 When false pass --private flag to 'globus-connect-server endpoint setup'
-Globus v5 only
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="incoming_port_range"></a>`incoming_port_range`
+##### <a name="-globus--incoming_port_range"></a>`incoming_port_range`
 
 Data type: `Array[Stdlib::Port, 2, 2]`
 
 --incoming-port-range use when running 'globus-connect-server node setup'
-Globus v5 only
 
 Default value: `[50000, 51000]`
 
-##### <a name="outgoing_port_range"></a>`outgoing_port_range`
+##### <a name="-globus--outgoing_port_range"></a>`outgoing_port_range`
 
 Data type: `Optional[Array[Stdlib::Port, 2, 2]]`
 
 --outgoing-port-range use when running 'globus-connect-server node setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ip_address"></a>`ip_address`
+##### <a name="-globus--ip_address"></a>`ip_address`
 
 Data type: `Optional[Stdlib::IP::Address]`
 
 --ip-address use when running 'globus-connect-server node setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="export_node"></a>`export_node`
+##### <a name="-globus--export_node"></a>`export_node`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 --export-node use when running 'globus-connect-server node setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="import_node"></a>`import_node`
+##### <a name="-globus--import_node"></a>`import_node`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 --import-node use when running 'globus-connect-server node setup'
-Globus v5 only
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="globus_user"></a>`globus_user`
-
-Data type: `String`
-
-See globus-connect-server.conf Globus/User
-Globus v4 only
-
-Default value: `'%(GLOBUS_USER)s'`
-
-##### <a name="globus_password"></a>`globus_password`
-
-Data type: `String`
-
-See globus-connect-server.conf Globus/Password
-Globus v4 only
-
-Default value: `'%(GLOBUS_PASSWORD)s'`
-
-##### <a name="endpoint_name"></a>`endpoint_name`
-
-Data type: `String`
-
-See globus-connect-server.conf Endpoint/Name
-Globus v4 only
-
-Default value: `$facts['networking']['hostname']`
-
-##### <a name="endpoint_public"></a>`endpoint_public`
-
-Data type: `Boolean`
-
-See globus-connect-server.conf Endpoint/Public
-Globus v4 only
-
-Default value: ``false``
-
-##### <a name="endpoint_default_directory"></a>`endpoint_default_directory`
-
-Data type: `String`
-
-See globus-connect-server.conf Endpoint/DefaultDirectory
-Globus v4 only
-
-Default value: `'/~/'`
-
-##### <a name="security_fetch_credentials_from_relay"></a>`security_fetch_credentials_from_relay`
-
-Data type: `Boolean`
-
-See globus-connect-server.conf Security/FetchCredentialFromRelay
-Globus v4 only
-
-Default value: ``true``
-
-##### <a name="security_certificate_file"></a>`security_certificate_file`
-
-Data type: `Stdlib::Absolutepath`
-
-See globus-connect-server.conf Security/CertificateFile
-Globus v4 only
-
-Default value: `'/var/lib/globus-connect-server/grid-security/hostcert.pem'`
-
-##### <a name="security_key_file"></a>`security_key_file`
-
-Data type: `Stdlib::Absolutepath`
-
-See globus-connect-server.conf Security/KeyFile
-Globus v4 only
-
-Default value: `'/var/lib/globus-connect-server/grid-security/hostkey.pem'`
-
-##### <a name="security_trusted_certificate_directory"></a>`security_trusted_certificate_directory`
-
-Data type: `Stdlib::Absolutepath`
-
-See globus-connect-server.conf Security/TrustedCertificateDirectory
-Globus v4 only
-
-Default value: `'/var/lib/globus-connect-server/grid-security/certificates/'`
-
-##### <a name="security_identity_method"></a>`security_identity_method`
-
-Data type: `Enum['MyProxy', 'OAuth', 'CILogon']`
-
-See globus-connect-server.conf Security/IdentityMethod
-Globus v4 only
-
-Default value: `'MyProxy'`
-
-##### <a name="security_authorization_method"></a>`security_authorization_method`
-
-Data type: `Optional[Enum['MyProxyGridmapCallout','CILogon','Gridmap']]`
-
-See globus-connect-server.conf Security/AuthorizationMethod
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="security_gridmap"></a>`security_gridmap`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-See globus-connect-server.conf Security/Gridmap
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="security_cilogon_identity_provider"></a>`security_cilogon_identity_provider`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf Security/IdentityProvider
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_server"></a>`gridftp_server`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf GridFTP/Server
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_server_port"></a>`gridftp_server_port`
-
-Data type: `Stdlib::Port`
-
-See globus-connect-server.conf GridFTP/ServerPort
-Globus v4
-
-Default value: `2811`
-
-##### <a name="gridftp_server_behind_nat"></a>`gridftp_server_behind_nat`
-
-Data type: `Boolean`
-
-See globus-connect-server.conf GridFTP/ServerBehindNat
-Globus v4 only
-
-Default value: ``false``
-
-##### <a name="gridftp_incoming_port_range"></a>`gridftp_incoming_port_range`
-
-Data type: `Array[Stdlib::Port, 2, 2]`
-
-See globus-connect-server.conf GridFTP/IncomingPortRange
-Globus v4 only
-
-Default value: `[50000, 51000]`
-
-##### <a name="gridftp_outgoing_port_range"></a>`gridftp_outgoing_port_range`
-
-Data type: `Optional[Array[Stdlib::Port, 2, 2]]`
-
-See globus-connect-server.conf GridFTP/OutgoingPortRange
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_data_interface"></a>`gridftp_data_interface`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf GridFTP/DataInterface
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_restrict_paths"></a>`gridftp_restrict_paths`
-
-Data type: `Array`
-
-See globus-connect-server.conf GridFTP/RestrictPaths
-Globus v4 only
-
-Default value: `['RW~', 'N~/.*']`
-
-##### <a name="gridftp_sharing"></a>`gridftp_sharing`
-
-Data type: `Boolean`
-
-See globus-connect-server.conf GridFTP/Sharing
-Globus v4 only
-
-Default value: ``false``
-
-##### <a name="gridftp_sharing_restrict_paths"></a>`gridftp_sharing_restrict_paths`
-
-Data type: `Optional[Array]`
-
-See globus-connect-server.conf GridFTP/SharingRestrictPaths
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_sharing_state_dir"></a>`gridftp_sharing_state_dir`
-
-Data type: `String`
-
-See globus-connect-server.conf GridFTP/SharingStateDir
-Globus v4 only
-
-Default value: `'$HOME/.globus/sharing'`
-
-##### <a name="gridftp_sharing_users_allow"></a>`gridftp_sharing_users_allow`
-
-Data type: `Optional[Array]`
-
-See globus-connect-server.conf GridFTP/UsersAllow
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_sharing_groups_allow"></a>`gridftp_sharing_groups_allow`
-
-Data type: `Optional[Array]`
-
-See globus-connect-server.conf GridFTP/GroupsAllow
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_sharing_users_deny"></a>`gridftp_sharing_users_deny`
-
-Data type: `Optional[Array]`
-
-See globus-connect-server.conf GridFTP/UsersDeny
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="gridftp_sharing_groups_deny"></a>`gridftp_sharing_groups_deny`
-
-Data type: `Optional[Array]`
-
-See globus-connect-server.conf GridFTP/GroupsDeny
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="myproxy_server"></a>`myproxy_server`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf MyProxy/Server
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="myproxy_server_port"></a>`myproxy_server_port`
-
-Data type: `Stdlib::Port`
-
-See globus-connect-server.conf MyProxy/ServerPort
-Globus v4 only
-
-Default value: `7512`
-
-##### <a name="myproxy_server_behind_nat"></a>`myproxy_server_behind_nat`
-
-Data type: `Boolean`
-
-See globus-connect-server.conf MyProxy/ServerBehindNAT
-Globus v4 only
-
-Default value: ``false``
-
-##### <a name="myproxy_ca_directory"></a>`myproxy_ca_directory`
-
-Data type: `Stdlib::Absolutepath`
-
-See globus-connect-server.conf MyProxy/CADirectory
-Globus v4 only
-
-Default value: `'/var/lib/globus-connect-server/myproxy-ca'`
-
-##### <a name="myproxy_config_file"></a>`myproxy_config_file`
-
-Data type: `Stdlib::Absolutepath`
-
-See globus-connect-server.conf MyProxy/ConfigFile
-Globus v4 only
-
-Default value: `'/var/lib/globus-connect-server/myproxy-server.conf'`
-
-##### <a name="myproxy_ca_subject_dn"></a>`myproxy_ca_subject_dn`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf MyProxy/CaSubjectDN
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="myproxy_firewall_sources"></a>`myproxy_firewall_sources`
-
-Data type: `Array`
-
-Sources to open in firewall for MyProxy
-Globus v4 only
-
-Default value: `['174.129.226.69', '54.237.254.192/29']`
-
-##### <a name="oauth_server"></a>`oauth_server`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf OAuth/Server
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="oauth_server_behind_firewall"></a>`oauth_server_behind_firewall`
-
-Data type: `Boolean`
-
-See globus-connect-server.conf OAuth/ServerBehindFirewall
-Globus v4 only
-
-Default value: ``false``
-
-##### <a name="oauth_stylesheet"></a>`oauth_stylesheet`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf OAuth/Stylesheet
-Globus v4 only
-
-Default value: ``undef``
-
-##### <a name="oauth_logo"></a>`oauth_logo`
-
-Data type: `Optional[String]`
-
-See globus-connect-server.conf OAuth/Logo
-Globus v4 only
-
-Default value: ``undef``
-
-### <a name="globuscli"></a>`globus::cli`
+### <a name="globus--cli"></a>`globus::cli`
 
 Manage Globus CLI
 
@@ -840,11 +340,11 @@ include ::globus::cli
 
 The following parameters are available in the `globus::cli` class:
 
-* [`ensure`](#ensure)
-* [`install_path`](#install_path)
-* [`manage_python`](#manage_python)
+* [`ensure`](#-globus--cli--ensure)
+* [`install_path`](#-globus--cli--install_path)
+* [`manage_python`](#-globus--cli--manage_python)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-globus--cli--ensure"></a>`ensure`
 
 Data type: `String[1]`
 
@@ -852,7 +352,7 @@ The ensure parameter for PIP installed CLI
 
 Default value: `'present'`
 
-##### <a name="install_path"></a>`install_path`
+##### <a name="-globus--cli--install_path"></a>`install_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -860,15 +360,15 @@ Path to install Globus CLI virtualenv
 
 Default value: `'/opt/globus-cli'`
 
-##### <a name="manage_python"></a>`manage_python`
+##### <a name="-globus--cli--manage_python"></a>`manage_python`
 
 Data type: `Boolean`
 
 Boolean to set if Python is managed by this class
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="globussdk"></a>`globus::sdk`
+### <a name="globus--sdk"></a>`globus::sdk`
 
 Manage Globus SDK
 
@@ -884,11 +384,11 @@ include globus::sdk
 
 The following parameters are available in the `globus::sdk` class:
 
-* [`ensure`](#ensure)
-* [`install_path`](#install_path)
-* [`manage_python`](#manage_python)
+* [`ensure`](#-globus--sdk--ensure)
+* [`install_path`](#-globus--sdk--install_path)
+* [`manage_python`](#-globus--sdk--manage_python)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-globus--sdk--ensure"></a>`ensure`
 
 Data type: `String[1]`
 
@@ -896,7 +396,7 @@ The ensure parameter for PIP installed SDK
 
 Default value: `'present'`
 
-##### <a name="install_path"></a>`install_path`
+##### <a name="-globus--sdk--install_path"></a>`install_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -904,15 +404,15 @@ Path to install Globus CLI virtualenv
 
 Default value: `'/opt/globus-sdk'`
 
-##### <a name="manage_python"></a>`manage_python`
+##### <a name="-globus--sdk--manage_python"></a>`manage_python`
 
 Data type: `Boolean`
 
 Boolean to set if Python is managed by this class
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="globustimer"></a>`globus::timer`
+### <a name="globus--timer"></a>`globus::timer`
 
 Manage Globus Timer
 
@@ -928,11 +428,11 @@ include ::globus::timer
 
 The following parameters are available in the `globus::timer` class:
 
-* [`ensure`](#ensure)
-* [`install_path`](#install_path)
-* [`manage_python`](#manage_python)
+* [`ensure`](#-globus--timer--ensure)
+* [`install_path`](#-globus--timer--install_path)
+* [`manage_python`](#-globus--timer--manage_python)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-globus--timer--ensure"></a>`ensure`
 
 Data type: `String[1]`
 
@@ -940,7 +440,7 @@ The ensure parameter for PIP installed globus-timer-cli
 
 Default value: `'present'`
 
-##### <a name="install_path"></a>`install_path`
+##### <a name="-globus--timer--install_path"></a>`install_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -948,68 +448,17 @@ Path to install Globus Timer CLI virtualenv
 
 Default value: `'/opt/globus-timer'`
 
-##### <a name="manage_python"></a>`manage_python`
+##### <a name="-globus--timer--manage_python"></a>`manage_python`
 
 Data type: `Boolean`
 
 Boolean to set if Python is managed by this class
 
-Default value: ``true``
-
-## Resource types
-
-### <a name="globus_connect_config"></a>`globus_connect_config`
-
-Section/setting name to manage from /etc/globus-connect-server.conf
-
-#### Properties
-
-The following properties are available in the `globus_connect_config` type.
-
-##### `ensure`
-
-Valid values: `present`, `absent`
-
-The basic property that the resource should be in.
-
-Default value: `present`
-
-##### `value`
-
-Valid values: `%r{^[\S ]*$}`
-
-The value of the setting to be defined.
-
-#### Parameters
-
-The following parameters are available in the `globus_connect_config` type.
-
-* [`name`](#name)
-* [`provider`](#provider)
-* [`secret`](#secret)
-
-##### <a name="name"></a>`name`
-
-namevar
-
-Section/setting name to manage from /etc/globus-connect-server.conf
-
-##### <a name="provider"></a>`provider`
-
-The specific backend to use for this `globus_connect_config` resource. You will seldom need to specify this --- Puppet
-will usually discover the appropriate provider for your platform.
-
-##### <a name="secret"></a>`secret`
-
-Valid values: ``true``, ``false``
-
-Whether to hide the value from Puppet logs. Defaults to `false`.
-
-Default value: ``false``
+Default value: `true`
 
 ## Functions
 
-### <a name="globusendpoint_setup_args"></a>`globus::endpoint_setup_args`
+### <a name="globus--endpoint_setup_args"></a>`globus::endpoint_setup_args`
 
 Type: Ruby 4.x API
 
@@ -1027,7 +476,7 @@ Data type: `Hash`
 
 
 
-### <a name="globusnode_setup_args"></a>`globus::node_setup_args`
+### <a name="globus--node_setup_args"></a>`globus::node_setup_args`
 
 Type: Ruby 4.x API
 
