@@ -11,8 +11,6 @@ describe 'globus' do
 
       let(:default_params) do
         {
-          client_id: 'foo',
-          client_secret: 'bar',
           owner: 'admin@example.com',
           display_name: 'Example',
           organization: 'Example'

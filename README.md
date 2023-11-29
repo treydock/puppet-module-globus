@@ -9,7 +9,7 @@ This module manages Globus Connect Server.
 
 ### Supported Versions of Globus
 
-Currently this module supports Globus 5.4.
+Currently this module supports Globus 5.4, at least 5.4.61
 
 | Globus Version | Globus Puppet module versions |
 | -------------- | ----------------------------- |
@@ -29,8 +29,6 @@ The following is the minimum parameters that must be passed to setup Globus v5.4
 ```puppet
 class { 'globus':
   display_name  => 'REPLACE My Site Globus',
-  client_id     => 'REPLACE-client-id-from-globus',
-  client_secret => 'REPLACE-client-id-from-globus',
   owner         => 'REPLACE-user@example.com',
   organization  => 'REPLACE-My Site',
 }

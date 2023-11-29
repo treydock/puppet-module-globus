@@ -4,7 +4,7 @@ shared_examples_for 'globus::config' do |_facts|
   let(:endpoint_setup) do
     [
       'globus-connect-server endpoint setup',
-      "'Example' --client-id foo --secret 'bar'",
+      "'Example'",
       "--owner 'admin@example.com'",
       "--organization 'Example'",
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
@@ -14,7 +14,6 @@ shared_examples_for 'globus::config' do |_facts|
   let(:node_setup) do
     [
       'globus-connect-server node setup',
-      '--client-id foo',
       '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
       '--incoming-port-range 50000 51000',
       '--ip-address 172.16.254.254'
@@ -28,9 +27,7 @@ shared_examples_for 'globus::config' do |_facts|
       group: 'root',
       mode: '0700',
       show_diff: 'false',
-      content: "export GLOBUS_CLIENT_SECRET=bar
-#{endpoint_setup.join(' ')}
-",
+      content: "#{endpoint_setup.join(' ')}\n",
     )
   end
 
@@ -41,9 +38,7 @@ shared_examples_for 'globus::config' do |_facts|
       group: 'root',
       mode: '0700',
       show_diff: 'false',
-      content: "export GLOBUS_CLIENT_SECRET=bar
-#{node_setup.join(' ')}
-",
+      content: "#{node_setup.join(' ')}\n",
     )
   end
 
@@ -51,7 +46,6 @@ shared_examples_for 'globus::config' do |_facts|
     is_expected.to contain_exec('globus-endpoint-setup').with(
       path: '/usr/bin:/bin:/usr/sbin:/sbin',
       command: endpoint_setup.join(' '),
-      environment: ['GLOBUS_CLIENT_SECRET=bar'],
       creates: '/var/lib/globus-connect-server/gcs-manager/deployment-key.json',
       logoutput: 'true',
     )
@@ -61,7 +55,6 @@ shared_examples_for 'globus::config' do |_facts|
     is_expected.to contain_exec('globus-node-setup').with(
       path: '/usr/bin:/bin:/usr/sbin:/sbin',
       command: node_setup.join(' '),
-      environment: ['GLOBUS_CLIENT_SECRET=bar'],
       unless: 'test -s /var/lib/globus-connect-server/info.json',
       logoutput: 'true',
       require: 'Exec[globus-endpoint-setup]',

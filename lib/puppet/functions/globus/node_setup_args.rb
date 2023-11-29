@@ -6,7 +6,6 @@ Puppet::Functions.create_function(:'globus::node_setup_args') do
   end
   def args(values)
     flags = []
-    flags << "--client-id #{values['client_id']}"
     flags << "--deployment-key #{values['deployment_key']}"
     flags << "--incoming-port-range #{values['incoming_port_range'].join(' ')}" unless values['incoming_port_range'].nil?
     flags << "--outgoing-port-range #{values['outgoing_port_range'].join(' ')}" unless values['outgoing_port_range'].nil?

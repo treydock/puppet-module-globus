@@ -8,8 +8,6 @@ describe 'globus class:' do
       pp = "
       class { 'globus':
         display_name        => 'REPLACE My Site Globus',
-        client_id           => 'REPLACE-client-id-from-globus',
-        client_secret       => 'REPLACE-client-id-from-globus',
         owner               => 'REPLACE-user@example.com',
         organization        => 'REPLACE-My Site',
         run_setup_commands  => false,
