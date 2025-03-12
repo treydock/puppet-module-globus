@@ -25,6 +25,11 @@ def platforms
       pip_provider: 'pip',
       venv_python_version: 'system',
     },
+    'Debian-12' => {
+      python_version: '3',
+      pip_provider: 'pip',
+      venv_python_version: 'system',
+    },
     'Debian-20.04' => {
       python_version: '3',
       pip_provider: 'pip',
