@@ -33,11 +33,11 @@ class globus::repo::deb {
   }
 
   apt::source { 'globus-toolkit-6-stable':
-    ensure   => 'absent',
+    ensure => 'absent',
   }
 
   apt::source { 'globus-toolkit-6-testing':
-    ensure   => 'absent',
+    ensure => 'absent',
   }
 
   apt::source { 'globus-connect-server-stable':

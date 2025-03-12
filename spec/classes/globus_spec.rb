@@ -13,7 +13,7 @@ describe 'globus' do
         {
           owner: 'admin@example.com',
           display_name: 'Example',
-          organization: 'Example'
+          organization: 'Example',
         }
       end
       let(:params) { default_params }
