@@ -8,32 +8,32 @@ def platforms
     'RedHat-7' => {
       python_version: '3',
       pip_provider: 'pip3',
-      venv_python_version: '3.6'
+      venv_python_version: '3.6',
     },
     'RedHat-8' => {
       python_version: '3',
       pip_provider: 'pip3',
-      venv_python_version: '3.6'
+      venv_python_version: '3.6',
     },
     'RedHat-9' => {
       python_version: '3',
       pip_provider: 'pip3',
-      venv_python_version: '3.9'
+      venv_python_version: '3.9',
     },
     'Debian-11' => {
       python_version: '3',
       pip_provider: 'pip',
-      venv_python_version: 'system'
+      venv_python_version: 'system',
     },
     'Debian-20.04' => {
       python_version: '3',
       pip_provider: 'pip',
-      venv_python_version: 'system'
+      venv_python_version: 'system',
     },
     'Debian-22.04' => {
       python_version: '3',
       pip_provider: 'pip',
-      venv_python_version: 'system'
-    }
+      venv_python_version: 'system',
+    },
   }
 end

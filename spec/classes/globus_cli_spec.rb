@@ -42,7 +42,7 @@ describe 'globus::cli' do
 
       it do
         is_expected.to contain_file('/usr/bin/globus').with('ensure' => 'link',
-                                                            'target' => '/opt/globus-cli/bin/globus')
+                                                            'target' => '/opt/globus-cli/bin/globus',)
       end
     end
   end

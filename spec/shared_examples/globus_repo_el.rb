@@ -13,7 +13,7 @@ shared_examples_for 'globus::repo::el' do |facts|
     is_expected.to contain_exec('RPM-GPG-KEY-Globus')
       .with(path: '/usr/bin:/bin:/usr/sbin:/sbin',
             command: 'wget -qO- https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus', # rubocop:disable Metrics/LineLength
-            creates: '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus')
+            creates: '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',)
   end
 
   it 'creates Yumrepo[globus-connect-server-5' do
