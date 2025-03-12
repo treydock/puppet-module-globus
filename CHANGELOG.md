@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v10.1.0](https://github.com/treydock/puppet-module-globus/tree/v10.1.0) (2025-03-12)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v10.0.0...v10.1.0)
+
+### Added
+
+- Support Debian 12 [\#46](https://github.com/treydock/puppet-module-globus/pull/46) ([treydock](https://github.com/treydock))
+
+### Fixed
+
+- Only manage mod\_auth\_openidc for RHEL8 [\#45](https://github.com/treydock/puppet-module-globus/pull/45) ([treydock](https://github.com/treydock))
+
 ## [v10.0.0](https://github.com/treydock/puppet-module-globus/tree/v10.0.0) (2023-11-29)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v9.0.0...v10.0.0)
