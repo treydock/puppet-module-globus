@@ -65,7 +65,7 @@ shared_examples_for 'globus::config' do |_facts|
 
   it do
     is_expected.to contain_firewall('500 allow HTTPS').with(
-      action: 'accept',
+      jump: 'accept',
       dport: '443',
       proto: 'tcp',
     )
@@ -73,7 +73,7 @@ shared_examples_for 'globus::config' do |_facts|
 
   it do
     is_expected.to contain_firewall('500 allow GridFTP data channels').with(
-      action: 'accept',
+      jump: 'accept',
       dport: '50000-51000',
       proto: 'tcp',
     )

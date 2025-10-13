@@ -16,11 +16,16 @@ class globus::timer (
 ) {
   if $manage_python {
     include globus::python
+    $venv_python_version = $globus::python::venv_python_version
+    $pip_provider = $globus::python::pip_provider
+  } else {
+    $venv_python_version = undef
+    $pip_provider = undef
   }
 
   python::pyvenv { 'globus-timer':
     ensure     => 'present',
-    version    => $globus::python::venv_python_version,
+    version    => $venv_python_version,
     venv_dir   => $install_path,
     systempkgs => true,
     before     => Python::Pip['globus-timer-cli'],
@@ -28,7 +33,7 @@ class globus::timer (
 
   python::pip { 'globus-timer-cli':
     ensure       => $ensure,
-    pip_provider => $globus::python::pip_provider,
+    pip_provider => $pip_provider,
     virtualenv   => $install_path,
   }
   file { '/usr/bin/globus-timer':
