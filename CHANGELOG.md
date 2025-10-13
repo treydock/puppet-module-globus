@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v11.0.0](https://github.com/treydock/puppet-module-globus/tree/v11.0.0) (2025-10-13)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v10.1.0...v11.0.0)
+
+### UNCATEGORIZED PRS; GO LABEL THEM
+
+- Major updates [\#47](https://github.com/treydock/puppet-module-globus/pull/47) ([treydock](https://github.com/treydock))
+
 ## [v10.1.0](https://github.com/treydock/puppet-module-globus/tree/v10.1.0) (2025-03-12)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v10.0.0...v10.1.0)
