@@ -71,15 +71,15 @@ class globus::config {
 
   if $globus::manage_firewall {
     firewall { '500 allow HTTPS':
-      action => 'accept',
-      dport  => '443',
-      proto  => 'tcp',
+      jump  => 'accept',
+      dport => '443',
+      proto => 'tcp',
     }
 
     firewall { '500 allow GridFTP data channels':
-      action => 'accept',
-      dport  => join($globus::incoming_port_range, '-'),
-      proto  => 'tcp',
+      jump  => 'accept',
+      dport => join($globus::incoming_port_range, '-'),
+      proto => 'tcp',
     }
   }
 }

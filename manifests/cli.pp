@@ -16,11 +16,16 @@ class globus::cli (
 ) {
   if $manage_python {
     include globus::python
+    $venv_python_version = $globus::python::venv_python_version
+    $pip_provider = $globus::python::pip_provider
+  } else {
+    $venv_python_version = undef
+    $pip_provider = undef
   }
 
   python::pyvenv { 'globus-cli':
     ensure     => 'present',
-    version    => $globus::python::venv_python_version,
+    version    => $venv_python_version,
     venv_dir   => $install_path,
     systempkgs => true,
     before     => Python::Pip['globus-cli'],
@@ -28,7 +33,7 @@ class globus::cli (
 
   python::pip { 'globus-cli':
     ensure       => $ensure,
-    pip_provider => $globus::python::pip_provider,
+    pip_provider => $pip_provider,
     virtualenv   => $install_path,
   }
 
