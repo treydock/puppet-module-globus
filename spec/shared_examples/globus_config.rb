@@ -7,7 +7,7 @@ shared_examples_for 'globus::config' do |_facts|
       "'Example'",
       "--owner 'admin@example.com'",
       "--organization 'Example'",
-      '--deployment-key /var/lib/globus-connect-server/gcs-manager/deployment-key.json',
+      "--deployment-key '/var/lib/globus-connect-server/gcs-manager/deployment-key.json'",
       '--agree-to-letsencrypt-tos',
     ]
   end
