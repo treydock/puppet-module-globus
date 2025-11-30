@@ -8,10 +8,10 @@ Puppet::Functions.create_function(:'globus::endpoint_setup_args') do
     flags = []
     flags << "'#{values['display_name']}'"
     flags << "--owner '#{values['owner']}'"
-    flags << "--project-id '#{values['project_id']}" unless values['project_id'].nil?
-    flags << "--project-admin '#{values['project_admin']}" unless values['project_admin'].nil?
+    flags << "--project-id '#{values['project_id']}'" unless values['project_id'].nil?
+    flags << "--project-admin '#{values['project_admin']}'" unless values['project_admin'].nil?
     flags << "--organization '#{values['organization']}'"
-    flags << "--deployment-key #{values['deployment_key']}"
+    flags << "--deployment-key '#{values['deployment_key']}'"
     flags << '--agree-to-letsencrypt-tos'
     flags << "--keywords '#{values['keywords'].join(',')}'" unless values['keywords'].nil?
     flags << "--department '#{values['department']}'" unless values['department'].nil?
