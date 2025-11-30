@@ -2,11 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v11.0.1](https://github.com/treydock/puppet-module-globus/tree/v11.0.1) (2025-11-30)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v11.0.0...v11.0.1)
+
+### Fixed
+
+- Fix quotes in endpoint\_setup\_args [\#48](https://github.com/treydock/puppet-module-globus/pull/48) ([mikerenfro](https://github.com/mikerenfro))
+
 ## [v11.0.0](https://github.com/treydock/puppet-module-globus/tree/v11.0.0) (2025-10-13)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v10.1.0...v11.0.0)
 
-### UNCATEGORIZED PRS; GO LABEL THEM
+### Changed
 
 - Major updates [\#47](https://github.com/treydock/puppet-module-globus/pull/47) ([treydock](https://github.com/treydock))
 
