@@ -3,7 +3,7 @@
 shared_examples_for 'globus::repo::deb' do |facts|
   let(:release_url) { 'https://downloads.globus.org/globus-connect-server/stable/installers/repo/deb/globus-repo_latest_all.deb' }
   let(:release_path) { '/usr/share/globus-repo/globus-repo_latest_all.deb' }
-  let(:repo_key) { '/usr/share/globus-repo/RPM-GPG-KEY-Globus-2024' }
+  let(:repo_key) { '/usr/share/globus-repo/GPG-KEY-Globus-2024' }
   let(:baseurl) { 'https://downloads.globus.org/globus-connect-server/stable/deb' }
 
   it do
