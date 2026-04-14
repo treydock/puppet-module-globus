@@ -27,5 +27,11 @@ appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
   delete: true
+spec/acceptance/nodesets/el10.yml:
+  delete: true
+spec/acceptance/nodesets/ubuntu-2004.yml:
+  unmanaged: true
+spec/acceptance/nodesets/ubuntu-2404.yml:
+  delete: true
 spec/acceptance/nodesets/debian-11.yml:
   delete: true
