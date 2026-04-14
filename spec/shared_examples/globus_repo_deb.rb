@@ -41,7 +41,7 @@ shared_examples_for 'globus::repo::deb' do |facts|
       repos: 'contrib',
       include: { 'src' => 'true' },
       key: {
-        'id' => '66A86341D3CDB1B26BE4D46F44AE7EC2FAF24365',
+        'name' => 'GPG-KEY-Globus-2024.asc',
         'source' => repo_key,
       },
       require: 'Exec[extract-globus-repo-key]',
