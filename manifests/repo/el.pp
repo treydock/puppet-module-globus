@@ -7,10 +7,10 @@ class globus::repo::el {
     $testing_enabled = '0'
   }
 
-  exec { 'RPM-GPG-KEY-Globus':
+  exec { 'RPM-GPG-KEY-Globus-2024':
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    command => "wget -qO- ${globus::release_url} | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus",
-    creates => '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
+    command => "wget -qO- ${globus::release_url} | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024 > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024",
+    creates => '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024',
   }
 
   file { '/etc/yum.repos.d/Globus-Toolkit.repo':
@@ -27,8 +27,8 @@ class globus::repo::el {
     priority       => '98',
     enabled        => '1',
     gpgcheck       => '1',
-    gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
-    require        => Exec['RPM-GPG-KEY-Globus'],
+    gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024',
+    require        => Exec['RPM-GPG-KEY-Globus-2024'],
   }
 
   yumrepo { 'globus-connect-server-5-testing':
@@ -38,7 +38,7 @@ class globus::repo::el {
     priority       => '98',
     enabled        => $testing_enabled,
     gpgcheck       => '1',
-    gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
-    require        => Exec['RPM-GPG-KEY-Globus'],
+    gpgkey         => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024',
+    require        => Exec['RPM-GPG-KEY-Globus-2024'],
   }
 }

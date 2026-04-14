@@ -2,9 +2,9 @@
 # @api private
 class globus::repo::deb {
   $release_name = basename($globus::release_url)
-  $repo_dir     = '/usr/share/globus-toolkit-repo'
+  $repo_dir     = '/usr/share/globus-repo'
   $release_path = "${repo_dir}/${release_name}"
-  $repo_key     = "${repo_dir}/RPM-GPG-KEY-Globus"
+  $repo_key     = "${repo_dir}/GPG-KEY-Globus-2024"
   if $globus::enable_testing_repos {
     $testing_ensure = 'present'
   } else {
@@ -49,7 +49,7 @@ class globus::repo::deb {
       'src' => true,
     },
     key      => {
-      'id'     => '66A86341D3CDB1B26BE4D46F44AE7EC2FAF24365',
+      'name'   => 'GPG-KEY-Globus-2024.asc',
       'source' => $repo_key,
     },
     require  => Exec['extract-globus-repo-key'],
@@ -64,7 +64,7 @@ class globus::repo::deb {
       'src' => true,
     },
     key      => {
-      'id'     => '66A86341D3CDB1B26BE4D46F44AE7EC2FAF24365',
+      'name'   => 'GPG-KEY-Globus-2024-testing.asc',
       'source' => $repo_key,
     },
     require  => Exec['extract-globus-repo-key'],
