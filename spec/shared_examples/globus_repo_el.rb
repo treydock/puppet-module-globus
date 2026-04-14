@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 shared_examples_for 'globus::repo::el' do |facts|
-  if facts[:operatingsystem] == 'Fedora'
+  if facts[:os]['name'] == 'Fedora'
     let(:url_os) { 'fedora' }
   else
     let(:url_os) { 'el' }
   end
-  let(:baseurl) { "https://downloads.globus.org/toolkit/gt6/stable/rpm/#{url_os}/#{facts[:operatingsystemmajrelease]}/$basearch/" }
-  let(:baseurl_gcs) { "https://downloads.globus.org/globus-connect-server/stable/rpm/#{url_os}/#{facts[:operatingsystemmajrelease]}/$basearch/" }
+  let(:baseurl) { "https://downloads.globus.org/globus-connect-server/stable/rpm/#{url_os}/#{facts[:os]['release']['major']}/$basearch/" }
 
   it 'installs GPG key' do
     is_expected.to contain_exec('RPM-GPG-KEY-Globus-2024')
@@ -19,7 +18,7 @@ shared_examples_for 'globus::repo::el' do |facts|
   it 'creates Yumrepo[globus-connect-server-5' do
     is_expected.to contain_yumrepo('globus-connect-server-5').with(
       descr: 'Globus-Connect-Server-5',
-      baseurl: baseurl_gcs,
+      baseurl: baseurl,
       failovermethod: 'priority',
       priority: '98',
       enabled: '1',
