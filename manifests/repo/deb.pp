@@ -2,7 +2,7 @@
 # @api private
 class globus::repo::deb {
   $release_name = basename($globus::release_url)
-  $repo_dir     = '/usr/share/globus-toolkit-repo'
+  $repo_dir     = '/usr/share/globus-repo'
   $release_path = "${repo_dir}/${release_name}"
   $repo_key     = "${repo_dir}/RPM-GPG-KEY-Globus-2024"
   if $globus::enable_testing_repos {

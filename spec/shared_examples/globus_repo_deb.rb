@@ -2,12 +2,12 @@
 
 shared_examples_for 'globus::repo::deb' do |facts|
   let(:release_url) { 'https://downloads.globus.org/globus-connect-server/stable/installers/repo/deb/globus-repo_latest_all.deb' }
-  let(:release_path) { '/usr/share/globus-toolkit-repo/globus-repo_latest_all.deb' }
-  let(:repo_key) { '/usr/share/globus-toolkit-repo/RPM-GPG-KEY-Globus-2024' }
+  let(:release_path) { '/usr/share/globus-repo/globus-repo_latest_all.deb' }
+  let(:repo_key) { '/usr/share/globus-repo/RPM-GPG-KEY-Globus-2024' }
   let(:baseurl) { 'https://downloads.globus.org/globus-connect-server/stable/deb' }
 
   it do
-    is_expected.to contain_file('/usr/share/globus-toolkit-repo').with(
+    is_expected.to contain_file('/usr/share/globus-repo').with(
       ensure: 'directory',
       owner: 'root',
       group: 'root',
@@ -20,7 +20,7 @@ shared_examples_for 'globus::repo::deb' do |facts|
       path: '/usr/bin:/bin:/usr/sbin:/sbin',
       command: "curl -Ls --show-error -o #{release_path} #{release_url}",
       creates: release_path,
-      require: 'File[/usr/share/globus-toolkit-repo]',
+      require: 'File[/usr/share/globus-repo]',
       before: 'Exec[extract-globus-repo-key]',
     )
   end
