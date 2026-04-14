@@ -10,10 +10,10 @@ shared_examples_for 'globus::repo::el' do |facts|
   let(:baseurl_gcs) { "https://downloads.globus.org/globus-connect-server/stable/rpm/#{url_os}/#{facts[:operatingsystemmajrelease]}/$basearch/" }
 
   it 'installs GPG key' do
-    is_expected.to contain_exec('RPM-GPG-KEY-Globus')
+    is_expected.to contain_exec('RPM-GPG-KEY-Globus-2024')
       .with(path: '/usr/bin:/bin:/usr/sbin:/sbin',
-            command: 'wget -qO- https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus', # rubocop:disable Metrics/LineLength
-            creates: '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',)
+            command: 'wget -qO- https://downloads.globus.org/globus-connect-server/stable/installers/repo/rpm/globus-repo-latest.noarch.rpm | rpm2cpio - | cpio -i --quiet --to-stdout ./etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024 > /etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024', # rubocop:disable Metrics/LineLength
+            creates: '/etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024',)
   end
 
   it 'creates Yumrepo[globus-connect-server-5' do
@@ -24,8 +24,8 @@ shared_examples_for 'globus::repo::el' do |facts|
       priority: '98',
       enabled: '1',
       gpgcheck: '1',
-      gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus',
-      require: 'Exec[RPM-GPG-KEY-Globus]',
+      gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Globus-2024',
+      require: 'Exec[RPM-GPG-KEY-Globus-2024]',
     )
   end
 

@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 shared_examples_for 'globus::repo::deb' do |facts|
-  let(:release_url) { 'http://downloads.globus.org/toolkit/gt6/stable/installers/repo/deb/globus-toolkit-repo_latest_all.deb' }
-  let(:release_path) { '/usr/share/globus-toolkit-repo/globus-toolkit-repo_latest_all.deb' }
-  let(:repo_key) { '/usr/share/globus-toolkit-repo/RPM-GPG-KEY-Globus' }
-  let(:baseurl) { 'https://downloads.globus.org/toolkit/gt6/stable/deb' }
-  let(:baseurl_gcs) { 'https://downloads.globus.org/globus-connect-server/stable/deb' }
+  let(:release_url) { 'https://downloads.globus.org/globus-connect-server/stable/installers/repo/deb/globus-repo_latest_all.deb' }
+  let(:release_path) { '/usr/share/globus-toolkit-repo/globus-repo_latest_all.deb' }
+  let(:repo_key) { '/usr/share/globus-toolkit-repo/RPM-GPG-KEY-Globus-2024' }
+  let(:baseurl) { 'https://downloads.globus.org/globus-connect-server/stable/deb' }
 
   it do
     is_expected.to contain_file('/usr/share/globus-toolkit-repo').with(
@@ -37,7 +36,7 @@ shared_examples_for 'globus::repo::deb' do |facts|
   it do
     is_expected.to contain_apt__source('globus-connect-server-stable').with(
       ensure: 'present',
-      location: baseurl_gcs,
+      location: baseurl,
       release: facts[:os]['distro']['codename'],
       repos: 'contrib',
       include: { 'src' => 'true' },
