@@ -87,7 +87,7 @@ Data type: `Variant[Stdlib::Httpsurl, Stdlib::Httpurl]`
 
 Release URL of Globus release RPM
 
-Default value: `'https://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm'`
+Default value: `'https://downloads.globus.org/globus-connect-server/stable/installers/repo/rpm/globus-repo-latest.noarch.rpm'`
 
 ##### <a name="-globus--gcs_repo_baseurl"></a>`gcs_repo_baseurl`
 
