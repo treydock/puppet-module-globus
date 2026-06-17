@@ -15,6 +15,7 @@ class globus::config {
       info_link => $globus::info_link,
       description => $globus::description,
       public => $globus::public,
+      advertised_owner => $globus::advertised_owner,
   })
   $endpoint_setup = "globus-connect-server endpoint setup ${endpoint_setup_args}"
   file { '/root/globus-endpoint-setup':
@@ -34,6 +35,11 @@ class globus::config {
       import_node => $globus::import_node,
   })
   $node_setup = "globus-connect-server node setup ${node_setup_args}"
+  if $globus::client_id != undef and $globus::client_secret != undef {
+    $globus_setup_env = Sensitive(["GCS_CLI_CLIENT_ID=${globus::client_id}", "GCS_CLI_CLIENT_SECRET=${globus::client_secret.unwrap}"])
+  } else {
+    $globus_setup_env = []
+  }
   file { '/root/globus-node-setup':
     ensure    => 'file',
     owner     => 'root',
@@ -44,10 +50,11 @@ class globus::config {
   }
   if $globus::run_setup_commands {
     exec { 'globus-endpoint-setup':
-      path      => '/usr/bin:/bin:/usr/sbin:/sbin',
-      command   => $endpoint_setup,
-      creates   => $globus::deployment_key,
-      logoutput => true,
+      path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+      command     => $endpoint_setup,
+      creates     => $globus::deployment_key,
+      logoutput   => true,
+      environment => $globus_setup_env,
     }
     exec { 'globus-node-setup':
       path      => '/usr/bin:/bin:/usr/sbin:/sbin',

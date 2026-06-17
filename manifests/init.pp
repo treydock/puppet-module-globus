@@ -38,6 +38,10 @@
 #   --project-id use when running 'globus-connect-server endpoint setup'
 # @param project_admin
 #   --project-admin use when running 'globus-connect-server endpoint setup'
+# @param client_id
+#   Define value of environment variable 'GCS_CLI_CLIENT_ID' when running 'globus-connect-server endpoint setup'
+# @param client_secret
+#   Define value of environment variable 'GCS_CLI_CLIENT_SECRET' when running 'globus-connect-server endpoint setup'
 # @param owner
 #   --owner use when running 'globus-connect-server endpoint setup'
 # @param organization
@@ -59,6 +63,8 @@
 #   --description use when running 'globus-connect-server endpoint setup'
 # @param public
 #   When false pass --private flag to 'globus-connect-server endpoint setup'
+# @param advertised_owner
+#   When false pass --dont-set-advertised-owner flag to 'globus-connect-server endpoint setup'
 # @param incoming_port_range
 #   --incoming-port-range use when running 'globus-connect-server node setup'
 # @param outgoing_port_range
@@ -95,6 +101,8 @@ class globus (
   # endpoint setup
   Optional[String[1]] $project_id = undef,
   Optional[String[1]] $project_admin = undef,
+  Optional[String[1]] $client_id = undef,
+  Optional[Sensitive[String[1]]] $client_secret = undef,
   Optional[Array] $keywords = undef,
   Optional[String] $department = undef,
   Optional[String] $contact_email = undef,
@@ -102,6 +110,7 @@ class globus (
   Optional[String] $info_link = undef,
   Optional[String] $description = undef,
   Boolean $public = true,
+  Boolean $advertised_owner = true,
   # node setup
   Array[Stdlib::Port, 2, 2] $incoming_port_range = [50000, 51000],
   Optional[Array[Stdlib::Port, 2, 2]] $outgoing_port_range = undef,

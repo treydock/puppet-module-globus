@@ -20,6 +20,7 @@ Puppet::Functions.create_function(:'globus::endpoint_setup_args') do
     flags << "--info-link '#{values['info_link']}'" unless values['info_link'].nil?
     flags << "--description '#{values['description']}'" unless values['description'].nil?
     flags << '--private' unless values['public']
+    flags << '--dont-set-advertised-owner' unless values['advertised_owner']
     flags.join(' ')
   end
 end
