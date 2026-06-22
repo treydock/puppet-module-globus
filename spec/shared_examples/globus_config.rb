@@ -86,6 +86,35 @@ shared_examples_for 'globus::config' do |_facts|
     it { is_expected.not_to contain_exec('globus-node-setup') }
   end
 
+  context 'when client credentials are defined' do
+    let(:params) do
+      default_params.merge(
+        client_id: 'client-id',
+        client_secret: sensitive('client-secret'),
+      )
+    end
+
+    it do
+      is_expected.to contain_exec('globus-endpoint-setup').with(
+        environment: sensitive(
+          [
+            'GCS_CLI_CLIENT_ID=client-id',
+            'GCS_CLI_CLIENT_SECRET=client-secret',
+          ],
+        ),
+      )
+    end
+  end
+
+  context 'when advertised_owner => false' do
+    let(:params) { default_params.merge(advertised_owner: false) }
+
+    it do
+      is_expected.to contain_file('/root/globus-endpoint-setup')
+        .with_content(%r{--dont-set-advertised-owner})
+    end
+  end
+
   context 'when extra_gridftp_settings defined' do
     let(:params) do
       default_params.merge(extra_gridftp_settings: [
