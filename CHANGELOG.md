@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v12.1.0](https://github.com/treydock/puppet-module-globus/tree/v12.1.0) (2026-06-22)
+
+[Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v12.0.0...v12.1.0)
+
+### Added
+
+- Add option to setup endpoint with service credentials [\#51](https://github.com/treydock/puppet-module-globus/pull/51) ([cmd-ntrf](https://github.com/cmd-ntrf))
+
+### Fixed
+
+- Update puppetlabs-firewall requirements in metadata.json [\#50](https://github.com/treydock/puppet-module-globus/pull/50) ([cmd-ntrf](https://github.com/cmd-ntrf))
+
 ## [v12.0.0](https://github.com/treydock/puppet-module-globus/tree/v12.0.0) (2026-04-14)
 
 [Full Changelog](https://github.com/treydock/puppet-module-globus/compare/v11.0.1...v12.0.0)

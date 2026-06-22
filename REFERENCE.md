@@ -65,6 +65,8 @@ The following parameters are available in the `globus` class:
 * [`display_name`](#-globus--display_name)
 * [`project_id`](#-globus--project_id)
 * [`project_admin`](#-globus--project_admin)
+* [`client_id`](#-globus--client_id)
+* [`client_secret`](#-globus--client_secret)
 * [`owner`](#-globus--owner)
 * [`organization`](#-globus--organization)
 * [`deployment_key`](#-globus--deployment_key)
@@ -75,6 +77,7 @@ The following parameters are available in the `globus` class:
 * [`info_link`](#-globus--info_link)
 * [`description`](#-globus--description)
 * [`public`](#-globus--public)
+* [`advertised_owner`](#-globus--advertised_owner)
 * [`incoming_port_range`](#-globus--incoming_port_range)
 * [`outgoing_port_range`](#-globus--outgoing_port_range)
 * [`ip_address`](#-globus--ip_address)
@@ -207,6 +210,22 @@ Data type: `Optional[String[1]]`
 
 Default value: `undef`
 
+##### <a name="-globus--client_id"></a>`client_id`
+
+Data type: `Optional[String[1]]`
+
+Define value of environment variable 'GCS_CLI_CLIENT_ID' when running 'globus-connect-server endpoint setup'
+
+Default value: `undef`
+
+##### <a name="-globus--client_secret"></a>`client_secret`
+
+Data type: `Optional[Sensitive[String[1]]]`
+
+Define value of environment variable 'GCS_CLI_CLIENT_SECRET' when running 'globus-connect-server endpoint setup'
+
+Default value: `undef`
+
 ##### <a name="-globus--owner"></a>`owner`
 
 Data type: `String[1]`
@@ -281,6 +300,14 @@ Default value: `undef`
 Data type: `Boolean`
 
 When false pass --private flag to 'globus-connect-server endpoint setup'
+
+Default value: `true`
+
+##### <a name="-globus--advertised_owner"></a>`advertised_owner`
+
+Data type: `Boolean`
+
+When false pass --dont-set-advertised-owner flag to 'globus-connect-server endpoint setup'
 
 Default value: `true`
 
